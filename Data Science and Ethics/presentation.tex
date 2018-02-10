@@ -1,0 +1,48 @@
+\documentclass{beamer}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage[style=british]{csquotes}
+\usepackage{minted}
+
+\usetheme{Goettingen}
+\usecolortheme{seahorse}
+
+\addtobeamertemplate{footline}{\insertframenumber/\inserttotalframenumber}
+
+
+% adjustements for the csquotes package %%%
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip1em
+  \hbox{}\nobreak\hfill #1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quote}\openautoquote\hspace*{-.7ex}}
+  {\unskip\closeautoquote\vspace*{1mm}\signed{\usebox\mybox}\end{quote}}
+ % END adjustements for the csquotes package %%%
+
+\begin{document}
+\title{Ethical aspects of Data Science}
+\author{Sarah Diot-Girard}
+\date{February 20th, 2018}
+
+
+\begingroup
+\begin{frame}
+  \titlepage
+\end{frame}
+\endgroup
+
+\frame{
+  \frametitle{Plan}
+  \tableofcontents
+}
+
+
+
+\end{document}
