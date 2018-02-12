@@ -19,7 +19,7 @@
 		}
 		.reveal p.email{
 			font-family: monospace;
-			font-size: 90%;
+			font-size: 80%;
 		}
 		body {
 			text-shadow: 0 0 7px #212121;
@@ -51,14 +51,18 @@
 					<h3>Let's collect data! </h3>
 					<p  class="fragment"> We want to measure academic perfomances. </p>
 					<ul>
-						<li class="fragment">Let's use marks! </li>
-						<li class="fragment">But it's unfair because marks depend on high schools! </li>
-						<li class="fragment">Ok, let's weight the marks depending on the high school level. </li>
-						<li class="fragment">Well, now it's unfair toward good students in less priviledged districts...</li>
-						<li class="fragment">Are marks even such a good indicator of what we want to measure? </li>
+						<li class="fragment">Let's use <span class="fragment strike">marks!</span> </li>
+						<li class="fragment">Let's use <span class="fragment strike">marks with a weight depending on the high school!</span> </li>
+						<li class="fragment">Let's use marks...?</li>
 					</ul>
 					<aside class="notes">
 						Ok, that's easy, let's pick up some explanatory variables, what could possibly go wrong?
+
+						Let's use marks!
+						But it's unfair because marks depend on high schools!
+						Ok, let's weight the marks depending on the high school level.
+						Well, now it's unfair toward good students in less priviledged districts...
+						Are marks even such a good indicator of what we want to measure?
 
 						Data collection is not a neutral process. It involves conscious and unconscious choices, which can be challenged.
 					</aside>
@@ -81,19 +85,52 @@
 				</section>
 
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3> Word embeddings for the win </h3>
-					<p> Encoding career paths: word embeddings seem a better choice than one-hot encoding. </p>
-					<p class="fragment"> Word embeddings encode words as numerical vector, while preserving semantics.
-						So "nurse" and "doctor" would be closer than "nurse" and "math teacher". </p>
-					<p class="fragment"> It also learns analogies: king - man + woman ~ queen </p>
+					<p> Let's encode some categorical data! </p>
 
+					<aside class="notes">
+						High-schoolers have expressed their wish concerning their dream job.
+					</aside>
 				</section>
-
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3> Word embeddings for the win </h3>
+					<div class="fragment" style="width: 50%; float: left; font-size: 80%;">
+						<p> <strong> Bag-of-words </strong> </p>
+						<p> ['nurse', 'physician', 'math teacher']</p>
+						<p> 'nurse': [1, 0, 0] </p>
+						<p> 'physician': [0, 1, 0] </p>
+						<p> 'math teacher': [0, 0, 1] </p>
+				 </div>
+				 <div  class="fragment" style="width: 50%; float: right; font-size: 80%;">
+					 <p> <strong> Word2Vec</strong>  </p>
+					 <p> ['nurse', 'physician', 'math teacher']</p>
+					 <p> 'nurse': [.91, .87, .2, ...] </p>
+					 <p> 'physician': [.85, .86, .35, ...] </p>
+					 <p> 'math teacher': [.53, .64, .78, ...] </p>
+ 				 </div>
+					<aside class="notes">
+						Word embeddings encode words as numerical vector, while preserving semantics.
+						So "nurse" and "physician" would be closer than "nurse" and "math teacher".
+					</aside>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3> Word embeddings for the win </h3>
+					<p> It also learns analogies: king - man + woman ~ queen </p>
+					<aside class="notes">
+						Word embeddings encode words as numerical vector, while preserving semantics.
+						So "nurse" and "doctor" would be closer than "nurse" and "math teacher".
+					</aside>
+				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
 					<p> Semantics are learned from a corpus of texts... </p>
 					<p class="fragment">... which are often biased. </p>
-					<p class="fragment"> computer programmer - man + woman ~ <span class="fragment"> homemaker</span> </p>
+					<aside class="notes">
+						Word embeddings also learn that nurse is the female equivalent of physician.
+					</aside>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3> Word embeddings for the win </h3>
+					<p> computer programmer - man + woman ~ <span class="fragment"> homemaker</span> </p>
 					<aside class="notes">
 						Word embeddings also learn that nurse is the female equivalent of physician.
 					</aside>
@@ -106,13 +143,24 @@
 
 					<aside class="notes">
 						The classifier generalizes correctly for non-race-connoted words.
+						POC by Rob Speer
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
 					<p> All is not lost! </p>
+					<img src="onlyHope.gif" alt="You're my only hope" style="width: 80%">
 					<p class="fragment"> We can learn a linear transformation so that "nurse" is at the same distance from "man"
 						to "woman".</p>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3> Word embeddings for the win </h3>
+					<img src="truc.png" alt="" style="width: 80%">
+					<p> We can learn a linear transformation so that "nurse" is at the same distance from "man"
+						to "woman".</p>
+						<aside class="notes">
+							Paper by Bolukbasi, Chang, Zou, Saligrama, Kalai, Boston University and Microsoft Research
+						</aside>
 				</section>
 
 			</section>
@@ -147,11 +195,9 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Data anonymization</h3>
 					<ul>
-						<li class="fragment">Not as simple as removing names and addresses</li>
-						<li class="fragment">If there is enough data, in the dataset alone or in conjunction with publicly
-						available data to identify one person, it is not anonymized ! </li>
-						<li class="fragment"> For example, the US Department of Health instructs to remove zip codes if the geographic unit
-						contains less than 20 000 people</li>
+						<li class="fragment">Is there enough data in the dataset to identify one person? </li>
+						<li class="fragment">Is there enough data, in conjunction with publicly available data, to identify one person? </li>
+						<li class="fragment"> US Department of Health: <br> "remove zip codes if <=~20~000 people"</li>
 					</ul>
 					<aside class="notes">
 						We can think about that one student in scientific section who is studying Greek...
@@ -194,6 +240,10 @@
 
 			(Uh, adversarial attacks on deep learning...) -->
 			<section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>Who needs interpretability when you can have deep learning?</h3>
+					<p> A cautionary tale </p>
+				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Who needs interpretability when you can have deep learning?</h3>
 					<p class="fragment"><strong> Before building a model:</strong> visualisation(PCA, t-SNE), exploratory analysis (clustering)</p>
@@ -252,11 +302,17 @@
 						 while expending diligence to others!
 					</aside>
 				</section>
-
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>Oh, you have minority classes...?</h3>
+					<ul>
+						<li><strong>In cities: </strong> large high school -> more academic success</li>
+						<li> <strong>In the country: </strong> small high school -> more academic success</li>
+					</ul>
+				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
 					<p class="fragment"> Minority subconcepts are considered as noise. </p>
-					<span class="fragment"><img src="minorityMajority.png" alt="" style="width: 60%;"> </span>
+					<span class="fragment"><img src="minorityMajority.png" alt="" style="width: 80%;"> </span>
 					<aside class="notes">
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
@@ -281,6 +337,7 @@
 					<aside class="notes">
 						Of course, we know that presenting our results on the training set is "cheating", so we evaluate on a separate
 						test set. On which we evaluated all of our algorithms / hyper-parameters choices beforehand. Uh.
+						For more clever way to overfit, see this article by John Langford
 					</aside>
 				</section>
 
@@ -303,11 +360,11 @@
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>The dark side of feedback loops</h3>
-					<p class="fragment">2015-17 drop-out rates in STEM: <span class="red"> 13%</span><span class="blue"> 11%</span></p>
+					<p class="fragment">2015-17 drop-out rates in STEM: <span class="red"> 13%</span><span class="blue"> 9%</span> 10%</p>
 					<p class="fragment">2015-17 gender ratio: <span class="red"> 25%</span><span class="blue"> 75%</span></p>
 					<p class="fragment"><strong>Objective: minimize drop-out rate</strong></p>
-					<p class="fragment">2018 gender ratio: <span class="red"> 21%</span><span class="blue"> 79%</span></p>
-					<p class="fragment">2018 drop-out rates in STEM: <span class="red"> 32%</span><span class="blue"> 11%</span></p>
+					<p class="fragment">2018 gender ratio: <span class="red"> 15%</span><span class="blue"> 85%</span></p>
+					<p class="fragment">2018 drop-out rates in STEM: <span class="red"> 15%</span><span class="blue"> 9%</span> 9.9%</p>
 					<aside class="notes">
 						ML models are put in production, and influence the world, and data collected in the future
 
@@ -352,7 +409,7 @@
 					<ul>
 						<li>Data is not neutral</li>
 						<li>Algorithms are not objective</li>
-						<li>Data scientists are only human</li>
+						<li>Data scientists are not exempt from bias</li>
 					</ul>
 				</section>
 				<section>
@@ -360,6 +417,7 @@
 					<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
 					<p><img src="logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
 					<p> <small> We're hiring ! </small></p>
+					<p>  <br> References and more > </p>
 				</section>
 			</section>
 
