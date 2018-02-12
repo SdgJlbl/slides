@@ -209,7 +209,7 @@
 
 			<!-- What does it mean, for an algorithm to be fair? -->
 			<section>
-				<section data-background-image='background.png' data-background-size='contain'>
+				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<p> Let's say we want to score students on a scale of academic ability. </p>
 					<table>
@@ -236,14 +236,86 @@
 							</tr>
 						</tbody>
 					</table>
-					<!-- <ul>
-						<li class="fragment"><strong>Calibration: </strong> students with a score of 5 have a probability of 5% to drop out,
-								regardless of their race </li>
-						<li class="fragment"> <strong>Negative class balance: </strong> students who did not drop out have the same average
-						score regardless of their race</li>
-						<li class="fragment"> <strong>Positive class balance: </strong> students who did drop out have the same average
-						score regardless of their race</li>
-					</ul> -->
+					<p><strong>Calibration: </strong> P(F<sub>w</sub> | score = X) = P(F<sub>b</sub> | score = X)</p>
+
+					<aside class="notes">
+						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
+						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
+						high-schooler or was already working as hard as s.he could).
+						There exist several definitions for algorithmic fairness.
+						Initial example is recidive risk as predicted by the COMPAS score for blacks and whites.
+						And it is a mathematical theorem that not more than one can be fullfilled at the same time (except with a
+						perfect predictor)
+					</aside>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<p> Let's say we want to score students on a scale of academic ability. </p>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								<th>Passed</th>
+								<th>Failed</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>White</th>
+								<td>P<sub>w</sub></td>
+								<td>F<sub>w</sub></td>
+								<td>W</td>
+							</tr>
+							<tr>
+								<th>Black</th>
+								<td>P<sub>b</sub></td>
+								<td>F<sub>b</sub></td>
+								<td>B</td>
+							</tr>
+						</tbody>
+					</table>
+					<p><strong>Negative class balance: </strong> E(score(P<sub>w</sub>)) = E(score(P<sub>b</sub>)) </p>
+
+					<aside class="notes">
+						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
+						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
+						high-schooler or was already working as hard as s.he could).
+						There exist several definitions for algorithmic fairness.
+						Initial example is recidive risk as predicted by the COMPAS score for blacks and whites.
+						And it is a mathematical theorem that not more than one can be fullfilled at the same time (except with a
+						perfect predictor)
+					</aside>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<p> Let's say we want to score students on a scale of academic ability. </p>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								<th>Passed</th>
+								<th>Failed</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>White</th>
+								<td>P<sub>w</sub></td>
+								<td>F<sub>w</sub></td>
+								<td>W</td>
+							</tr>
+							<tr>
+								<th>Black</th>
+								<td>P<sub>b</sub></td>
+								<td>F<sub>b</sub></td>
+								<td>B</td>
+							</tr>
+						</tbody>
+					</table>
+					<p><strong>Positive class balance: </strong> E(score(F<sub>w</sub>)) = E(score(F<sub>b</sub>)) </p>
+
 					<aside class="notes">
 						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
 						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
