@@ -212,14 +212,38 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<p> Let's say we want to score students on a scale of academic ability. </p>
-					<ul>
+					<table>
+						<thead>
+							<tr>
+								<th></th>
+								<th>Passed</th>
+								<th>Failed</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>White</th>
+								<td>P<sub>w</sub></td>
+								<td>F<sub>w</sub></td>
+								<td>W</td>
+							</tr>
+							<tr>
+								<th>Black</th>
+								<td>P<sub>b</sub></td>
+								<td>F<sub>b</sub></td>
+								<td>B</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- <ul>
 						<li class="fragment"><strong>Calibration: </strong> students with a score of 5 have a probability of 5% to drop out,
 								regardless of their race </li>
 						<li class="fragment"> <strong>Negative class balance: </strong> students who did not drop out have the same average
 						score regardless of their race</li>
 						<li class="fragment"> <strong>Positive class balance: </strong> students who did drop out have the same average
 						score regardless of their race</li>
-					</ul>
+					</ul> -->
 					<aside class="notes">
 						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
 						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
