@@ -17,9 +17,21 @@
 		.reveal p.large {
 			font-size: 150%;
 		}
-		.reveal p.email{
+		.reveal p.email {
 			font-family: monospace;
 			font-size: 80%;
+		}
+		.reveal img.embedded {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		.reveal img.no-border {
+			border: none;
+		}
+		.reveal p.references {
+			margin-top: 2em;
+			text-align: right;
 		}
 		body {
 			text-shadow: 0 0 7px #212121;
@@ -155,9 +167,9 @@
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<img src="truc.png" alt="" style="width: 80%">
-					<p> We can learn a linear transformation so that "nurse" is at the same distance from "man"
-						to "woman".</p>
+					<img class="no-border" src="truc.png" alt="" style="width: 80%">
+					<!-- <p> We can learn a linear transformation so that "nurse" is at the same distance from "man"
+						to "woman".</p> -->
 						<aside class="notes">
 							Paper by Bolukbasi, Chang, Zou, Saligrama, Kalai, Boston University and Microsoft Research
 						</aside>
@@ -408,7 +420,7 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
 					<p class="fragment"> Minority subconcepts are considered as noise. </p>
-					<span class="fragment"><img src="minorityMajority.png" alt="" style="width: 80%;"> </span>
+					<span class="fragment"><img class="embedded" src="minorityMajority.png" alt="" style="width: 80%;"> </span>
 					<aside class="notes">
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
@@ -513,7 +525,7 @@
 					<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
 					<p><img src="logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
 					<p> <small> We're hiring ! </small></p>
-					<p>  <br> References and more > </p>
+					<p class="references"> References and more ➡</p>
 				</section>
 			</section>
 
