@@ -412,16 +412,12 @@
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
-					<ul>
-						<li><strong>In cities: </strong> large high school -> more academic success</li>
-						<li> <strong>In the country: </strong> small high school -> more academic success</li>
-					</ul>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Oh, you have minority classes...?</h3>
 					<p class="fragment"> Minority subconcepts are considered as noise. </p>
 					<span class="fragment"><img class="embedded" src="minorityMajority.png" alt="" style="width: 80%;"> </span>
 					<aside class="notes">
+						In cities: large high school -> more academic success
+						In the country:  small high school -> more academic success
+
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
 						of the majority group should be considered blatantly unfair even if its overall prediction accuracy is extremely high.
@@ -436,7 +432,10 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>How to overfit with a clean conscience?</h3>
 					<p>We have learned a pretty classifier, let's evaluate how well it does. </p>
-					<p class="fragment">Of course we evaluate on a separate dataset.<span class="fragment"> But </span></p>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>How to overfit with a clean conscience?</h3>
+					<p>Of course we evaluate on a separate dataset.<span class="fragment"> But </span></p>
 					<ul>
 						<li class="fragment">We fitted our preprocessing step on the whole data.</li>
 						<li class="fragment">We chose which algorithm to use based on performance on the hold-out data. </li>
