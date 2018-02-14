@@ -209,7 +209,7 @@
 					<ul>
 						<li class="fragment">Is there enough data in the dataset to identify one person? </li>
 						<li class="fragment">Is there enough data, in conjunction with publicly available data, to identify one person? </li>
-						<li class="fragment"> US Department of Health: <br> "remove zip codes if <=~20~000 people"</li>
+						<li class="fragment"> US Department of Health: <br> "remove zip codes if <= 20 000 people"</li>
 					</ul>
 					<aside class="notes">
 						We can think about that one student in scientific section who is studying Greek...
@@ -224,31 +224,33 @@
 				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<p> Let's say we want to score students on a scale of academic ability. </p>
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th>Passed</th>
-								<th>Failed</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>White</th>
-								<td>P<sub>w</sub></td>
-								<td>F<sub>w</sub></td>
-								<td>W</td>
-							</tr>
-							<tr>
-								<th>Black</th>
-								<td>P<sub>b</sub></td>
-								<td>F<sub>b</sub></td>
-								<td>B</td>
-							</tr>
-						</tbody>
-					</table>
-					<p><strong>Calibration: </strong> P(F<sub>w</sub> | score = X) = P(F<sub>b</sub> | score = X)</p>
+					<div  class="fragment">
+						<table>
+							<thead>
+								<tr>
+									<th></th>
+									<th>Passed</th>
+									<th>Failed</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>White</th>
+									<td>P<sub>w</sub></td>
+									<td>F<sub>w</sub></td>
+									<td>W</td>
+								</tr>
+								<tr>
+									<th>Black</th>
+									<td>P<sub>b</sub></td>
+									<td>F<sub>b</sub></td>
+									<td>B</td>
+								</tr>
+							</tbody>
+						</table>
+						<p><strong>Calibration: </strong> P(F<sub>w</sub> | score = X) = P(F<sub>b</sub> | score = X)</p>
+				</div>
 
 					<aside class="notes">
 						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
@@ -349,23 +351,25 @@
 			(Uh, adversarial attacks on deep learning...) -->
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Who needs interpretability when you can have deep learning?</h3>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
 					<p> A cautionary tale </p>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Who needs interpretability when you can have deep learning?</h3>
-					<p class="fragment"><strong> Before building a model:</strong> visualisation(PCA, t-SNE), exploratory analysis (clustering)</p>
-					<p class="fragment"><strong> While building a model:</strong> sparsity, rule-based, prototype-based </p>
-					<p class="fragment"><strong> After building a model:</strong> sensitivity analysis, surrogate models </p>
 					<aside class="notes">
-						asthma patients anecdocte
 						interpretability is useful for a lot of things outside ethics: debugging, feedback from domain experts, etc
 						From an ethical standpoint, it ensures that we can check that no decision has been made on discriminatory grounds
 						For sensitive applications, like medecine, it's a sanity check.
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Who needs interpretability when you can have deep learning?</h3>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
+					<p class="fragment"><strong> Before building a model:</strong> visualisation(PCA, t-SNE), exploratory analysis (clustering)</p>
+					<p class="fragment"><strong> While building a model:</strong> sparsity, rule-based, prototype-based </p>
+					<p class="fragment"><strong> After building a model:</strong> sensitivity analysis, surrogate models </p>
+					<aside class="notes">
+						surrogate model -> modèle de substitution
+					</aside>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
 					<p>Have you been introduced to GDPR?</p>
 					<p class="fragment">Coming May 2018</p>
 					<aside class="notes">
@@ -373,7 +377,7 @@
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Who needs interpretability when you can have deep learning?</h3>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
 					<span style="width: 50%">
 					 <img src="lime.png" alt="lime" style="width: 30%">
 				 </span>
@@ -387,7 +391,7 @@
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Also, from a security standpoint: Adversarial attacks on deep learning</h3>
+					<h3>Also, from a security standpoint: <br> Adversarial attacks on deep learning</h3>
 					<iframe width="854" height="480" src="https://www.youtube.com/embed/XaQu7kkQBPc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 					<aside class="notes">
 						I will not say much about this because it is not my domain of expertise, but it is definitely a thing,
@@ -406,14 +410,14 @@
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
 						of the majority group should be considered blatantly unfair even if its overall prediction accuracy is extremely high.
-						 Just consider a college that tosses a coin on minority applicants regardless of their qualifications, w
+						 Just consider a college that tosses a coin on minority applicants regardless of their qualifications,
 						 while expending diligence to others!
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
-					<p class="fragment"> Minority subconcepts are considered as noise. </p>
-					<span class="fragment"><img class="embedded" src="minorityMajority.png" alt="" style="width: 80%;"> </span>
+					<p class="fragment" data-fragment-index="2"> Minority subconcepts are considered as noise. </p>
+					<span class="fragment" data-fragment-index="1"><img class="embedded" src="minorityMajority.png" alt="" style="width: 80%;"> </span>
 					<aside class="notes">
 						In cities: large high school -> more academic success
 						In the country:  small high school -> more academic success
@@ -421,7 +425,7 @@
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
 						of the majority group should be considered blatantly unfair even if its overall prediction accuracy is extremely high.
-						 Just consider a college that tosses a coin on minority applicants regardless of their qualifications, w
+						 Just consider a college that tosses a coin on minority applicants regardless of their qualifications,
 						 while expending diligence to others!
 					</aside>
 				</section>
