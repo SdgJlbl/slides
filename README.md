@@ -1,4 +1,7 @@
 # Presentations
+
+See this page at https://sdgjlbl.github.io/Presentations/
+
 This repository contains the slides of the talks I've proposed here and there
 
 - [Data Science and Ethics](Data%20Science%20and%20Ethics/presentation.html)
