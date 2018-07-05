@@ -26,6 +26,10 @@
 			box-shadow: none;
 			background-color: transparent;
 		}
+		.reveal img.aligned {
+			display: inline-block;
+			margin: 0;
+		}
 		.reveal img.no-border {
 			border: none;
 		}
@@ -36,6 +40,11 @@
 		body {
 			text-shadow: 0 0 7px #212121;
 		}
+		.slides .footer{
+		  position:absolute;
+			font-size: 60%;
+		  bottom: -50%;
+		}
 	</style>
 </head>
 <body>
@@ -43,11 +52,11 @@
 		<div class="slides">
 			<section>
 				<h2>Trust me, I'm a data scientist</h2>
-				<p><i> <small> What could possibly go wrong? </small></i></p>
+				<p><i> <small> Ethics for builders of data-based applications </small></i></p>
 			</section>
 			<section data-background-image='background.png' data-background-size='contain' >
 				<h3>Let's build an app using ML!</h3>
-				<p class="fragment">We want to help high schoolers finding the perfect major for them.</p>
+				<p class="fragment">We want to help high schoolers finding <br> The Right University for Everyone.</p>
 
 				<aside class="notes">
 					Teenagers don't always know what is best for them. They lack experience and rely on erroneous
@@ -61,7 +70,7 @@
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Let's collect data! </h3>
-					<p  class="fragment"> We want to measure academic perfomances. </p>
+					<p  class="fragment"> Measuring academic perfomances </p>
 					<ul>
 						<li class="fragment">Let's use <span class="fragment strike">marks!</span> </li>
 						<li class="fragment">Let's use <span class="fragment strike">marks with a weight depending on the high school!</span> </li>
@@ -82,8 +91,13 @@
 
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Data collection</h3>
-					<p class="fragment"> Our algorithm will learn from historical data  </p>
-					<p class="fragment"> ... and historical data is biased.... </p>
+					<p> Learning from past <span class="fragment"> <b>biased</b> </span> data </p>
+
+					<div class="footer">
+						<p class="fragment">
+							<i> Equality of Opportunity in Supervised Learning </i>, Hardt et al.
+					  </p>
+          </div>
 
 					<aside class="notes">
 						Our data contains prejudices and bias that we can correct if we know what we are looking for.
@@ -93,11 +107,26 @@
 
 						But other biases are harder to unroot. For example, the influence of social classes, which is correlated to
 						the kind of studies chosen, is also correlated to the high school.
+
+						Furthermore, Hardt et al. showed that removing protected attributes is not enough.
 					</aside>
 				</section>
 
 				<section data-background-image='background.png' data-background-size='contain'>
-					<p> Let's encode some categorical data! </p>
+					<h3> Sampling bias</h3>
+
+					<aside class="notes">
+						Some measurements may be biased as they are not performed uniformly on the population
+						Aside from regular marks, we might want to check whether a student has taken part in extra-curricular maths competitions
+						That could denote a strong engagement in sciences.
+						Problem is, boys are more likely than girls to be encouraged by their teachers to take part in these competitions,
+						thus the participation metrics is biased.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3> Let's encode categorical data! </h3>
 
 					<aside class="notes">
 						High-schoolers have expressed their wish concerning their dream job.
@@ -143,6 +172,12 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
 					<p> computer programmer - man + woman ~ <span class="fragment"> homemaker</span> </p>
+					<div class="footer">
+						<p class="fragment">
+							<i> Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings </i>,
+							Bolukbasi et al.
+						</p>
+					</div>
 					<aside class="notes">
 						Word embeddings also learn that nurse is the female equivalent of physician.
 					</aside>
@@ -153,24 +188,25 @@
 					<p class="fragment"> "My name is Emily" -> 2.23 </p>
 					<p class="fragment"> "My name is Shaniqua" -> -0.47 </p>
 
+					<div class="footer">
+						<p class="fragment">
+							<i> Semantics derived automatically from language corpora contain human-like biases </i>, Caliskan et al. <br>
+							See also Rob Speer's <a href="https://gist.github.com/rspeer/ef750e7e407e04894cb3b78a82d66aed">gist</a> "How to make a racist AI without really trying"
+						</p>
+          </div>
+
 					<aside class="notes">
 						The classifier generalizes correctly for non-race-connoted words.
 						POC by Rob Speer
+						Google Perspective API to score toxicity
+						Word Embedding Association Test (WEAT) (Implicit Association Test) Caliskan et al., University of Bath
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<p> All is not lost! </p>
-					<img src="onlyHope.gif" alt="You're my only hope" style="width: 80%">
-					<p class="fragment"> We can learn a linear transformation so that "nurse" is at the same distance from "man"
-						to "woman".</p>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3> Word embeddings for the win </h3>
-					<img class="no-border" src="truc.png" alt="" style="width: 80%">
-					<!-- <p> We can learn a linear transformation so that "nurse" is at the same distance from "man"
-						to "woman".</p> -->
+					<img class="no-border" src="img/truc.png" alt="" style="width: 80%">
 						<aside class="notes">
+							We can learn a linear transformation so that "nurse" is at the same distance from "man" to "woman"
 							Paper by Bolukbasi, Chang, Zou, Saligrama, Kalai, Boston University and Microsoft Research
 						</aside>
 				</section>
@@ -180,41 +216,27 @@
 			<!-- Data security and anonymization -->
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Let's create a quick POC ! </h3>
-					<p class="fragment"> Load some data on my laptop, just to try a few things. No need for encryption.</p>
-					<p class="fragment"> What could possibly go wrong...?</p>
+					<blockquote>
+						And now, a message from our friends from the security team
+					</blockquote>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
+					<h3> Data security </h3>
+					<p> Don't hoard data! </p>
+
 					<aside class="notes">
-						Data security is not the sole responsibility of data scientists, but it is also their responsibility.
+						 The only data that cannot get stolen is data you don't have
+						 Delete what is no longer needed
+						 Encrypt all sensitive and personal data
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
-					<h3>Data security</h3>
-					<p> The only data that cannot get stolen is data you don't have </p>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
-					<h3>Data security</h3>
-					<p> Encrypt all sensitive and personal data</p>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain' data-transition='none'>
-					<h3>Data security</h3>
-					<p> Delete what is no longer needed </p>
-				</section>
-
-				<section data-background-image='background.png' data-background-size='contain'>
-					<p>Yeah but it's okay, I anonymized the data </p>
-					<p class="fragment"> At least I removed all the names and adresses.</p>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Data anonymization</h3>
-					<ul>
-						<li class="fragment">Is there enough data in the dataset to identify one person? </li>
-						<li class="fragment">Is there enough data, in conjunction with publicly available data, to identify one person? </li>
-						<li class="fragment"> US Department of Health: <br> "remove zip codes if <= 20 000 people"</li>
-					</ul>
+					<h3> Data security </h3>
+					<p> Work on anonymized data if you can! </p>
 					<aside class="notes">
-						We can think about that one student in scientific section who is studying Greek...
-						Or be especially careful with year of birth, since a student with 2 years or more in advance (or late) is
-						likely to be unique in a given school.
+						 We can think about that one student in scientific section who is studying Greek...
+ 						 Or be especially careful with year of birth, since a student with 2 years or more in advance (or late) is
+ 					 	 likely to be unique in a given school.
 					</aside>
 				</section>
 			</section>
@@ -354,48 +376,42 @@
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
 					<p> A cautionary tale </p>
 					<aside class="notes">
+						asthmatic patients classified as low risk in a postoperative context
 						interpretability is useful for a lot of things outside ethics: debugging, feedback from domain experts, etc
-						From an ethical standpoint, it ensures that we can check that no decision has been made on discriminatory grounds
+						From an ethical standpoint, it ensures that we can check that no decision has been made on discriminatory grounds + GDPR
 						For sensitive applications, like medecine, it's a sanity check.
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<p class="fragment"><strong> Before building a model:</strong> visualisation(PCA, t-SNE), exploratory analysis (clustering)</p>
-					<p class="fragment"><strong> While building a model:</strong> sparsity, rule-based, prototype-based </p>
-					<p class="fragment"><strong> After building a model:</strong> sensitivity analysis, surrogate models </p>
+					<p><strong> Before building a model:</strong> <br>
+						visualisation (PCA, t-SNE),<br>
+						exploratory analysis (clustering)</p>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
+					<p><strong> While building a model:</strong> <br>sparsity, rule-based, <br>prototype-based </p>
+				</section>
+				<section data-background-image='background.png' data-background-size='contain'>
+					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
+					<p><strong> After building a model:</strong> <br> surrogate models, <br>sensitivity analysis </p>
 					<aside class="notes">
+						sensitivity analysis -> first-order limited expansions
 						surrogate model -> modèle de substitution
 					</aside>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<p>Have you been introduced to GDPR?</p>
-					<p class="fragment">Coming May 2018</p>
-					<aside class="notes">
-						 General Data Protection Regulation, starting may 2018: the right to an explanation
-					</aside>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
 					<span style="width: 50%">
-					 <img src="lime.png" alt="lime" style="width: 30%">
+					 <img src="img/lime.png" alt="lime" style="width: 30%">
 				 </span>
 				 <span style="width: 50%">
-						<img src="eli5.png" alt="ELI5" style="width: 40%">
+						<img src="img/eli5.png" alt="ELI5" style="width: 40%">
  				 </span>
 					<aside class="notes">
 						A few existing algortihms for explaining models a posteriori
 						 Locally Interpretable Model-Agnostic Explaination
 						 Explain Like I'm 5
-					</aside>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Also, from a security standpoint: <br> Adversarial attacks on deep learning</h3>
-					<iframe width="854" height="480" src="https://www.youtube.com/embed/XaQu7kkQBPc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-					<aside class="notes">
-						I will not say much about this because it is not my domain of expertise, but it is definitely a thing,
-						and it should be addressed for sensitive applications.
 					</aside>
 				</section>
 			</section>
@@ -405,7 +421,7 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
 					<p class="fragment"> The less data you have, the less accurate you are. </p>
-					<span class="fragment"><img src="minoritySampling.png" alt="" style="width: 60%;"> </span>
+					<span class="fragment"><img src="img/minoritySampling.png" alt="" style="width: 60%;"> </span>
 					<aside class="notes">
 						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
 						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
@@ -417,16 +433,10 @@
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Oh, you have minority classes...?</h3>
 					<p class="fragment" data-fragment-index="2"> Minority subconcepts are considered as noise. </p>
-					<span class="fragment" data-fragment-index="1"><img class="embedded" src="minorityMajority.png" alt="" style="width: 80%;"> </span>
+					<span class="fragment" data-fragment-index="1"><img class="embedded" src="img/minorityMajority.png" alt="" style="width: 80%;"> </span>
 					<aside class="notes">
 						In cities: large high school -> more academic success
 						In the country:  small high school -> more academic success
-
-						Unbalanced classes and sub-concepts are a known pain for ML practitioners.
-						A classifier that performs no better than a coin toss when assessing minorities while accurately sorting members
-						of the majority group should be considered blatantly unfair even if its overall prediction accuracy is extremely high.
-						 Just consider a college that tosses a coin on minority applicants regardless of their qualifications,
-						 while expending diligence to others!
 					</aside>
 				</section>
 			</section>
@@ -434,32 +444,33 @@
 			<!-- Algorithms and the sketchy scientific method -> great results or a clever way to overfit? -->
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>How to overfit with a clean conscience?</h3>
-					<p>We have learned a pretty classifier, let's evaluate how well it does. </p>
+					<h3>Let's evaluate our classifier!</h3>
 				</section>
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>How to overfit with a clean conscience?</h3>
-					<p>Of course we evaluate on a separate dataset.<span class="fragment"> But </span></p>
 					<ul>
-						<li class="fragment">We fitted our preprocessing step on the whole data.</li>
-						<li class="fragment">We chose which algorithm to use based on performance on the hold-out data. </li>
-						<li class="fragment">We use accuracy as a measure of performance even though we have minority classes. </li>
+						<li class="fragment"> Evaluate on a separate dataset <img class="embedded aligned" src="img/check.png" alt="" style="height: .8em;"></li>
+						<li class="fragment"> Fit preprocessing on a separate dataset <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"> </li>
+						<li class="fragment"> Select the best algorithm on different data <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"></li>
+						<li class="fragment"> Use appropriate performance metrics <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"></li>
 					</ul>
 					<aside class="notes">
 						Of course, we know that presenting our results on the training set is "cheating", so we evaluate on a separate
 						test set. On which we evaluated all of our algorithms / hyper-parameters choices beforehand. Uh.
-						For more clever way to overfit, see this article by John Langford
+						Fitted our preprocessing step on the whole data.
+						Chose which algorithm to use based on performance on the hold-out data.
+						Use accuracy as a measure of performance even though we have minority classes.
 					</aside>
 				</section>
 
 				<section data-background-image='background.png' data-background-size='contain'>
 					<h3>Biases are not only in the data</h3>
-					<p>Let's talk about cognitive bias. </p>
 					<ul>
 						<li class="fragment">Apophenia</li>
 						<li class="fragment">Illusory causation</li>
 						<li class="fragment">Confirmation bias </li>
 					</ul>
+					<img class="fragment current-visible embedded aligned" src="img/cloud.jpg" alt="" style="height: 15%;">
 					<aside class="notes">
 						Data scientists are human before being scientists, and doing rigorous science is hard (see the p-value crisis).
 						Apophenia -> tendency to see patterns in noise
@@ -470,7 +481,7 @@
 			<!-- The dark side of feedback loops -->
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>The dark side of feedback loops</h3>
+					<h3>Let's deploy our app in production!</h3>
 					<p class="fragment">2015-17 drop-out rates in STEM: <span class="red"> 13%</span><span class="blue"> 9%</span> 10%</p>
 					<p class="fragment">2015-17 gender ratio: <span class="red"> 25%</span><span class="blue"> 75%</span></p>
 					<p class="fragment"><strong>Objective: minimize drop-out rate</strong></p>
@@ -485,7 +496,12 @@
 						So proportionally more girls drop out than boys
 						Next year data:
 
-
+						+ Drop-out can be measured in different ways, and is only a proxy to our true objective.
+					</aside>
+				</section><section data-background-image='background.png' data-background-size='contain'>
+					<h3>Let's deploy our app in production!</h3>
+					<p>  Beware of feedback loops! </p>
+					<aside class="notes">
 						Works for credit scoring and higher mortage rates
 						Filter-bubbles on Facebook
 					</aside>
@@ -495,21 +511,15 @@
 			<!-- Make it scale ! -->
 			<section>
 				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Make it scale !</h3>
-					<p> So okay, our app is not perfect, but it still might be useful. </p>
-					<p class="fragment"> What if it would be used as the official software for all French students? </p>
+					<h3>Make it scale!</h3>
+					<p  class="fragment"> What if our algorithm is used to match all students with their "chosen" major, country-wide? </p>
 					<aside class="notes">
+						Ow, we just got a HUGE opportunity for our start-up!
 						No opt out, no laugh it out if the results are not what you expect.
-						Even with a 99.9% accuracy, out of 700 000 students, that means 700 students with a wrong affectation.
+						Even with a 99% accuracy, out of 700 000 students, that means 7000 students with a wrong affectation.
 						These students are more likely to be from minorities, because of the bias towards majority groups in learning.
+
 					</aside>
-				</section>
-				<section data-background-image='background.png' data-background-size='contain'>
-					<h3>Make it scale !</h3>
-					<blockquote>
-						&ldquo;So to sum up, these are the three elements of a WMD: Opacity, Scale, Damage.&rdquo;
-					</blockquote>
-					<p>Cathy O'Neil,  <i>Weapons of Math Destruction</i></p>
 				</section>
 			</section>
 
@@ -526,7 +536,7 @@
 				<section>
 					<p class="large"> Thanks for your attention! </p>
 					<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
-					<p><img src="logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
+					<p><img src="img/logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
 					<p> <small> We're hiring ! </small></p>
 					<p class="references"> References and more ➡</p>
 				</section>
