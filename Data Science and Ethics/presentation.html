@@ -45,6 +45,22 @@
 			font-size: 60%;
 		  bottom: -50%;
 		}
+		#left {
+		  left:-8.33%;
+		  text-align: left;
+		  float: left;
+		  width:40%;
+		  z-index:-10;
+		}
+
+	#right {
+		  left:31.25%;
+		  top: 75px;
+		  float: right;
+		  text-align: left;
+		  z-index:-10;
+		  width:60%;
+		}
 	</style>
 </head>
 <body>
@@ -235,127 +251,119 @@
 			<!-- What does it mean, for an algorithm to be fair? -->
 			<section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
-					<p> Let's say we want to score students on a scale of academic ability. </p>
-					<div  class="fragment">
-						<table>
-							<thead>
-								<tr>
-									<th></th>
-									<th>Passed</th>
-									<th>Failed</th>
-									<th>Total</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>White</th>
-									<td>P<sub>w</sub></td>
-									<td>F<sub>w</sub></td>
-									<td>W</td>
-								</tr>
-								<tr>
-									<th>Black</th>
-									<td>P<sub>b</sub></td>
-									<td>F<sub>b</sub></td>
-									<td>B</td>
-								</tr>
-							</tbody>
-						</table>
-						<p><strong>Calibration: </strong> P(F<sub>w</sub> | score = X) = P(F<sub>b</sub> | score = X)</p>
-				</div>
+					<h3> Let's create a score to predict academic success! </h3>
 
 					<aside class="notes">
-						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
+						We want to offer an "academic" score to universities, which would be more predictive than mark averages,
 						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
 						high-schooler or was already working as hard as s.he could).
-						There exist several definitions for algorithmic fairness.
-						Initial example is recidive risk as predicted by the COMPAS score for blacks and whites.
-						And it is a mathematical theorem that not more than one can be fullfilled at the same time (except with a
-						perfect predictor)
+					</aside>
+					</section>
+
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<div id="left">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Calibration: </strong> <br>
+						P(<span class="blue">Y = grad| S = s<sub>ref</sub>, G = b</span>)  <br>
+						&emsp;  = P(<span class="red">Y = grad | S = s<sub>ref</sub>, G = r</span>)
+					</div>
+					<aside class="notes">
+						Calibration ensures that the score is actually an indicator of what we are trying to predict.
+						The algorithm should be calibrated on every sub-group as well as globally.
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
-					<p> Let's say we want to score students on a scale of academic ability. </p>
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th>Passed</th>
-								<th>Failed</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>White</th>
-								<td>P<sub>w</sub></td>
-								<td>F<sub>w</sub></td>
-								<td>W</td>
-							</tr>
-							<tr>
-								<th>Black</th>
-								<td>P<sub>b</sub></td>
-								<td>F<sub>b</sub></td>
-								<td>B</td>
-							</tr>
-						</tbody>
-					</table>
-					<p><strong>Negative class balance: </strong> E(score(P<sub>w</sub>)) = E(score(P<sub>b</sub>)) </p>
-
+					<div id="left">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Predictive parity: </strong> <br>
+						P(<span class="blue">Y = grad | S > s<sub>ref</sub>, G = b</span>)  <br>
+						&emsp;  = P(<span class="red">Y = grad | S > s<sub>ref</sub>, G = r</span>)
+					</div>
 					<aside class="notes">
-						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
-						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
-						high-schooler or was already working as hard as s.he could).
-						There exist several definitions for algorithmic fairness.
-						Initial example is recidive risk as predicted by the COMPAS score for blacks and whites.
-						And it is a mathematical theorem that not more than one can be fullfilled at the same time (except with a
-						perfect predictor)
+					Also, Positive Predictive Value (predictive power) should be the same on all groups.
+					Because of the conditional distribution of the score on the subgroups, it differs from calibration.
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
-					<p> Let's say we want to score students on a scale of academic ability. </p>
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th>Passed</th>
-								<th>Failed</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>White</th>
-								<td>P<sub>w</sub></td>
-								<td>F<sub>w</sub></td>
-								<td>W</td>
-							</tr>
-							<tr>
-								<th>Black</th>
-								<td>P<sub>b</sub></td>
-								<td>F<sub>b</sub></td>
-								<td>B</td>
-							</tr>
-						</tbody>
-					</table>
-					<p><strong>Positive class balance: </strong> E(score(F<sub>w</sub>)) = E(score(F<sub>b</sub>)) </p>
-
+					<div id="left">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Error rate balance: </strong> <br>
+						P(<span class="blue">S > s<sub>ref</sub> | Y = fail, G = b</span>)  <br>
+						&emsp; = P(<span class="red">S > s<sub>ref</sub> | Y = fail, G = r</span>)
+						<br>
+						<span class="fragment">
+							E(<span class="blue">S | Y = fail, G = b</span>) <br>
+							&emsp; = E(<span class="red">S | Y = fail, G = r</span>)
+						</span>
+					</div>
 					<aside class="notes">
-						We want to offer a "academic" score to universities, which would be more predictive than mark averages,
-						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
-						high-schooler or was already working as hard as s.he could).
-						There exist several definitions for algorithmic fairness.
-						Initial example is recidive risk as predicted by the COMPAS score for blacks and whites.
-						And it is a mathematical theorem that not more than one can be fullfilled at the same time (except with a
-						perfect predictor)
+					S > s_ref -> false positive;
+					False positive rates should be equal for all subgroups.
+					Average score of all graduating student should be the same for all subgroups.
 					</aside>
 				</section>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<div id="left">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Error rate balance: </strong> <br>
+						P(<span class="blue">S <= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
+						&emsp; = P(<span class="red">S <= s<sub>ref</sub> | Y = grad, G = r</span>)
+						<br>
+						<span class="fragment">
+							E(<span class="blue">S | Y = grad, G = b</span>) <br>
+							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
+						</span>
+					</div>
+					<aside class="notes">
+					S <= s_ref -> false negative;
+					False negative rates should be equal for all subgroups.
+					Average score of all non-graduating student should be the same for all subgroups.
+					</aside>
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<div id="left">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Equal acceptance rate: </strong> <br>
+						P(<span class="blue">S > s<sub>ref</sub> | G = b</span>)  <br>
+						&emsp; = P(<span class="red">S > s<sub>ref</sub> | G = r</span>)
+					</div>
+					<aside class="notes">
+					The proportion of admitted students in each subgroup should be the same.
+					</aside>
+				</section>
+
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
-					<p> It is proven that you cannot have all three conditions to be true simultaneously. </p>
+					<p> All those criterion seem fair and reasonable.</p>
+					<p class="fragment"> Bad news, you cannot have all of them ! </p>
+
+					<div class="footer">
+						<p class="fragment">
+							<i> Inherent Trade-Offs in the Fair Determination of Risk Scores  </i>, Kleinberg et al. <br>
+							<i> Fair prediction with disparate impact: A study of bias in recidivism prediction instruments </i>,<br> A. Chouldechova <br>
+							<i> 21 fairness definitions and their politics</i>, A. Narayanan
+						</p>
+					</div>
+
+					<aside class="notes">
+						Arvind Narayanan argues that any 3 fairness goal for a binary classifier might not be equalized across groups,
+						if prevalence is different.
+						If you add individual fairness requirement, you cannot even fulfill two equalized metrics.
 				</section>
 			</section>
 
@@ -375,34 +383,43 @@
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<p><strong> Before building a model:</strong> <br>
-						visualisation (PCA, t-SNE),<br>
-						exploratory analysis (clustering)</p>
+					<div style="width: 50%; float: left;">
+						<p><strong> Before building a model:</strong> <br>
+							visualisation (PCA, t-SNE),<br>
+							exploratory analysis (clustering)</p>
+					</div>
+					<div style="width: 50%; float: right; ">
+						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+					</div>
+
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<p><strong> While building a model:</strong> <br>sparsity, rule-based, <br>prototype-based </p>
-				</section>
-				<section data-background-image='img/background.png' data-background-size='contain'>
-					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<p><strong> After building a model:</strong> <br> surrogate models, <br>sensitivity analysis </p>
+					<div style="width: 50%; float: left;">
+						<p><strong> While building a model:</strong> <br>sparsity, rule-based, <br>prototype-based </p>
+					</div>
+					<div style="width: 50%; float: right; ">
+						<img class="no-border" src="img/eli5.png" alt="" style="width: 80%">
+					</div>
 					<aside class="notes">
-						sensitivity analysis -> first-order limited expansions
-						surrogate model -> modèle de substitution
+						example : bag of word + logistic regression
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Who needs interpretability <br> when you can have deep learning?</h3>
-					<span style="width: 50%">
-					 <img src="img/lime.png" alt="lime" style="width: 30%">
-				 </span>
-				 <span style="width: 50%">
-						<img src="img/eli5.png" alt="ELI5" style="width: 40%">
- 				 </span>
+					<div style="width: 50%; float: left;">
+						<p><strong> After building a model:</strong> <br> surrogate models, <br>sensitivity analysis </p>
+					</div>
+					<div style="width: 50%; float: right; ">
+						<img class="no-border" src="img/lime.png" alt="" style="width: 80%">
+					</div>
+					<div class="footer">
+							<i> “Why Should I Trust You?” Explaining the Predictions of Any Classifier </i>, Ribeiro et al.
+					</div>
 					<aside class="notes">
-						A few existing algortihms for explaining models a posteriori
-						 Locally Interpretable Model-Agnostic Explaination
-						 Explain Like I'm 5
+						Locally Interpretable Model-Agnostic Explaination
+						sensitivity analysis -> first-order limited expansions
+						surrogate model -> modèle de substitution
 					</aside>
 				</section>
 			</section>
@@ -456,12 +473,21 @@
 
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Biases are not only in the data</h3>
+
+					<div style="width: 50%; float: left;">
 					<ul>
-						<li class="fragment">Apophenia</li>
-						<li class="fragment">Illusory causation</li>
-						<li class="fragment">Confirmation bias </li>
+						<li class="fragment" data-fragment-index="1" >Apophenia</li>
+						<li class="fragment" data-fragment-index="2">Illusory causation</li>
+						<li class="fragment" data-fragment-index="3">Confirmation bias </li>
 					</ul>
-					<img class="fragment current-visible embedded aligned" src="img/cloud.jpg" alt="" style="height: 15%;">
+
+					</div>
+					<div class="fragment current-visible embedded aligned" data-fragment-index="1" style="width: 50%; float: right; ">
+						<img class="no-border" src="img/cloud.jpg" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
+					</div>
+					<div class="fragment embedded aligned" data-fragment-index="2" style="width: 50%; float: right; ">
+						<img class="no-border" src="img/placeholder.png" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
+					</div>
 					<aside class="notes">
 						Data scientists are human before being scientists, and doing rigorous science is hard (see the p-value crisis).
 						Apophenia -> tendency to see patterns in noise
@@ -504,9 +530,13 @@
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Make it scale!</h3>
 					<p  class="fragment"> What if our algorithm is used to match all students with their "chosen" major, country-wide? </p>
+
+					<div class="fragment footer">
+							<i> Weapons of Math Destruction </i>, Cathy O'Neil
+					</div>
 					<aside class="notes">
 						Ow, we just got a HUGE opportunity for our start-up!
-						No opt out, no laugh it out if the results are not what you expect.
+						Ow, we just created what Cathy O'Neil calls a Weapon of math destruction
 						Even with a 99% accuracy, out of 700 000 students, that means 7000 students with a wrong affectation.
 						These students are more likely to be from minorities, because of the bias towards majority groups in learning.
 
@@ -529,74 +559,9 @@
 					<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
 					<p><img src="img/logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
 					<p> <small> We're hiring ! </small></p>
-					<p class="references"> References and more ➡</p>
 				</section>
 			</section>
 
-			<section>
-				<section>
-					<h3>References </h3>
-				</section>
-				<section>
-						<h3> Visuals and graphics </h3>
-						<p> Icon from the postbac.io logo made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a>; <br>
-							font by <a href="https://www.behance.net/aktab">aktab studio</a></p>
-						<p> Many thanks to <a href="https://twitter.com/ewjoachim">@ewjoachim</a> for the logo and the graphs. </p>
-				</section>
-				<section>
-					<h3> About data biases </h3>
-					<p><a href="https://medium.com/@angebassa/data-alone-isnt-ground-truth-9e733079dfd4">Data alone isn't ground truth</a></p>
-					<p><a href="https://gist.github.com/rspeer/ef750e7e407e04894cb3b78a82d66aed">How to make a racist AI with Word Embeddings</a></p>
-					<p><a href="https://blog.conceptnet.io/2017/08/12/you-werent-supposed-to-actually-implement-it-google/">A follow-up post on a real life application...</a></p>
-					<p><a href="https://arxiv.org/abs/1607.06520">Debiasing Word Embeddings</a></p>
-				</section>
-				<section>
-					<h3> Data security and data anonymization </h3>
-					<p><a href="https://medium.com/@andrew.therriault/data-security-for-data-scientists-2f1fcd8c261b">Data security tips for data scientists</p>
-					<p><a href="https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/index.html">Data anonymization best practices</a></p>
-					<p><a href="https://www.youtube.com/watch?v=68qf3TWCy8I">A talk about data anonymization in natural text</a></p>
-				</section>
-				<section>
-					<h3>Algorithmic fairness</h3>
-					<p><a href="https://speak-statistics-to-power.github.io/fairness/">Mathematical definitions of fairness</p>
-					<p><a href="https://arxiv.org/pdf/1609.05807.pdf">Inherent Trade-Offs in the Fair Determination of Risk Scores</a></p>
-					<p><a href="https://hackernoon.com/fair-and-balanced-thoughts-on-bias-in-probabilistic-modeling-2ffdbd8a880f">A blog article on fairness trade-offs</a></p>
-					<p><a href="http://blog.fastforwardlabs.com/2017/03/09/fairml-auditing-black-box-predictive-models.html">FairML,
-						a tool for auditing black-box models</a></p>
-				</section>
-				<section>
-					<h3> Model interpretability </h3>
-					<p><a href="https://www.youtube.com/watch?v=B3PtcF-6Dtc&list=PLGVZCDnMOq0oe0eD-edj_2CuBIZ938bWT&index=9">A great talk about why we need interpretable models</p>
-					<p><a href="https://arxiv.org/abs/1702.08608">A paper about how to evaluate rigorously the interpretability of a model</a></p>
-					<p><a href="http://people.csail.mit.edu/beenkim/papers/BeenK_FinaleDV_ICML2017_tutorial.pdf">A tutorial about model interpretability</a></p>
-					<p> Python libraries: <a href="https://github.com/marcotcr/lime">LIME</a> (<a href="https://arxiv.org/abs/1602.04938">paper</a>)
-					 and <a href="http://eli5.readthedocs.io/en/latest/overview.html">ELI5</a></p>
-				 <p><a href="https://arxiv.org/pdf/1606.03490.pdf">A critical discussion of model interpretability</a></p>
-					<p><a href="https://christophm.github.io/interpretable-ml-book/">Further reading on interpretability</a></p>
-				</section>
-				<section>
-					<h3>Cognitive biases and overfitting</h3>
-			 		<p><a href="http://hunch.net/?p=22">11 clever ways to overfit</a></p>
-					<p><a href="https://www.kdnuggets.com/2016/12/4-cognitive-bias-key-points-data-scientists-need-know.html">4 cognitive biases for data scientists</a></p>
-				</section>
-				<section>
-					<h3> Ethical issues in applications </h3>
-					<p><a href="https://weaponsofmathdestructionbook.com/"><i> Weapons of Math Destruction</i></a>, Cathy O'Neil:
-						a book about unethical and dangerous applications of Machine Learning</p>
-					<p><a href="http://www.orlandotorres.org/predictive-policing-sf.html">A quick blog post illustrating some ideas
-							of the WMD book</a></p>
-					<p><a href="http://www.fast.ai/2017/11/02/ethics/">About ethical responsibility of data scientists</a></p>
-					<p><a href="https://research.googleblog.com/2016/10/equality-of-opportunity-in-machine.html">Correcting bias a posteriori in supervised learning</a></p>
-				</section>
-				<section>
-					<h3>Further reading</h3>
-					<p><a href="http://smerity.com/articles/2016/algorithms_can_be_prejudiced.html">A good summary of most typical issues</a></p>
-					<p><a href="https://medium.com/@mrtz/how-big-data-is-unfair-9aa544d739de">A more thorough article</a></p>
-					<p><a href="https://www.youtube.com/watch?v=qY8gwKASa38&list=PLGVZCDnMOq0oe0eD-edj_2CuBIZ938bWT&index=30"><i>How computers can be assholes</i>,
-						 great talk from PyData</a></p>
-					<p><a href="https://medium.com/@hannawallach/big-data-machine-learning-and-the-social-sciences-927a8e20460d">Big data from the point of view of social sciences</a></p>
-				</section>
-			</section>
 		</div>
 	</div>
 				<script src="reveal.js/js/reveal.js"></script>
