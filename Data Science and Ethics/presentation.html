@@ -172,22 +172,23 @@
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<p> It also learns analogies: king - man + woman ~ queen </p>
+					<img class="no-border" src="img/word_embedding_2.png" alt="" style="width: 80%">
 					<aside class="notes">
-						Word embeddings encode words as numerical vector, while preserving semantics.
-						So "nurse" and "doctor" would be closer than "nurse" and "math teacher".
+						They also learn analogies between words.
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
 					<p> Semantics are learned from a corpus of texts... </p>
 					<p class="fragment">... which are often biased. </p>
-					<aside class="notes">
-						Word embeddings also learn that nurse is the female equivalent of physician.
-					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
+					<img class="no-border" src="img/word_embedding_3.png" alt="" style="width: 80%">
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain'>
+					<h3> Word embeddings for the win </h3>
+					<img class="no-border" src="img/word_embedding_4.png" alt="" style="width: 80%">
 					<p> computer programmer - man + woman ~ <span class="fragment"> homemaker</span> </p>
 					<div class="footer">
 						<p class="fragment">
@@ -236,7 +237,7 @@
 					<h3 style="color:black;">And now, a message from our friends<br> from the security team </h3>
 					<p  style="color:black; text-shadow:none;"> Don't hoard data! </p>
 					<p  style="color:black; text-shadow:none;"> Work on anonymized data if you can! </p>
-
+					<img class="no-border" src="img/no-dragon.png" alt="" style="width: 50%">
 					<aside class="notes">
 						 The only data that cannot get stolen is data you don't have
 						 Delete what is no longer needed
@@ -263,7 +264,7 @@
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<div id="left">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+						<img class="no-border" src="img/calibration.png" alt="" style="width: 80%">
 					</div>
 					<div id="right">
 						<strong>Calibration: </strong> <br>
@@ -278,7 +279,7 @@
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<div id="left">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+						<img class="no-border" src="img/ppv.png" alt="" style="width: 80%">
 					</div>
 					<div id="right">
 						<strong>Predictive parity: </strong> <br>
@@ -293,7 +294,29 @@
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<div id="left">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+						<img class="no-border" src="img/fnr.png" alt="" style="width: 80%">
+					</div>
+					<div id="right">
+						<strong>Error rate balance: </strong> <br>
+						P(<span class="blue">S <= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
+						&emsp; = P(<span class="red">S <= s<sub>ref</sub> | Y = grad, G = r</span>)
+						<br>
+						<span class="fragment">
+							E(<span class="blue">S | Y = grad, G = b</span>) <br>
+							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
+						</span>
+					</div>
+					<aside class="notes">
+					S <= s_ref -> false negative;
+					FNR = FN / (FN + TP)
+					False negative rates should be equal for all subgroups.
+					Average score of all non-graduating student should be the same for all subgroups.
+					</aside>
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<div id="left">
+						<img class="no-border" src="img/fpr.png" alt="" style="width: 80%">
 					</div>
 					<div id="right">
 						<strong>Error rate balance: </strong> <br>
@@ -314,28 +337,7 @@
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3>What does it mean, for an algorithm to be fair?</h3>
 					<div id="left">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
-					</div>
-					<div id="right">
-						<strong>Error rate balance: </strong> <br>
-						P(<span class="blue">S <= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
-						&emsp; = P(<span class="red">S <= s<sub>ref</sub> | Y = grad, G = r</span>)
-						<br>
-						<span class="fragment">
-							E(<span class="blue">S | Y = grad, G = b</span>) <br>
-							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
-						</span>
-					</div>
-					<aside class="notes">
-					S <= s_ref -> false negative;
-					False negative rates should be equal for all subgroups.
-					Average score of all non-graduating student should be the same for all subgroups.
-					</aside>
-				</section>
-				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
-					<div id="left">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+						<img class="no-border" src="img/parity.png" alt="" style="width: 80%">
 					</div>
 					<div id="right">
 						<strong>Equal acceptance rate: </strong> <br>
@@ -389,7 +391,7 @@
 							exploratory analysis (clustering)</p>
 					</div>
 					<div style="width: 50%; float: right; ">
-						<img class="no-border" src="img/placeholder.png" alt="" style="width: 80%">
+						<img class="no-border" src="img/PCA.png" alt="" style="width: 80%">
 					</div>
 
 				</section>
@@ -486,7 +488,10 @@
 						<img class="no-border" src="img/cloud.jpg" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
 					</div>
 					<div class="fragment embedded aligned" data-fragment-index="2" style="width: 50%; float: right; ">
-						<img class="no-border" src="img/placeholder.png" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
+						<img class="no-border" src="img/spurrious_correlation.png" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
+					</div>
+					<div class="fragment embedded aligned" data-fragment-index="3" style="width: 50%; float: right; ">
+						<img class="no-border" src="img/confirmation_bias.png" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
 					</div>
 					<aside class="notes">
 						Data scientists are human before being scientists, and doing rigorous science is hard (see the p-value crisis).
