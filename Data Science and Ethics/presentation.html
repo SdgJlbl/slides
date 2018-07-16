@@ -172,7 +172,7 @@
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<img class="no-border" src="img/word_embedding_2.png" alt="" style="width: 80%">
+					<img class="no-border" src="img/word_embedding_2.png" alt="" style="width: 60%">
 					<aside class="notes">
 						They also learn analogies between words.
 					</aside>
@@ -184,13 +184,12 @@
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<img class="no-border" src="img/word_embedding_3.png" alt="" style="width: 80%">
+					<img class="no-border" src="img/word_embedding_3.png" alt="" style="width: 60%">
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
-					<img class="no-border" src="img/word_embedding_4.png" alt="" style="width: 80%">
-					<p> computer programmer - man + woman ~ <span class="fragment"> homemaker</span> </p>
-					<div class="footer">
+					<img class="no-border" src="img/word_embedding_4.png" alt="" style="width: 60%">
+					<div class="footer" style="bottom: -10%;">
 						<p class="fragment">
 							<i> Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings </i>,
 							Bolukbasi et al.
@@ -208,7 +207,7 @@
 
 					<div class="footer">
 						<p class="fragment">
-							<i> Semantics derived automatically from language corpora contain human-like biases </i>, Caliskan et al. <br>
+							<i> Semantics derived automatically from language corpora contain human-like biases </i>,<br> Caliskan et al. <br>
 							See also Rob Speer's <a href="https://gist.github.com/rspeer/ef750e7e407e04894cb3b78a82d66aed">gist</a> "How to make a racist AI without really trying"
 						</p>
           </div>
@@ -235,9 +234,13 @@
 			<section>
 				<section data-background-color='white'>
 					<h3 style="color:black;">And now, a message from our friends<br> from the security team </h3>
-					<p  style="color:black; text-shadow:none;"> Don't hoard data! </p>
-					<p  style="color:black; text-shadow:none;"> Work on anonymized data if you can! </p>
-					<img class="no-border" src="img/no-dragon.png" alt="" style="width: 50%">
+					<div style="width: 50%; float: left;">
+						<p  style="color:black; text-shadow:none;"> Don't hoard data! </p>
+						<p  style="color:black; text-shadow:none;"> Work on anonymized data if you can! </p>
+					</div>
+					<div style="width: 50%; float: right; ">
+						<img class="no-border" src="img/no-dragon.png" alt="" style="width: 40%">
+					</div>
 					<aside class="notes">
 						 The only data that cannot get stolen is data you don't have
 						 Delete what is no longer needed
@@ -393,6 +396,9 @@
 					<div style="width: 50%; float: right; ">
 						<img class="no-border" src="img/PCA.png" alt="" style="width: 80%">
 					</div>
+					<aside class="notes">
+						stochastic neighbour embedding
+					</aside>
 
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
@@ -402,6 +408,7 @@
 					</div>
 					<div style="width: 50%; float: right; ">
 						<img class="no-border" src="img/eli5.png" alt="" style="width: 80%">
+						<p style="font-size: 60%;">  From ELI5 documentation </p>
 					</div>
 					<aside class="notes">
 						example : bag of word + logistic regression
@@ -415,7 +422,7 @@
 					<div style="width: 50%; float: right; ">
 						<img class="no-border" src="img/lime.png" alt="" style="width: 80%">
 					</div>
-					<div class="footer">
+					<div class="footer" style="bottom: -10%">
 							<i> “Why Should I Trust You?” Explaining the Predictions of Any Classifier </i>, Ribeiro et al.
 					</div>
 					<aside class="notes">
@@ -487,7 +494,7 @@
 					<div class="fragment current-visible embedded aligned" data-fragment-index="1" style="width: 50%; float: right; ">
 						<img class="no-border" src="img/cloud.jpg" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
 					</div>
-					<div class="fragment embedded aligned" data-fragment-index="2" style="width: 50%; float: right; ">
+					<div class="fragment current-visible embedded aligned" data-fragment-index="2" style="width: 50%; float: right; ">
 						<img class="no-border" src="img/spurrious_correlation.png" alt="" style="height: 50%; position:absolute;bottom:0;right:8em;">
 					</div>
 					<div class="fragment embedded aligned" data-fragment-index="3" style="width: 50%; float: right; ">
@@ -511,7 +518,7 @@
 					<p class="fragment">2018 drop-out rates in STEM: <span class="red"> 15%</span><span class="blue"> 9%</span> 9.9%</p>
 					<aside class="notes">
 						ML models are put in production, and influence the world, and data collected in the future
-
+						Science Technology Engineering Mathematics
 						 Our model has learned that female students have a higher drop-out rate in STEM fields
 						So it only sends the most determined female students in those majors
 						An unbalanced gender ratio in maths make the atmosphere more toxic for the girls who are studying there
@@ -524,6 +531,8 @@
 					<h3>Let's deploy our app in production!</h3>
 					<p>  Beware of feedback loops! </p>
 					<aside class="notes">
+						+ Drop-out can be measured in different ways, and is only a proxy to our true objective.
+						
 						Works for credit scoring and higher mortage rates
 						Filter-bubbles on Facebook
 					</aside>
