@@ -132,18 +132,18 @@
 					<h3>Let's collect data! </h3>
 					<p  class="fragment"> Measuring academic perfomances </p>
 					<ul>
-						<li class="fragment">Let's use <span class="fragment strike">marks!</span> </li>
-						<li class="fragment">Let's use <span class="fragment strike">marks with a weight depending on the high school!</span> </li>
-						<li class="fragment">Let's use marks...?</li>
+						<li class="fragment">Let's use <span class="fragment strike">grades!</span> </li>
+						<li class="fragment">Let's use <span class="fragment strike">grades with a weight depending on the high school!</span> </li>
+						<li class="fragment">Let's use grades...?</li>
 					</ul>
 					<aside class="notes">
 						Ok, that's easy, let's pick up some explanatory variables, what could possibly go wrong?
 
 						Let's use marks!
 						But it's unfair because marks depend on high schools!
-						Ok, let's weight the marks depending on the high school level.
+						Ok, let's weight the grades depending on the high school level.
 						Well, now it's unfair toward good students in less priviledged districts...
-						Are marks even such a good indicator of what we want to measure?
+						Are grades even such a good indicator of what we want to measure?
 
 						Data collection is not a neutral process. It involves conscious and unconscious choices, which can be challenged.
 					</aside>
@@ -155,7 +155,7 @@
 
 					<div class="footer">
 						<p class="fragment">
-							<i> Equality of Opportunity in Supervised Learning </i>, Hardt et al.
+							<i>Equality of Opportunity in Supervised Learning</i>, Hardt et al.
 					  </p>
           </div>
 
@@ -229,23 +229,23 @@
 					<img class="no-border" src="img/word_embedding_4.png" alt="" style="width: 60%">
 					<div class="footer" style="bottom: -10%;">
 						<p class="fragment">
-							<i> Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings </i>,
-							Bolukbasi et al.
+							<i> Semantics derived automatically from language corpora contain human-like biases</i>,<br> Caliskan et al. <br>
 						</p>
 					</div>
 					<aside class="notes">
 						Word embeddings also learn that nurse is the female equivalent of physician.
+						Word Embedding Association Test (WEAT) (Implicit Association Test) Caliskan et al., University of Bath
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3> Word embeddings for the win </h3>
 					<img class="no-border" src="img/truc.png" alt="" style="width: 60%">
 					<div class="footer" style="bottom: -10%;">
-							<i> Semantics derived automatically from language corpora contain human-like biases </i>,<br> Caliskan et al. <br>
-							See also Rob Speer's <a href="https://gist.github.com/rspeer/ef750e7e407e04894cb3b78a82d66aed">gist</a> "How to make a racist AI without really trying"
+							<i> Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings</i>,
+							Bolukbasi et al.
+								See also Rob Speer's <a href="https://gist.github.com/rspeer/ef750e7e407e04894cb3b78a82d66aed">gist</a> "How to make a racist AI without really trying"
           </div>
 						<aside class="notes">
-							Word Embedding Association Test (WEAT) (Implicit Association Test) Caliskan et al., University of Bath
 							We can learn a linear transformation so that "nurse" is at the same distance from "man" to "woman"
 							Paper by Bolukbasi, Chang, Zou, Saligrama, Kalai, Boston University and Microsoft Research
 						</aside>
@@ -292,10 +292,14 @@
 					<div id="left">
 						<img class="no-border" src="img/calibration.png" alt="" style="width: 80%">
 					</div>
-					<div id="right">
+					<div id="right"  style="font-size: 80%;">
 						<strong>Calibration: </strong> <br>
 						P(<span class="blue">Y = grad| S = s<sub>ref</sub>, G = b</span>)  <br>
 						&emsp;  = P(<span class="red">Y = grad | S = s<sub>ref</sub>, G = r</span>)
+
+						<p style="font-size: 60%;"> For a same score,
+							you have the same probability of graduating
+							regardless of which subgroup you belong to.</p>
 					</div>
 					<aside class="notes">
 						Calibration ensures that the score is actually an indicator of what we are trying to predict.
@@ -307,10 +311,13 @@
 					<div id="left">
 						<img class="no-border" src="img/ppv.png" alt="" style="width: 80%">
 					</div>
-					<div id="right">
+					<div id="right" style="font-size: 80%;">
 						<strong>Predictive parity: </strong> <br>
 						P(<span class="blue">Y = grad | S &gt; s<sub>ref</sub>, G = b</span>)  <br>
 						&emsp;  = P(<span class="red">Y = grad | S &gt; s<sub>ref</sub>, G = r</span>)
+						<p style="font-size: 60%;"> For a score higher than the threshold,
+							you have the same probability of graduating
+							regardless of which subgroup you belong to.</p>
 					</div>
 					<aside class="notes">
 					Also, Positive Predictive Value (predictive power) should be the same on all groups.
@@ -322,15 +329,21 @@
 					<div id="left">
 						<img class="no-border" src="img/fnr.png" alt="" style="width: 80%">
 					</div>
-					<div id="right">
+					<div id="right"  style="font-size: 80%;">
 						<strong>Error rate balance: </strong> <br>
 						P(<span class="blue">S &lt;= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &lt;= s<sub>ref</sub> | Y = grad, G = r</span>)
 						<br>
-						<span class="fragment">
+						<p style="font-size: 60%;"> If you would have graduated,
+							you have the same probability of getting a too low score
+							regardless of which subgroup you belong to.</p>
+						<span class="fragment" data-fragment-index="2" >
 							E(<span class="blue">S | Y = grad, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
 						</span>
+						<p class="fragment" data-fragment-index="2" style="font-size: 60%;">
+							The average score of graduating students
+							is the same regardless of the subgroup.</p>
 					</div>
 					<aside class="notes">
 					S &lt;= s_ref -> false negative;
@@ -344,15 +357,21 @@
 					<div id="left">
 						<img class="no-border" src="img/fpr.png" alt="" style="width: 80%">
 					</div>
-					<div id="right">
+					<div id="right"  style="font-size: 80%;">
 						<strong>Error rate balance: </strong> <br>
 						P(<span class="blue">S &gt; s<sub>ref</sub> | Y = fail, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | Y = fail, G = r</span>)
+						<p style="font-size: 60%;"> If you would have failed,
+							you have the same probability of getting a too high score
+							regardless of which subgroup you belong to.</p>
 						<br>
-						<span class="fragment">
+						<span class="fragment" data-fragment-index="2">
 							E(<span class="blue">S | Y = fail, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = fail, G = r</span>)
 						</span>
+						<p class="fragment" data-fragment-index="2" style="font-size: 60%;">
+							The average score of failing students
+							is the same regardless of the subgroup. </p>
 					</div>
 					<aside class="notes">
 					S > s_ref -> false positive;
@@ -365,10 +384,13 @@
 					<div id="left">
 						<img class="no-border" src="img/parity.png" alt="" style="width: 80%">
 					</div>
-					<div id="right">
+					<div id="right" style="font-size: 80%;">
 						<strong>Equal acceptance rate: </strong> <br>
 						P(<span class="blue">S &gt; s<sub>ref</sub> | G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | G = r</span>)
+						<p style="font-size: 60%;">
+							The probability of having a score higher than the threshold is the same
+							regardless of which subgroup you belong to. </p>
 					</div>
 					<aside class="notes">
 					The proportion of admitted students in each subgroup should be the same.
@@ -564,7 +586,7 @@
 					<p  class="fragment"> What if our algorithm is used to match all students with their "chosen" major, nation-wide? </p>
 
 					<div class="fragment footer">
-							<i> Weapons of Math Destruction </i>, Cathy O'Neil
+							<i> Weapons of Math Destruction</i>, Cathy O'Neil
 					</div>
 					<aside class="notes">
 						Ow, we just got a HUGE opportunity for our start-up!
@@ -591,6 +613,10 @@
 					<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
 					<p><img src="img/logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
 					<p> <small> We're hiring ! </small></p>
+				</section>
+				<section>
+					<h3>References</h3>
+					
 				</section>
 			</section>
 
