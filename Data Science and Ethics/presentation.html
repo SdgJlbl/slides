@@ -360,7 +360,6 @@
 						<p style="font-size: 60%;"> If you would have failed,
 							you have the same probability of getting a too high score
 							regardless of which subgroup you belong to.</p>
-						<br>
 						<span class="fragment" data-fragment-index="2">
 							E(<span class="blue">S | Y = fail, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = fail, G = r</span>)
@@ -450,6 +449,7 @@
 						<img class="no-border" src="img/eli5.png" alt="" style="width: 80%">
 						<p style="font-size: 60%;">  From ELI5 documentation </p>
 					</div>
+					<img class="no-border fragment" src="img/eli5.png" alt="" style="width: 80%; position: absolute; margin-left: -40%">
 					<aside class="notes">
 						example : bag of word + logistic regression
 					</aside>
@@ -545,13 +545,9 @@
 
 			<!-- The dark side of feedback loops -->
 			<section>
-				<section data-background-image='img/background.png' data-background-size='contain'>
-					<h3>Let's deploy our app in production!</h3>
-					<p class="fragment">2015-17 drop-out rates in STEM: <span class="red"> 13%</span><span class="blue"> 9%</span> 10%</p>
-					<p class="fragment">2015-17 gender ratio: <span class="red"> 25%</span><span class="blue"> 75%</span></p>
-					<p class="fragment"><strong>Objective: minimize drop-out rate</strong></p>
-					<p class="fragment">2018 gender ratio: <span class="red"> 15%</span><span class="blue"> 85%</span></p>
-					<p class="fragment">2018 drop-out rates in STEM: <span class="red"> 15%</span><span class="blue"> 9%</span> 9.9%</p>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3> Let's deploy our app in production! </h3>
+					<img class="no-border" src="img/feedback1.png" alt="" style="width: 80%">
 					<aside class="notes">
 						ML models are put in production, and influence the world, and data collected in the future
 						Science Technology Engineering Mathematics
@@ -559,11 +555,33 @@
 						So it only sends the most determined female students in those majors
 						An unbalanced gender ratio in maths make the atmosphere more toxic for the girls who are studying there
 						So proportionally more girls drop out than boys
-						Next year data:
-
-						+ Drop-out can be measured in different ways, and is only a proxy to our true objective.
 					</aside>
-				</section><section data-background-image='img/background.png' data-background-size='contain'>
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3> Let's deploy our app in production! </h3>
+					<img class="no-border" src="img/feedback2.png" alt="" style="width: 80%">
+					<aside class="notes">
+						ML models are put in production, and influence the world, and data collected in the future
+						Science Technology Engineering Mathematics
+						 Our model has learned that female students have a higher drop-out rate in STEM fields
+						So it only sends the most determined female students in those majors
+						An unbalanced gender ratio in maths make the atmosphere more toxic for the girls who are studying there
+						So proportionally more girls drop out than boys
+					</aside>
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
+					<h3> Let's deploy our app in production! </h3>
+					<img class="no-border" src="img/feedback3.png" alt="" style="width: 80%">
+					<aside class="notes">
+						ML models are put in production, and influence the world, and data collected in the future
+						Science Technology Engineering Mathematics
+						 Our model has learned that female students have a higher drop-out rate in STEM fields
+						So it only sends the most determined female students in those majors
+						An unbalanced gender ratio in maths make the atmosphere more toxic for the girls who are studying there
+						So proportionally more girls drop out than boys
+					</aside>
+				</section>
+				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>Let's deploy our app in production!</h3>
 					<p>  Beware of feedback loops! </p>
 					<aside class="notes">
