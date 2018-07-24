@@ -506,10 +506,10 @@
 				<section data-background-image='img/background.png' data-background-size='contain'>
 					<h3>How to overfit with a clean conscience?</h3>
 					<ul>
-						<li class="fragment"> Evaluate on a separate dataset <img class="embedded aligned" src="img/check.png" alt="" style="height: .8em;"></li>
-						<li class="fragment"> Fit preprocessing on a separate dataset <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"> </li>
-						<li class="fragment"> Select the best algorithm on different data <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"></li>
-						<li class="fragment"> Use appropriate performance metrics <img class="embedded aligned" src="img/cross.png" alt="" style="height: .65em;"></li>
+						<li class="fragment"> Evaluate on a separate dataset <img class="fragment embedded aligned" src="img/check.png" alt="" style="height: .8em;"></li>
+						<li class="fragment"> Fit preprocessing on the whole dataset <img class="fragment embedded aligned" src="img/cross.png" alt="" style="height: .75em;"> </li>
+						<li class="fragment"> Select the best algorithm on test data <img class="fragment embedded aligned" src="img/cross.png" alt="" style="height: .75em;"></li>
+						<li class="fragment"> Use inappropriate performance metrics <img class="fragment embedded aligned" src="img/cross.png" alt="" style="height: .75em;"></li>
 					</ul>
 					<aside class="notes">
 						Of course, we know that presenting our results on the training set is "cheating", so we evaluate on a separate
@@ -604,10 +604,11 @@
 					</div>
 					<aside class="notes">
 						Ow, we just got a HUGE opportunity for our start-up!
-						Ow, we just created what Cathy O'Neil calls a Weapon of math destruction
 						Even with a 99% accuracy, out of 700 000 students, that means 7000 students with a wrong affectation.
 						These students are more likely to be from minorities, because of the bias towards majority groups in learning.
 
+						Ow, we just created what Cathy O'Neil calls a Weapon of math destruction: black-box algorithm, feedback loop,
+						damages on a large scale
 					</aside>
 				</section>
 			</section>
