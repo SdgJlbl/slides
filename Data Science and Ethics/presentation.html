@@ -295,8 +295,8 @@
 						&emsp;  = P(<span class="red">Y = grad | S = s<sub>ref</sub>, G = r</span>)
 
 						<p style="font-size: 60%;"> For a same score,
-							you have the same probability of graduating
-							regardless of which subgroup you belong to.</p>
+							one has the same probability of graduating
+							regardless of which subgroup one belongs to.</p>
 					</div>
 					<aside class="notes">
 						Calibration ensures that the score is actually an indicator of what we are trying to predict.
@@ -313,8 +313,8 @@
 						P(<span class="blue">Y = grad | S &gt; s<sub>ref</sub>, G = b</span>)  <br>
 						&emsp;  = P(<span class="red">Y = grad | S &gt; s<sub>ref</sub>, G = r</span>)
 						<p style="font-size: 60%;"> For a score higher than the threshold,
-							you have the same probability of graduating
-							regardless of which subgroup you belong to.</p>
+							one has the same probability of graduating
+							regardless of which subgroup one belongs to.</p>
 					</div>
 					<aside class="notes">
 					Also, Positive Predictive Value (predictive power) should be the same on all groups.
@@ -331,9 +331,9 @@
 						P(<span class="blue">S &lt;= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &lt;= s<sub>ref</sub> | Y = grad, G = r</span>)
 						<br>
-						<p style="font-size: 60%;"> If you would have graduated,
-							you have the same probability of getting a too low score
-							regardless of which subgroup you belong to.</p>
+						<p style="font-size: 60%;"> If one will graduate,
+							one has the same probability of getting a too low score
+							regardless of which subgroup one belongs to.</p>
 						<span class="fragment" data-fragment-index="2" >
 							E(<span class="blue">S | Y = grad, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
@@ -358,9 +358,9 @@
 						<strong>Error rate balance: </strong> <br>
 						P(<span class="blue">S &gt; s<sub>ref</sub> | Y = fail, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | Y = fail, G = r</span>)
-						<p style="font-size: 60%;"> If you would have failed,
-							you have the same probability of getting a too high score
-							regardless of which subgroup you belong to.</p>
+						<p style="font-size: 60%;"> If one will fail,
+							one has the same probability of getting a too high score
+							regardless of which subgroup one belongs to.</p>
 						<span class="fragment" data-fragment-index="2">
 							E(<span class="blue">S | Y = fail, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = fail, G = r</span>)
@@ -386,10 +386,11 @@
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | G = r</span>)
 						<p style="font-size: 60%;">
 							The probability of having a score higher than the threshold is the same
-							regardless of which subgroup you belong to. </p>
+							regardless of which subgroup one belongs to. </p>
 					</div>
 					<aside class="notes">
-					The proportion of admitted students in each subgroup should be the same.
+						The probability of being accepted is the same.
+						The proportion of admitted students in each subgroup should be the same.
 					</aside>
 				</section>
 
