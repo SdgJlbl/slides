@@ -97,13 +97,17 @@
 			<section>
 				<h2>Trust me, I'm a data scientist</h2>
 				<p><i> <small> Ethics for builders of data-based applications </small></i></p>
+				<aside class="notes">
+					Hello everybody and welcome to this talk about how ethical issues may lurk inconspicuously
+					in your most mundane and innocent-looking data-based applications.
+				</aside>
 			</section>
 			<section>
 				<h3>About me</h3>
 				<ul>
 					<li>Sarah Diot-Girard</li>
 					<li>Working in Machine Learning since 2012</li>
-					<li>Curently at
+					<li>Currently at
 						<img class="peopledoc-logo" src="img/logo-peopledoc-WoB.svg"/>
 					</li>
 					<li>Interested in ethics but not an expert</li>
@@ -112,11 +116,16 @@
 			<section>
 				<h2>Trust me, I'm a data scientist</h2>
 				<p><i> <small> Ethics for builders of data-based applications </small></i></p>
+				<aside class="notes">
+					Ethics, this, some would say, slightly boring domain of philosophy, has a long tradition.
+					Moral philosophers love a good thought experiment, and let’s do that all together today!
+					 Promise, no trolley involved.
+				</aside>
 			</section>
 
 			<section data-background-image='img/background.png' data-background-size='contain'>
 				<h3>Let's build an app using ML!</h3>
-				<p class="fragment">We want to help high schoolers finding <br> the perfect major for them.</p>
+				<p class="fragment">We want to help high schoolers <br> find the perfect major for them.</p>
 
 				<aside class="notes">
 					Teenagers don't always know what is best for them. They lack experience and rely on erroneous
@@ -145,15 +154,20 @@
 						Well, now it's unfair toward good students in less priviledged districts...
 						Are grades even such a good indicator of what we want to measure?
 
-						Data collection is not a neutral process. It involves conscious and unconscious choices, which can be challenged.
+						Data collection is not a neutral process. It involves conscious and unconscious choices
+						and we should be aware that these choices can and should be challenged.
+
 					</aside>
 				</section>
 
 				<section data-background-image='img/background.png' data-background-size='contain'>
-					<h3> Data collection</h3>
+					<h3>Data collection</h3>
 					<p> Learning from past <span class="fragment"> <b>biased</b> </span> data </p>
 
 					<aside class="notes">
+						The other thing to consider is that we are learning using data from the past,
+						data produced by our - biased and prejudiced - society.
+						Let’s take again this women in tech issue.
 						Our data contains prejudices and bias that we can correct if we know what we are looking for.
 						For example, there are less girls in computer science, so the algorithm might pick up that gender is a
 						predictive variable for a good fit to computer science studies.
@@ -166,7 +180,8 @@
 				</section>
 
 				<section data-background-image='img/background.png' data-background-size='contain'>
-					<h3> Sampling bias</h3>
+					<h3>Data collection</h3>
+					<p>Sampling bias</p>
 
 					<aside class="notes">
 						Some measurements may be biased as they are not performed uniformly on the population
@@ -252,7 +267,7 @@
 			<!-- Data security and anonymization -->
 			<section>
 				<section data-background-color='white'>
-					<h3 style="color:black;">And now, a message from our friends<br> from the security team </h3>
+					<h3 style="color:black;">And now a message from the security team </h3>
 					<div style="width: 50%; float: left;">
 						<p  style="color:black; text-shadow:none;"> Don't hoard data! </p>
 						<p  style="color:black; text-shadow:none;"> Work on anonymized data if you can! </p>
@@ -264,19 +279,20 @@
 						 The only data that cannot get stolen is data you don't have
 						 Delete what is no longer needed
 						 Encrypt all sensitive and personal data
-						 We can think about that one student in scientific section who is studying Greek...
-							Or be especially careful with year of birth, since a student with 2 years or more in advance (or late) is
-							likely to be unique in a given school.
+						 Let’s consider that all students in a same class have roughly the same age. If one student
+						 is two-year early or late, they can be uniquely identify by a combination of year of birth
+						 and high school name.
 					</aside>
 				</section>
 			</section>
 
-			<!-- What does it mean, for an algorithm to be fair? -->
+			<!-- What does it mean for an algorithm to be fair? -->
 			<section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
 					<h3> Let's create a score to predict academic success! </h3>
 
 					<aside class="notes">
+						Now that we have collected some data - and encrypted it, we are ready to design our algorithm
 						We want to offer an "academic" score to universities, which would be more predictive than mark averages,
 						to measure how well the student is likely to perform in higher studies (regardless of if s.he was a dilettante
 						high-schooler or was already working as hard as s.he could).
@@ -284,7 +300,7 @@
 					</section>
 
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<div id="left">
 						<img class="no-border" src="img/calibration.png" alt="" style="width: 80%">
 					</div>
@@ -294,8 +310,8 @@
 						&emsp;  = P(<span class="red">Y = grad | S = s<sub>ref</sub>, G = r</span>)
 
 						<p style="font-size: 60%;"> For a same score,
-							you have the same probability of graduating
-							regardless of which subgroup you belong to.</p>
+							one has the same probability of graduating
+							regardless of which subgroup one belongs to.</p>
 					</div>
 					<aside class="notes">
 						Calibration ensures that the score is actually an indicator of what we are trying to predict.
@@ -303,7 +319,7 @@
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<div id="left">
 						<img class="no-border" src="img/ppv.png" alt="" style="width: 80%">
 					</div>
@@ -312,8 +328,8 @@
 						P(<span class="blue">Y = grad | S &gt; s<sub>ref</sub>, G = b</span>)  <br>
 						&emsp;  = P(<span class="red">Y = grad | S &gt; s<sub>ref</sub>, G = r</span>)
 						<p style="font-size: 60%;"> For a score higher than the threshold,
-							you have the same probability of graduating
-							regardless of which subgroup you belong to.</p>
+							one has the same probability of graduating
+							regardless of which subgroup one belongs to.</p>
 					</div>
 					<aside class="notes">
 					Also, Positive Predictive Value (predictive power) should be the same on all groups.
@@ -321,7 +337,7 @@
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<div id="left">
 						<img class="no-border" src="img/fnr.png" alt="" style="width: 80%">
 					</div>
@@ -330,9 +346,9 @@
 						P(<span class="blue">S &lt;= s<sub>ref</sub> | Y = grad, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &lt;= s<sub>ref</sub> | Y = grad, G = r</span>)
 						<br>
-						<p style="font-size: 60%;"> If you would have graduated,
-							you have the same probability of getting a too low score
-							regardless of which subgroup you belong to.</p>
+						<p style="font-size: 60%;"> If one will graduate,
+							one has the same probability of getting a too low score
+							regardless of which subgroup one belongs to.</p>
 						<span class="fragment" data-fragment-index="2" >
 							E(<span class="blue">S | Y = grad, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = grad, G = r</span>)
@@ -349,7 +365,7 @@
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<div id="left">
 						<img class="no-border" src="img/fpr.png" alt="" style="width: 80%">
 					</div>
@@ -357,9 +373,9 @@
 						<strong>Error rate balance: </strong> <br>
 						P(<span class="blue">S &gt; s<sub>ref</sub> | Y = fail, G = b</span>)  <br>
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | Y = fail, G = r</span>)
-						<p style="font-size: 60%;"> If you would have failed,
-							you have the same probability of getting a too high score
-							regardless of which subgroup you belong to.</p>
+						<p style="font-size: 60%;"> If one will fail,
+							one has the same probability of getting a too high score
+							regardless of which subgroup one belongs to.</p>
 						<span class="fragment" data-fragment-index="2">
 							E(<span class="blue">S | Y = fail, G = b</span>) <br>
 							&emsp; = E(<span class="red">S | Y = fail, G = r</span>)
@@ -375,7 +391,7 @@
 					</aside>
 				</section>
 				<section data-background-image='img/background.png' data-background-size='contain' data-transition='none'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<div id="left">
 						<img class="no-border" src="img/parity.png" alt="" style="width: 80%">
 					</div>
@@ -385,21 +401,22 @@
 						&emsp; = P(<span class="red">S &gt; s<sub>ref</sub> | G = r</span>)
 						<p style="font-size: 60%;">
 							The probability of having a score higher than the threshold is the same
-							regardless of which subgroup you belong to. </p>
+							regardless of which subgroup one belongs to. </p>
 					</div>
 					<aside class="notes">
-					The proportion of admitted students in each subgroup should be the same.
+						The probability of being accepted is the same.
+						The proportion of admitted students in each subgroup should be the same.
 					</aside>
 				</section>
 
 				<section data-background-image='img/background.png' data-background-size='contain'>
-					<h3>What does it mean, for an algorithm to be fair?</h3>
+					<h3>What does it mean for an algorithm to be fair?</h3>
 					<p> All those criteria seem fair and reasonable.</p>
-					<p class="fragment"> Bad news, you cannot have all of them ! </p>
+					<p class="fragment"> Bad news, you cannot have all of them! </p>
 
 					<div class="footer">
 						<p class="fragment">
-							<i> Inherent Trade-Offs in the Fair Determination of Risk Scores  </i>, Kleinberg et al. <br>
+							<i> Inherent Trade-Offs in the Fair Determination of Risk Scores</i>, Kleinberg et al. <br>
 							<i> Fair prediction with disparate impact: A study of bias in recidivism prediction instruments </i>,<br> A. Chouldechova <br>
 							<i> 21 fairness definitions and their politics</i>, A. Narayanan
 						</p>
@@ -538,6 +555,7 @@
 					</div>
 					<aside class="notes">
 						Data scientists are human before being scientists, and doing rigorous science is hard (see the p-value crisis).
+						We are subjet to cognitive bias.
 						Apophenia -> tendency to see patterns in noise
 					</aside>
 				</section>
