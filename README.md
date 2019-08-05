@@ -1,6 +1,6 @@
 # Talks
 
-See this page at https://sdgjlbl.github.io/talks/
+See this page at https://sdgjlbl.github.io/slides
 
 This repository contains the slides of the talks I've proposed here and there
 
