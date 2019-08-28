@@ -383,9 +383,11 @@ class CatNap():
 					<h2>Label</h2>
 				</section>
 				<section>
-					<pre><code data-trim data-noescape>
-<label for="cat">Are you a cat?</label>
-<input type="checkbox" name="cat" id="cat">
+					<pre><code data-trim>
+<form>
+  <label for="cat">Are you a cat?</label>
+  <input type="checkbox" name="cat" id="cat">
+</form>
 					</code></pre>
 				</section>
 				<section>
@@ -439,6 +441,7 @@ class CatNap():
 				<h2>Merci pour votre attention !</h2>
 				<p>Et désolée pour les blagues pas drôles...</p>
 				<p><img class="icon" src="img/GitHub-logo.png" alt="Logo GitHub" style="width: 1em">@SdgJlbl</p>
+				<p><img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@SdgJlbl</p>
 				<p><img class="icon" src="img/pdoc-logo.png" alt="Logo PeopleDoc" style="width: 4em"></p>
 			</section>
 
@@ -457,7 +460,8 @@ class CatNap():
 					},
 					dependencies: [
 							{ src: 'reveal.js/plugin/notes/notes.js', async: true },
-							{ src: 'reveal.js/plugin/math/math.js', async: true }
+							{ src: 'reveal.js/plugin/math/math.js', async: true },
+							{ src: 'reveal.js/plugin/highlight/highlight.js', async: true }
 						]
 				});
 				</script>
