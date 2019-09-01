@@ -150,13 +150,24 @@
 				<section>
 					<h3>What is a good test?</h3>
 					<ul>
-						<li>Readable</li>
-						<li>Thorough</li>
-						<li>Specific</li>
-						<li class="fragment highlight-blue">Repeatable (stable)</li>
-						<li>Isolated</li>
-						<li class="fragment highlight-blue">Fast</li>
+						<li>Readable and simple</li>
+						<li class="fragment" data-fragment-index="1">Thorough</li>
+						<li class="fragment" data-fragment-index="2">Specific <br>
+							<span class="fragment current-visible"  data-fragment-index="3" style="position:absolute;top:2em;left:2em;">
+								<span class="fragment fade-out" data-fragment-index="4">
+									<img src="img/car_dashboard.jpg" alt="A car dashboard" style="width: 90%">
+								</span> </span></li>
+						<li class="fragment" data-fragment-index="5">
+                            <span class="fragment highlight-blue" data-fragment-index="8">Repeatable (stable)</span></li>
+						<li class="fragment" data-fragment-index="6">Isolated</li>
+						<li class="fragment" data-fragment-index="7">
+                            <span class="fragment highlight-blue" data-fragment-index="9">Fast</span></li>
 					</ul>
+					<aside class="notes">
+						repeatable -> once it fails, it'll fail till you fix the bug;
+						isolated -> if it fails in your test suite, it fails on its own -> you can debug each test
+						one-by-one
+					</aside>
 				</section>
 				<section>
 					<img src="img/mindmap.jpg" alt="Mindmap of test-related topics" style="width: 80%">
@@ -208,6 +219,7 @@
 				<section>
 					<pre><code>
 df_filled = fill_missing_values(df_raw, how='average')
+
 df_cleaned = remove_outliers(df_filled)
 					</code></pre>
 				</section>
@@ -219,20 +231,20 @@ df_cleaned = remove_outliers(df_filled)
 				<section>
 					<pre><code>
 df = fill_missing_values(df_raw, how='average') <span class="fragment blue unicode">&#10004;</span>
+
 fill_missing_values(df_raw, how='average') <span class="fragment red unicode">&#10007;</span>
+
 df = fill_missing_values('raw_df.csv', how='average') <span class="fragment red unicode">&#10007;</span>
+
+df_out, label_mapping = encode_labels(df_in)  <span class="fragment blue unicode">&#10004;</span>
 					</code></pre>
+					<p class="fragment">Output(s) depend only on input(s)</p>
 					<aside class="notes">
 						2) modify the DataFrame in place
 						3)  I/O are side-effects
 					</aside>
 				</section>
-				<section>
-					<pre><code>
-df_out, label_mapping = encode_labels(df_in)  <span class="fragment blue unicode">&#10004;</span>
-					</code></pre>
-					<p class="fragment">Output(s) depend only on input(s)</p>
-				</section>
+
 				<section>
 					<h3>Unit tests</h3>
 					<p>... test units of source code</p>
@@ -254,17 +266,24 @@ df_out, label_mapping = encode_labels(df_in)  <span class="fragment blue unicode
 					</aside>
 				</section>
 				<section>
-					<pre><code data-trim>import numpy as np
+					<pre><code>import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
 def normalize(arr):
-	return np.zeros(arr.shape)
+    return np.zeros(arr.shape)
 
 @given(arrays(dtype=float, shape=(3,4)))
-def test_normalize(a):
-	assert np.all(a >= 0)
-	assert np.all(a <= 1)</code></pre>
+def test_normalize_is_between_bounds(input):
+    output = normalize(input)
+    assert np.all(output >= 0)
+    assert np.all(output <= 1)
+
+@given(arrays(dtype=float, shape=(3,4)))
+def test_normalize_is_idempotent(a):
+    normalized_input = normalize(input)
+    output = normalize(normalized_input)
+    assert np.all(output == normalized_input)</code></pre>
 				</section>
 				<section>
 					<p>Add a few trivial tests with simple examples</p>
@@ -338,8 +357,11 @@ def test_normalize(a):
 					<h3>Metamorphic testing</h3>
 					<pre><code>
 def test_compute_variance():
+
   x = np.random.rand(25)
+
   assert compute_variance(x * -1) == compute_variance(x)
+
   assert compute_variance(2 * x) == 4 * compute_variance(x)
 					</code></pre>
 				</section>
@@ -392,7 +414,7 @@ def test_compute_variance():
 					<h3>Mocks</h3>
 					<p>... mimic the behaviour of an object in a controlled way</p>
                     <aside class="notes">
-                        Mocks are pieces of magic that allow you to call a function and get a predetermined result
+                        Mocks are ways of cheating that allow you to call a function and get a predetermined result
                         without actually executing the function.
                         eg load a file from disk
                         also great to mock slow functions in unit tests
@@ -402,6 +424,7 @@ def test_compute_variance():
 				<pre><code>
 def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
     ...
+
 
 def model_training(arr: np.ndarray):
     ...
@@ -467,6 +490,8 @@ def model_training(arr: np.ndarray):
 				<p class="references"></p>
 				<p><em>Testing and validating machine learning classifiers by metamorphic testing</em>, X. Xie et al</p>
 				<p><em>On testing machine learning programs</em>, H. Ben Braieka and F. Khomh</p>
+				<p><a href="//hypothesis.readthedocs.io/en/latest/">Documentation of <code>hypothesis</code></a></p>
+				<p><a href="//tdda.readthedocs.io/en/v1.0.30/">Documentation of <code>tdda</code></a></p>
 			</section>
 
 		</div>
@@ -478,7 +503,7 @@ def model_training(arr: np.ndarray):
 					history: true,
 					slideNumber: true,
 					math: {
-						mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+						mathjax: 'node_modules/mathjax/MathJax.js',
 						config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
 						// pass other options into `MathJax.Hub.Config()`
 					},
