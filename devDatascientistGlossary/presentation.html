@@ -93,7 +93,7 @@
 				<section>
 					<h1>De la polysémie en milieu hybride</h1>
 					<h4>Sarah Diot-Girard</h4>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Bonjour à tous et merci de m'accueillir pour cette première conf à distance de la DjangoCong
 						#muchInnovation
 						Je suis scientifique de la donnée.
@@ -101,20 +101,20 @@
 				</section>
 				<section>
 					<h3>#MauvaiseTraductionLittérale</h3>
-					<aside class="speaker-notes">
-						J'ai appris il y a 2 semaines ce que voulait dire WSGI.
+					<aside class="notes">
+						Désolée talk en franglais
 						J'utilise Python au quotidien.
 					</aside>
 				</section>
 				<section>
 					<img src="img/webPython.png" alt="Web Python logos" style="width: 90%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						sans jamais me servir de ça.
 					</aside>
 				</section>
 				<section>
 					<img src="img/SciPython.png" alt="Scientific Python logos" style="width: 90%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Mon ordinaire, c'est plutôt ça.
 
 						Fun fact: j'ai moins de followers Twitter que mon chat
@@ -124,7 +124,7 @@
 					<img src="img/iggdra.jpg" alt="A picture of my cat" style="width: 70%">
 					<p class="fragment">
 						<img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@Iggdrapatate</p>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Bref après cette introduction trop longue et pas du tout assez structurée,
 						nous allons parler de
 					</aside>
@@ -134,7 +134,7 @@
 				<section>
 					<h1>De la polysémie en milieu hybride</h1>
 					<h4>Sarah Diot-Girard</h4>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						ou autrement dit, de ce qu'il se passe quand on injecte un ou une data scientist dans un milieu
 						composé de développeurs web.
 						Anecdote sur les modèles
@@ -155,7 +155,7 @@ CREATE TABLE cat_nap(
 					</code></pre>
 				</section>
 				<section>
-					<pre><code>
+					<pre><code class="python">
 from django.db import models
 
 
@@ -213,7 +213,7 @@ class CatNap(models.Model):
 				</section>
 				<section>
 					\[ a_{n+1} = a_{n} - \gamma \nabla F(a_n)\]
-					<aside class="speaker-notes">
+					<aside class="notes">
 						gradient ~= dérivée en multidimensionnel
 					</aside>
 				</section>
@@ -226,7 +226,7 @@ class CatNap(models.Model):
 				</section>
 				<section>
 					<img src="img/modelML" alt="Data + hyperparameters in algorithm -> model" style="width: 100%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						le jeu de données est parcouru plusieurs fois par l'algorithme
 						qui ajuste itérativement les poids
 						par une procédure d'optimisation pour réduire la loss (l'erreur)
@@ -242,7 +242,7 @@ class CatNap(models.Model):
 				<section>
 
 					<img src="img/gradient-descent.png" alt="An illustration of gradient descent" style="width: 80%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Gradient : "dérivée" de fonction multidimensionnelle
 						Descente de gradient : méthode d'optimisation utilisée en ML pour minimiser itérativement
 						la loss function(truc corrélé avec le taux d'erreur)
@@ -256,14 +256,14 @@ class CatNap(models.Model):
 				</section>
 				<section>
 					<img src="img/bad_cluster.png" alt="Bad cluster, bad" style="width: 80%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Cluster = machines physiques
 						Performance : temps de réponse, memory usage, CPU usage
 					</aside>
 				</section>
 				<section>
 					<img src="img/bad_clustering.png" alt="A bad cluster of points" style="width: 60%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Cluster de points (ou de samples), souvent en espace à haute dimension
 						Performance = qualité du résultat de l'apprentissage
 					</aside>
@@ -273,7 +273,7 @@ class CatNap(models.Model):
 				</section>
 				<section>
 					<h2>Apprentissage supervisé vs non-supervisé</h2>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Exemples annotés ou pas
 					</aside>
 				</section>
@@ -307,14 +307,14 @@ class CatNap(models.Model):
 				</section>
 				<section>
 					<h2>Fréquentiste vs Bayésien</h2>
-					<aside class="speaker-notes">Just kidding, les stats fréquentistes sont obscures et absconces
+					<aside class="notes">Just kidding, les stats fréquentistes sont obscures et absconces
 					et les Bayésiens ont raison.</aside>
 				</section>
 			</section>
 			<section>
 				<section>
 					<h2>Variable</h2>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Toujours compliqué de trouver un nom explicite mais pas trop long...
 					</aside>
 				</section>
@@ -324,14 +324,14 @@ cat_nap_length_per_day_in_minutes = cat_nap_length_per_day / 60
 average_cat_nap_length_per_day_in_minutes =
 	sum(cat_nap_length_per_day_in_minutes) / len(cat_nap_length_per_day_in_minutes)
 					</code></pre>
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Le truc impossible à nommer
 						On n'en a jamais assez
 					</aside>
 				</section>
 				<section>
 					<img src="img/variables.png" alt="A dataframe with columns named x_1, x_2, ..." style="width: 80%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						On a un autre pb de nommage de variables...
 						On récupère des fichiers comme ça, et bonne chance pour comprendre ce qui se passe.
 						+ quand on a trop de variables -> curse of dimensionality
@@ -375,7 +375,7 @@ class CatNap():
 				</section>
 				<section>
 					<img src="img/class.png" alt="A dataframe for classification" style="width: 80%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						classe = catégorie (de trucs qu'on veut prédire)
 					</aside>
 				</section>
@@ -383,9 +383,11 @@ class CatNap():
 					<h2>Label</h2>
 				</section>
 				<section>
-					<pre><code data-trim data-noescape>
-<label for="cat">Are you a cat?</label>
-<input type="checkbox" name="cat" id="cat">
+					<pre><code data-trim>
+<form>
+  <label for="cat">Are you a cat?</label>
+  <input type="checkbox" name="cat" id="cat">
+</form>
 					</code></pre>
 				</section>
 				<section>
@@ -430,7 +432,7 @@ class CatNap():
 				</section>
 				<section>
 					<img src="img/logistic_regression.jpg" alt="Une illustration de régression logistique" style="width: 50%">
-					<aside class="speaker-notes">
+					<aside class="notes">
 						Régression logistique
 					</aside>
 				</section>
@@ -439,6 +441,7 @@ class CatNap():
 				<h2>Merci pour votre attention !</h2>
 				<p>Et désolée pour les blagues pas drôles...</p>
 				<p><img class="icon" src="img/GitHub-logo.png" alt="Logo GitHub" style="width: 1em">@SdgJlbl</p>
+				<p><img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@SdgJlbl</p>
 				<p><img class="icon" src="img/pdoc-logo.png" alt="Logo PeopleDoc" style="width: 4em"></p>
 			</section>
 
@@ -457,7 +460,8 @@ class CatNap():
 					},
 					dependencies: [
 							{ src: 'reveal.js/plugin/notes/notes.js', async: true },
-							{ src: 'reveal.js/plugin/math/math.js', async: true }
+							{ src: 'reveal.js/plugin/math/math.js', async: true },
+							{ src: 'reveal.js/plugin/highlight/highlight.js', async: true }
 						]
 				});
 				</script>
