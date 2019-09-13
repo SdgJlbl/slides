@@ -291,6 +291,16 @@ class CatNap(models.Model):
 						méthode d'inférence statistique basée sur la réplication
 						multiple des données selon les techniques de rééchantillonnage </p>
 				</section>
+                <section>
+                    <h3>Population</h3>
+					<img src="img/population.png" alt="A Gaussian distribution for a metric"
+						 style="width: 50%; vertical-align: middle;">
+					<span class="fragment"> \( \mu = 11\)</span>
+                </section>
+                <section>
+                    <h3>Echantillon</h3>
+					<img src="img/sample.png" alt="A sample from the previous population" style="width: 50%">
+                </section>
 				<section>
 					<p>Erreur standard d'une grandeur statistique:</p>
 					<script type="math/tex; mode=display">
@@ -298,10 +308,37 @@ class CatNap(models.Model):
 						s = \sqrt{\sum_{i=1}^n \frac{(x_i - \bar{x})^2}{n-1} }
 					</script>
 				</section>
+                <section>
+                    <h3>Echantillon</h3>
+					<div class="two-halves">
+						<div id="left">
+							<img src="img/sample.png" alt="A sample from the previous population"
+								 style="width: 100%">
+						</div>
+						<div id="right">
+							<br><br>
+							\[ \bar{x} = 10.7 \]
+							\[ SE(\bar{x}) = 1.6 \]
+						</div>
+					</div>
+                </section>
+				<section>
+					<h3>Rééchantillonnage </h3>
+					<img src="img/bootstrap1.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap2.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap3.png" alt="A sample from the previous sample" style="width: 30%">
+				</section>
+				<section>
+					<img src="img/bootstrap1.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap2.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap3.png" alt="A sample from the previous sample" style="width: 30%">
+					\[ \hat{\mu_1} = 9.25 \hspace{1.5cm} \hat{\mu_2} = 12.25  \hspace{1.5cm} \hat{\mu_3} = 8.5\]
+					\[ \bar{\mu} = 10  \hspace{3cm} SE(\bar{\mu}) = 1.98\]
+				</section>
 				<section>
 					<p>Estimation par bootstrap</p>
 					<script type="math/tex; mode=display">
-						 SE(\bar{\theta}) = \sqrt{\sum_{b=1}^B \frac{(\hat{\theta _b} - \bar{\theta})^2}{B-1} } \mbox{ where }
+						 SE(\bar{\theta }) = \sqrt{\sum_{b=1}^B \frac{(\hat{\theta _b} - \bar{\theta})^2}{B-1} } \mbox{ where }
 						\bar{\theta} = \sum_{b=1}^B \frac{\hat{\theta _b}}{B}
 					</script>
 				</section>
@@ -408,6 +445,12 @@ class CatNap():
 					<img src="img/test_val.png" alt="train/val/test splits" style="width: 100%">
 				</section>
 				<section>
+					<img src="img/overfitting.png" alt="overfitting" style="width: 100%">
+				</section>
+				<section>
+					<img src="img/test_val.png" alt="train/val/test splits" style="width: 100%">
+				</section>
+				<section>
 					<h2>Régression</h2>
 				</section>
 				<section>
@@ -438,11 +481,19 @@ class CatNap():
 				</section>
 			</section>
 			<section>
+				<p class="fragment">Ecrivez un glossaire</p>
+				<aside class="notes">
+					bien pour les nouveaux Pythonistes, les dev qui viennent d'un autre langage, les nouveaux contributeurs,
+					clarifier la communication au sein de l'équipe...
+				</aside>
+			</section>
+			<section>
 				<h2>Merci pour votre attention !</h2>
 				<p>Et désolée pour les blagues pas drôles...</p>
 				<p><img class="icon" src="img/GitHub-logo.png" alt="Logo GitHub" style="width: 1em">@SdgJlbl</p>
 				<p><img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@SdgJlbl</p>
 				<p><img class="icon" src="img/pdoc-logo.png" alt="Logo PeopleDoc" style="width: 4em"></p>
+				<p style="font-size: medium">Merci à @ewjoachim pour les graphiques 😻</p>
 			</section>
 
 		</div>
