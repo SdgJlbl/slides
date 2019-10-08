@@ -118,19 +118,24 @@
 				<p>
 					<img class="icon" src="./img/GitHub-logo.png"
 						 alt="GitHub logo" style="width: 1em"/>
-					<a href="https://github.com/SdgJlbl" style="font-family: 'Hepta Slab'">@SdgJlbl</a>
+					<a href="https://github.com/SdgJlbl">@SdgJlbl</a>
 				</p>
 			</section>
 			<!-- Why? -->
 			<section>
 				<section>
 					<h2>Motivation</h2>
-					<p class="fragment">Distinguish between <strong>legitimate owls</strong> and <br>
-						<strong>SPAM</strong> <span style="font-size: smaller">(Strigidae Proliferating Adverse Messages)</span> </p>
-					<p class="fragment">while preserving privacy of owl communications</p>
+					<p class="fragment" data-fragment-index="1">Distinguish between <strong>legitimate owls</strong> and <br>
+						<strong>SPAM</strong> <span style="font-size: smaller">(Strigidae* Proliferating Adverse Messages)</span>
+					</p>
+					<p class="fragment" data-fragment-index="2">while preserving privacy of owl communications</p>
+					<footer class="fragment" data-fragment-index="1" style="font-size: 70%">*"Strigidae" is a fancy word for "owl"</footer>
 					<aside class="notes">
-						You have been noticing an increase in undesired owls in your magical school
-						You want to set up a filter to distinguish between legitimate owls and SPAM
+						You're the headmaster of a boarding school and your students receive letters every day.
+						But lately, you have been noticing an increase in advertisments, and unwanted solicitations, and
+						your students are complaining. Even their owls are complaining. Ah, yes, their owls. Did I
+						mention you're the headmaster of a <strong>magical</strong> school ? Heck, you're Dumbledore.
+						So you want to set up a filter to distinguish between legitimate owls and SPAM which stand for
 						(Strigidae Proliferating Adverse Messages)
 					</aside>
 				</section>
@@ -149,6 +154,10 @@
 				</section>
 				<section>
 					<p>You have to collect some private information</p>
+				</section>
+				<section>
+					<h3>Best way of doing <br>privacy-preserving ML</h3>
+					<p class="fragment"> Don't collect private information</p>
 				</section>
 			</section>
 			<section>
@@ -297,17 +306,17 @@
 						<tbody>
 							<tr><td><em>1</em></td><td>15-20</td><td>M</td><td>Slyth./Griff.</td><td>Dragon pox</td></tr>
 							<tr><td><em>2</em></td><td>15-20</td><td>M</td><td>Huff./Rav.</td><td>Black cat flu</td></tr>
-							<tr><td><em>3</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>3</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
 							<tr><td><em>4</em></td><td>15-20</td><td>F</td><td>Slyth./Griff.</td><td>Petrification</td></tr>
 							<tr><td><em>5</em></td><td>10-14</td><td>M</td><td>Slyth./Griff.</td><td>Hippogriff bite</td></tr>
 							<tr><td><em>6</em></td><td>10-14</td><td>M</td><td>Slyth./Griff.</td><td>Dragon pox</td></tr>
 							<tr><td><em>7</em></td><td>15-20</td><td>M</td><td>Huff./Rav.</td><td>Black cat flu</td></tr>
-							<tr><td><em>8</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>8</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
 							<tr><td><em>9</em></td><td>15-20</td><td>F</td><td>Slyth./Griff.</td><td>Lycanthropy</td></tr>
 							<tr><td><em>10</em></td><td>15-20</td><td>M</td><td>Slyth./Griff.</td><td>Hippogriff bite</td></tr>
 						</tbody>
 					</table>
-					<p class="fragment">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
+					<p class="fragment" data-fragment-index="1">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
 				</section>
 				<section>
 					<h3><em>l</em>-diversity</h3>
@@ -326,19 +335,19 @@
 							<tr><th>ID</th><th>Age</th><th>Gender</th><th>House</th><th>Magical Disease</th></tr>
 						</thead>
 						<tbody>
-							<tr><td><em>3</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>3</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
 							<tr><td><em>5</em></td><td>10-14</td><td>M</td><td>\</td><td>Hippogriff bite</td></tr>
 							<tr><td><em>6</em></td><td>10-14</td><td>M</td><td>\</td><td>Dragon pox</td></tr>
-							<tr><td><em>8</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>8</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
 							<tr><td><em>12</em></td><td>10-14</td><td>M</td><td>\</td><td>Common cold</td></tr>
-							<tr><td><em>18</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>18</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
 							<tr><td><em>21</em></td><td>10-14</td><td>M</td><td>\</td><td>Black cat flu</td></tr>
-							<tr><td><em>25</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
-							<tr><td><em>28</em></td><td>10-14</td><td>F</td><td>\</td><td>Dragon pox</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>25</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>28</em></td><td>10-14</td><td>F</td><td>\</td><td>Dragon pox</td></tr>
 							<tr><td><em>30</em></td><td>10-14</td><td>M</td><td>\</td><td>Hippogriff bite</td></tr>
 						</tbody>
 					</table>
-					<p class="fragment">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
+					<p class="fragment" data-fragment-index="1">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
 				</section>
 				<section>
 					<h3><em>t</em>-closeness</h3>
@@ -532,31 +541,45 @@
 
 			-->
 			<section>
-				<h3>Ccl / further / food for thought / key take-aways / open questions</h3>
+				<h3>In a nutshell</h3>
 				<ul>
-					<li>BUGS!!!!!!!!!!!!!!!!!</li>
-					<li>Generate synthetic datasets</li>
-					<li>Quantify impact on your use-case (eg deidentification for clinical data -> loss of concept < 3%)</li>
-					<li>True anonymisation is hard even with structured data</li>
-					<li>Pseudonymisation is not enough</li>
-					<li>Beware of edge cases (eg foreign first names)</li>
-					<li>Privacy budget</li>
-					<li>Be extra careful if your model is exposed</li>
-					<li>how to quantify privacy without reading?</li>
+					<li class="fragment">True anonymisation is hard</li>
+					<li class="fragment">Beware of edge cases</li>
+					<li class="fragment">Bugs can ruin all your efforts</li>
+					<li class="fragment">It's always a trade-off</li>
 				</ul>
 				<aside class="notes">
-					edge cases -> overfitting
+					pseudonymisation is not enough;
+					eg foreign first names;
+					edge cases -> overfitting;
+					between privacy and utility / accuracy
 				</aside>
 			</section>
+			<section>
+				<h3>Future perspectives</h3>
+				<ul>
+					<li class="fragment">How to evaluate the impact on your use-case?</li>
+					<li class="fragment">How to generate privacy-preserving synthetic data? <br>With which guarantees?</li>
+					<li class="fragment">How to quantify privacy loss without accessing the values?</li>
+				</ul>
+				<aside class="notes">
+					eg deidentification for clinical data -> loss of concept < 3%);
+				</aside>
+			</section>
+			<section>
+				<h3>And this SPAM problem?</h3>
+				<p>Well, maybe you do want to buy a Nimbus 2000 after all...</p>
+			</section>
+
 			<section>
 				<h2>Questions?</h2>
 				<p><img class="icon" src="./img/GitHub-logo.png"
 							 alt="GitHub logo" style="width: 1em"/>
-						<a href="https://github.com/SdgJlbl" style="font-family: 'Hepta Slab'">@SdgJlbl</a></p>
+						<a href="https://github.com/SdgJlbl">@SdgJlbl</a></p>
 				<p><img class="icon" src="./img/pdoc-logo.png"
 											  alt="PeopleDoc logo" style="width: 4em"/></p>
 				<footer style="font-size: 50%">
-					Slides available on <span style="font-family: 'Hepta Slab'">sdg.jlbl.net</span>
+					Slides available on sdg.jlbl.net
 				</footer>
 			</section>
 			<section>
