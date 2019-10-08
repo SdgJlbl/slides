@@ -11,4 +11,4 @@ This repository contains the slides of the talks I've proposed here and there
 - [Introduction to Data Privacy](https://speakerdeck.com/sdgjlbl/introduction-to-data-privacy)
 - [Dev & Data Scientist Glossary](devDatascientistGlossary/presentation.html)
 - [Tests for Data Scientists](tests_for_datascientist/presentation.html)
-- [Text Privacy (provisionnal title)](text_privacy/presentation.html)
+- [Privacy-preserving text analysis](text_privacy/presentation.html)
