@@ -18,6 +18,6 @@
   "homepage": "https://github.com/SdgJlbl/slides#readme",
   "dependencies": {
     "mathjax": "^2.7.0",
-    "reveal.js": "^3.8.0"
+    "reveal.js": "^4.3.0"
   }
 }
