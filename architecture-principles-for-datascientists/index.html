@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="mine.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Off with their I/Os!</h1>
+            <h4>Best architecture practices to isolate I/Os</h4>
+        </section>
+        <section>
+            <h2>About me</h2>
+            <ul>
+                <li>Lead data scientist at <img class="icon" src="./img/hokodo-logo.png"
+                                                alt="Hokodo logo" style="width: 4em"/></li>
+                <li>I push ML models in prod</li>
+                <li><img class="icon" src="./img/GitHub-logo.png"
+                         alt="GitHub logo" style="width: 1em"/>
+                    <a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
+            </ul>
+        </section>
+        <!-- Atmosphere setup [white rabbit]-->
+        <section>
+            <section>
+                <h3>Disclaimer</h3>
+                <p>This talk is very loosely inspired by </br><i>Alice's adventures in Wonderland</i></p>
+            </section>
+            <section>
+                <img src="./img/quelquechose.jpg"
+                     alt="dozingoff" style="width: 7em"/>
+
+                <aside class="notes">
+                    It was supposed to be an easy and fast fix, but you have spent most of your day on it.
+                    Your test suite has been running for 20 minutes, and you are dozing off..
+                    Suddenly, you're wide awake. Something is moving out of the corner of your eye...
+                    Intrigued, you follow the little mammal, and suddenly, you are falling...
+                </aside>
+            </section>
+            <section>
+                <img class="fragment" data-fragment-index="1" src="./img/white_rabbit.jpg"
+                     alt="follow the white rabbit" style="width: 7em"/>
+
+                <aside class="notes">
+                    It was supposed to be an easy and fast fix, but you have spent most of your day on it.
+                    Your test suite has been running for 20 minutes, and you are dozing off..
+                    Suddenly, you're wide awake. Something is moving out of the corner of your eye...
+                    Intrigued, you follow the little mammal, and suddenly, you are falling...
+                </aside>
+            </section>
+            <section>
+                <h2>Into the rabbit hole</h2>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                import pandas as pd
+                from sklearn.linear_model import LogisticRegression
+                from sklearn.preprocessing import StandardScaler
+                from sklearn.model_selection import train_test_split
+                from sklearn.metrics import confusion_matrix
+
+                df = pd.read_csv("input.csv", index_col=0)
+                X_train, X_test, y_train, y_test = train_test_split(
+                    df.drop(columns="label"), df["label"],
+                    stratify=df["label"]
+                )
+
+                # standardize the data to avoid badly conditioned matrices
+                scaler = StandardScaler()
+                X_train_scaled = scaler.fit_transform(X_train)
+
+                # train a logistic regression classifier
+                classifier = LogisticRegression()
+                classifier.fit(X_train_scaled, y_train)
+
+                # apply the result to test data
+                X_test_scaled = scaler.transform(X_test)
+                confusion_matrix(y_test, classifier.predict(X_test_scaled))
+
+                </code></pre>
+                <aside class="notes">
+                    As you fall seemingly forever and ever, you think about how you came to this point.
+                    You started from a neat script, that you packaged into independent functions,
+                    each an independent component.
+                    * present the code context *
+                </aside>
+            </section>
+
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers="1-20|2,15" class="language-python">
+                def standardise_data(input_file):
+                    df = pd.read_csv(input_file, index_col=0)
+                    X_train, X_test, y_train, y_test = train_test_split(
+                        df.drop(columns="label"),
+                        df["label"],
+                        stratify=df["label"],
+                    )
+                    scaler = StandardScaler()
+                    X_train_scaled = scaler.fit_transform(X_train)
+                    parameters = pd.DataFrame(
+                        data=np.vstack((scaler.mean_, scaler.scale_)),
+                        columns=scaler.feature_names_in_,
+                        index=["mean", "scale"],
+                    )
+                    parameters.to_csv("standardisation_parameters.csv")
+                    X_test_scaled = scaler.transform(X_test)
+                    return X_train_scaled, X_test_scaled, y_train, y_test
+
+                </code></pre>
+            </section>
+
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def train_classifier(cleaned_data, labels, model_name):
+                        classifier = LogisticRegression()
+                        classifier.fit(cleaned_data, labels)
+                        joblib.dump(classifier, model_name)
+
+
+                    def evaluate(model, data, label):
+                        classifier = joblib.load(model)
+                        return confusion_matrix(label, classifier.predict(data))
+
+					</code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def main():
+                        X_train, X_test, y_train, y_test = standardise_data("input.csv")
+                        model_name = "saved_model.pkl"
+                        train_classifier(X_train, y_train, model_name)
+                        print(evaluate(model_name, X_test, y_test))
+                </code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                def standardise_data(input_file):
+                    df = pd.read_csv(input_file, index_col=0)
+                    X_train, X_test, y_train, y_test = train_test_split(
+                        df.drop(columns="label"),
+                        df["label"],
+                        stratify=df["label"],
+                    )
+                    scaler = StandardScaler()
+                    X_train_scaled = scaler.fit_transform(X_train)
+                    parameters = pd.DataFrame(
+                        data=np.vstack((scaler.mean_, scaler.scale_)),
+                        columns=scaler.feature_names_in_,
+                        index=["mean", "scale"],
+                    )
+                    parameters.to_csv("standardisation_parameters.csv")
+                    X_test_scaled = scaler.transform(X_test)
+                    return X_train_scaled, X_test_scaled, y_train, y_test
+
+                </code></pre>
+            </section>
+        </section>
+
+        <!-- Pure functions vs side-effects [drink me/ drink me too]-->
+        <section>
+            <section>
+                <h2>Pure functions </br>    versus side-effects</h2>
+                <img src="./img/drink_me.jpg"
+                     alt="drink me" style="width: 3em"/>
+                <aside class="notes">
+                    At the bottom of the hole, you find a small table with a bottle on it.
+                    Attached to the bottle, there's a label. It says "Drink me - and you'll learn all about functional
+                    programming". Intrigued, you drink a large gulp.
+                </aside>
+            </section>
+            <section>
+                <h3>Pure functions</h3>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Output depends only on the inputs</li>
+                    <li class="fragment" data-fragment-index="2">Easy to unit test</li>
+                    <li class="fragment" data-fragment-index="3">Great for parallelising</li>
+                    <li class="fragment" data-fragment-index="4">NO side effect </li>
+                </ul>
+                <aside class="notes">
+                    Everything starts moving again around you, growing bigger, or are you the one becoming smaller?
+                    Pure functions seem soooo cool! They will probably solve all your problems!
+                    Your test suite will be lightning fast! It will be so easy to test all the edge cases, without
+                    headaches caused by bad test isolation!
+                    If you ever need to parallelise part of the preprocessing, it's free!
+                </aside>
+            </section>
+            <section>
+                <h3 class="fragment" data-fragment-index="1">All I/Os are side-effects!!!</h3>
+                <img src="./img/eat_me.jpg"
+                     alt="eat me" style="width: 7em"/>
+                <aside class="notes">
+                    As you become tiny, you notice a small cake under the table. On it is written "Eat me - all I/Os
+                    are side-effects".
+                    OMG what are you going to do? You need I/Os for your code to actually DO something (read data from
+                    disk or from an API / save your models / return predictions to a third party calling your service...)
+                </aside>
+            </section>
+            <section>
+                <p>How can we have both the advantages of using a functional coding style, and still do actual stuff?</p>
+                <aside class="notes">
+                    Perplexed and sobered, you squeeze through a small door, wondering how to use all this new knowledge about FP.
+                </aside>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2 class="fragment" data-fragment-index="1">Onion architecture</h2>
+                <img src="./img/caterpillar.jpg"
+                     alt="this is a caterpillar, possibly high" style="width: 7em"/>
+            </section>
+            <section>
+                <h3>Onion architecture</h3>
+                <img src="./img/onion.svg"
+                     alt="onion architecture diagram" style="width: 99%"/>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def standardise_data(X_train):
+                        scaler = StandardScaler()
+                        X_train_scaled = scaler.fit_transform(X_train)
+                        parameters = pd.DataFrame(
+                            data=np.vstack((scaler.mean_, scaler.scale_)),
+                            columns=scaler.feature_names_in_,
+                            index=["mean", "scale"],
+                        )
+                        return X_train_scaled, parameters
+
+
+                    def train_classifier(cleaned_data, labels):
+                        classifier = LogisticRegression()
+                        classifier.fit(cleaned_data, labels)
+                        return classifier
+
+
+                    def evaluate(scaler, classifier, data, label):
+                        cleaned_data = scaler.transform(data)
+                        return confusion_matrix(label, classifier.predict(cleaned_data))
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def main():
+                        input_file = "input.csv"
+                        preprocess_file = "scaler.csv"
+                        model_name = "saved_model.pkl"
+                        df = pd.read_csv(input_file, index_col=0)
+                        X_train, X_test, y_train, y_test = train_test_split(
+                            df.drop(columns="label"),
+                            df["label"],
+                            stratify=df["label"],
+                        )
+                        # preprocessing
+                        X_train_cleaned, scaling_parameters = standardise_data(X_train)
+                        scaling_parameters.to_csv(preprocess_file)
+
+                        #training
+                        model = train_classifier(X_train_cleaned, y_train)
+                        joblib.dump(model, model_name)
+
+                        # evaluating
+                        scaler = load_scaler(preprocess_file)
+                        confusion_matrix = evaluate(scaler, model_name, X_test, y_test))
+                        print(confusion_matrix)
+                </code></pre>
+            </section>
+
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def load_scaler(parameters_file):
+                        parameters = pd.read_csv(parameters_file, index_col=0)
+                        scaler = StandardScaler()
+                        scaler.scale_ = parameters.loc["scale"].values
+                        scaler.mean_ = parameters.loc["mean"].values
+                        scaler.feature_names_in_ = list(parameters.columns)
+                        return scaler
+                </code></pre>
+                <aside class="notes">
+                    You feel pretty confident that you can improve your code with this new knowledge.
+                    Soon, all of the logic will be encapsulated in pure functions, that will be tested with fast unit tests.
+                    No more nasty bugs, no longer waiting for hours for the test suite to finish.
+                    Ah, you feel pretty proud of yourself.
+                    That's when you find some piece of code that makes you doubt your sanity
+                </aside>
+            </section>
+
+        </section>
+
+        <!-- [mad tea party] -->
+        <section>
+            <section>
+                <h2 class="fragment" data-fragment-index="1">Here the madness begins</h2>
+                <img src="./img/mad_tea_party.jpg"
+                     alt="people drinking tea, in a sense" style="width: 7em"/>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def update_data(gsheet_name, metrics, confusion_matrix):
+                        creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json", scope=scope
+                        )
+                        client = gspread.authorize(creds)
+
+                        gspreadsheet = client.open(gsheet_name)
+
+                        # Map sheet name to worksheet object
+                        worksheet_dict = {
+                            sheet.title: sheet for sheet in gspreadsheet.worksheets()}
+
+                        # update confusion matrix
+                        current_conf_mat = gspread_dataframe.get_as_dataframe(
+                            worksheet_dict["Confusion matrix"])
+                        new_conf_mat = confusion_matrix + current_conf_mat
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Confusion matrix"], new_conf_mat, resize=True
+                        )
+
+                        # save metrics
+                        worksheet_dict["Metrics"].clear()
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Metrics"], metrics, resize=True
+                        )
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def update_data(client, gsheet_name, metrics, confusion_matrix):
+                        gspreadsheet = client.open(gsheet_name)
+
+                        # Map sheet name to worksheet object
+                        worksheet_dict = {sheet.title: sheet
+                            for sheet in gspreadsheet.worksheets()}
+
+                        # update confusion matrix
+                        current_conf_mat = gspread_dataframe.get_as_dataframe(
+                            worksheet_dict["Confusion matrix"])
+                        new_conf_mat = confusion_matrix + current_conf_mat
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Confusion matrix"], new_conf_mat, resize=True
+                        )
+
+                        # save metrics
+                        worksheet_dict["Metrics"].clear()
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Metrics"], metrics, resize=True
+                        )
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def update_data(gspreadsheet, metrics, confusion_matrix):
+                        # Map sheet name to worksheet object
+                        worksheet_dict = {sheet.title: sheet
+                                          for sheet in gspreadsheet.worksheets()}
+
+                        # update confusion matrix
+                        current_conf_mat = gspread_dataframe.get_as_dataframe(
+                            worksheet_dict["Confusion matrix"])
+                        new_conf_mat = confusion_matrix + current_conf_mat
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Confusion matrix"], new_conf_mat, resize=True
+                        )
+
+                        # save metrics
+                        worksheet_dict["Metrics"].clear()
+                        gspread_dataframe.set_with_dataframe(
+                            worksheet_dict["Metrics"], metrics, resize=True
+                        )
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Abstraction layer</h3>
+                <img src="./img/dependency_injection.svg"
+                     alt="dependency injection diagram" style="width: 90%"/>
+
+            </section>
+            <section class="full-screen-code">
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+                        class GsheetWriter:
+                            def __init__(self, google_keyfile_dict, gsheet_name):
+                                self.credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+                                    keyfile_dict=google_keyfile_dict,
+                                    scopes=["https://www.googleapis.com/auth/spreadsheets"]
+                                )
+                                self.client = gspread.authorize(self.credentials)
+                                self.gsheet_name = gsheet_name
+                                self._gsheet = None
+
+                            @property
+                            def gsheet(self):
+                                return self._gsheet or self.open_gsheet()
+
+                            def open_gsheet(self):
+                                    self._gsheet = self.client.open(self.gsheet_name)
+                                return self._gsheet
+					</code></pre>
+            </section>
+
+            <section class="full-screen-code">
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+                        class GsheetWriter:
+                            (...)
+
+                            def update_worksheet(self, *,
+                                    worksheet_name, worksheet_content, erase=False):
+
+                                gsheet = self.gsheet
+                                try:
+                                    worksheet = gsheet.worksheet(worksheet_name)
+                                except gspread.exceptions.WorksheetNotFound:
+                                    rows, cols = worksheet_content.shape
+                                    worksheet = gsheet.add_worksheet(
+                                        title=worksheet_name, rows=str(rows), cols=str(cols)
+                                    )
+
+                                if not erase:
+                                    current_content = get_as_dataframe(worksheet)
+                                    updated_content = current_content + worksheet_content
+                                    set_with_dataframe(
+                                        worksheet, updated_content, resize=True
+                                    )
+                                else:
+                                    set_with_dataframe(
+                                        worksheet, worksheet_content, resize=True
+                                    )
+
+					</code></pre>
+            </section>
+            <section>
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+                        @dataclasses.dataclass
+                        class WorksheetUpdate:
+                            name: str
+                            contents: pd.DataFrame
+                            erase: bool = False
+                    </code></pre>
+            </section>
+            <section class="full-screen-code">
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+
+                        class GsheetWriter:
+                            # auth shenanigans
+                            (...)
+
+                            @tenacity.retry(stop=stop_after_attempt(3))
+                            def update_worksheet(self, *, worksheet_update: WorksheetUpdate):
+                                gsheet = self.gsheet
+                                try:
+                                    worksheet = gsheet.worksheet(worksheet_update.name)
+                                except gspread.exceptions.WorksheetNotFound:
+                                    rows, cols = worksheet_update.contents.shape
+                                    worksheet = gsheet.add_worksheet(
+                                        title=worksheet_update.name, rows=str(rows), cols=str(cols)
+                                    )
+
+                                if not worksheet_update.erase:
+                                    current_content = get_as_dataframe(worksheet)
+                                    updated_content = current_content + worksheet_update.contents
+                                    set_with_dataframe(
+                                        worksheet, updated_content, resize=True
+                                    )
+                                else:
+                                    set_with_dataframe(
+                                        worksheet, worksheet_update.contents, resize=True
+                                    )
+
+					</code></pre>
+            </section>
+            <section class="full-screen-code">
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+                        def update_data(writer, metrics, confusion_matrix):
+                            worksheet_updates = [
+                                WorksheetUpdate(
+                                    name="Confusion matrix",
+                                    contents=confusion_matrix,
+                                    update=True,
+                                ),
+                                WorksheetUpdate(
+                                    name="Metrics", contents=metrics
+                                ),
+                            ]
+                            for worksheet_update in worksheet_updates:
+                                writer.update_worksheet(worksheet_update=worksheet_update)
+
+
+                        def main():
+                            writer = GsheetWriter(credentials, gsheet_name)
+                            update_data(writer, metrics, confusion_matrix)
+
+					</code></pre>
+            </section>
+
+            <section class="full-screen-code">
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+                        class ExcelWriter:
+                            def __init__(self, local_path):
+                                self.local_path = local_path
+
+                            def update_worksheet(self, *,
+                                worksheet_update: WorksheetUpdate):
+
+                                    if worksheet_update.update:
+                                    current_content = pd.read_excel(
+                                        self.local_path,
+                                        sheet_name=worksheet_update.name
+                                    )
+                                    updated_content = (current_content +
+                                        worksheet_update.contents)
+                                    updated_content.to_excel(
+                                        self.local_path,
+                                        sheet_name=worksheet_update.name
+                                    )
+					</code></pre>
+				</section>
+			</section>
+
+			<!-- Loggers, batch functions and other checkpoints [queen croquet] -->
+			<section>
+				<section>
+					<h2 class="fragment" data-fragment-index="1">When things get very uncooperative</h2>
+					<img src="./img/croquet.jpg"
+							 alt="is this even a game of croquet?" style="width: 7em"/>
+				</section>
+			</section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+	<script>
+	Reveal.initialize({
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight ],
+	});
+	document.getElementsByTagName("code").forEach(element => {
+		var dot = document.createElement("div");
+		dot.classList = "dot"
+		element.prepend(dot);
+		element.prepend(dot.cloneNode());
+		element.prepend(dot.cloneNode());
+	});
+	</script>
+</body>
+</html>
