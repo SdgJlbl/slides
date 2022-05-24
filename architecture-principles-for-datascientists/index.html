@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../node_modules/reveal.js/css/reveal.css">
+	<link rel="stylesheet" href="mine.css">
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Off with their I/Os!</h1>
+				<h4>Best architecture practices to contain I/Os</h4>
+			</section>
+			<section>
+				<h2>About me</h2>
+				<ul>
+					<li>Lead data scientist at <img class="icon" src="./img/hokodo-logo.png"
+											  alt="Hokodo logo" style="width: 4em"/></li>
+					<li>I push ML models in prod</li>
+					<li><img class="icon" src="./img/GitHub-logo.png"
+							 alt="GitHub logo" style="width: 1em"/>
+						<a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
+				</ul>
+			</section>
+			<!-- Atmosphere setup [white rabbit]-->
+			<section>
+				<section>
+					<h3>Disclaimer</h3>
+					<p>This talk is very loosely inspired by <i>Alice's adventures in Wonderland</i></p>
+				</section>
+				<!-- It was supposed to be an easy and fast fix, but you have spent most of your day on it.
+					Your test suite has been running for 20 minutes, and you are dozing off..
+					Suddenly, you're wide awake. Something is moving out of the corner of your eye...
+					-->
+				<section>
+					<img class="fragment" data-fragment-index="1" src="./img/white_rabbit.jpg"
+							 alt="follow the white rabbit" style="width: 7em"/>
+				</section>
+
+				<!-- Intrigued, you follow the little mammal, and suddenly, you are falling...
+					-->
+				<section>
+					<h2>Into the rabbit hole</h2>
+				</section>
+				<!--
+					As you fall seemingly forever and ever, you think about how you came to this point.
+					You started from a neat script, that you packaged into independent functions,
+					each an independent component.
+					Exemple de script (preprocessing + learning) transformé en ensemble de fonctions "par composant"
+					Problème sur les tests unitaires / isolation
+					Error handling
+
+				-->
+			</section>
+
+			<!-- Pure functions vs side-effects [drink me/ drink me too]-->
+			<section>
+				<section>
+					<h2>Pure functions versus side-effects</h2>
+					<img src="./img/drink_me.jpg"
+							 alt="drink me" style="width: 3em"/>
+				</section>
+				<section>
+					<h3>Pure functions</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Output depends only on the inputs</li>
+						<li class="fragment" data-fragment-index="2">Easy to unit test</li>
+						<li class="fragment" data-fragment-index="3">Great for parallelising</li>
+						<li class="fragment" data-fragment-index="4">NO side effect </li>
+					</ul>
+				</section>
+				<section>
+					<h3>All I/Os are side-effects!!!</h3>
+					<img src="./img/eat_me.jpg"
+							 alt="eat me" style="width: 7em"/>
+				</section>
+				<section>
+					<p>How can we have both the advantages of using a functional coding style, and still do actual stuff?</p>
+				</section>
+			</section>
+
+			<!-- Perplexed, you squeeze through a small door, wondering how to use all this new knowledge about FP. -->
+			<section>
+				<section>
+					<h2 class="fragment" data-fragment-index="1">Onion architecture</h2>
+					<img src="./img/caterpillar.jpg"
+							 alt="this is a caterpillar, possibly high" style="width: 7em"/>
+				</section>
+				<section>
+					<h3>Onion architecture</h3>
+					<img src="./img/onion.png"
+							 alt="architecture diagram" style="width: 7em"/>
+
+				</section>
+			</section>
+
+			<!-- You feel pretty confident that you can improve your code with this new knowledge.
+			 	Soon, all of the logic will be encapsulated in pure functions, that will be tested with fast unit tests.
+			 	No more nasty bugs, no longer waiting for hours for the test suite to finish.
+			 	Ah, you feel pretty proud of yourself. [mad tea party] -->
+			<section>
+				<section>
+					<h2 class="fragment" data-fragment-index="1">Here the madness begins</h2>
+					<img src="./img/mad_tea_party.jpg"
+							 alt="people drinking tea, in a sense" style="width: 7em"/>
+				</section>
+			</section>
+
+			<!-- Loggers, batch functions and other checkpoints [queen croquet] -->
+			<section>
+				<section>
+					<h2 class="fragment" data-fragment-index="1">When things get very uncooperative</h2>
+					<img src="./img/croquet.jpg"
+							 alt="is this even a game of croquet?" style="width: 7em"/>
+				</section>
+			</section>
+
+		</div>
+	</div>
+				<script src="../node_modules/reveal.js/js/reveal.js"></script>
+				<script>
+				Reveal.initialize({
+					history: true,
+					slideNumber: true,
+					math: {
+						mathjax: '../node_modules/mathjax/MathJax.js',
+						config: 'TeX-AMS_HTML-full&noContrib'  // See http://docs.mathjax.org/en/latest/config-files.html
+						// pass other options into `MathJax.Hub.Config()`
+					},
+					dependencies: [
+							{ src: '../node_modules/reveal.js/plugin/notes/notes.js', async: true },
+							{ src: '../node_modules/reveal.js/plugin/math/math.js', async: true }
+						]
+				});
+				</script>
+			</body>
+			</html>
