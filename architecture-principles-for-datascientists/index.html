@@ -4,7 +4,6 @@
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
 	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
-	<link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/monokai.css">
 	<link rel="stylesheet" href="mine.css">
 </head>
 <body>
@@ -107,9 +106,17 @@
 							 alt="people drinking tea, in a sense" style="width: 7em"/>
 				</section>
 				<section>
-					<pre><code data-trim data-noescape>
-            def a(a **kw):
+					<pre><code data-trim data-noescape data-line-numbers class="language-python">
+            def a(a, **kw):
                 print(a, kw)
+
+            class B(C):
+                def __init__(self):
+                    """
+                    hohoho
+                    """
+                    self.yo = "ha"  # hum
+
 					</code></pre>
 				</section>
 			</section>
@@ -133,6 +140,13 @@
 					history: true,
 					slideNumber: true,
 					plugins: [ RevealHighlight ],
+				});
+				document.getElementsByTagName("code").forEach(element => {
+					var dot = document.createElement("div");
+					dot.classList = "dot"
+					element.prepend(dot);
+					element.prepend(dot.cloneNode());
+					element.prepend(dot.cloneNode());
 				});
 				</script>
 			</body>
