@@ -4,6 +4,7 @@
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
 	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/monokai.css">
 	<link rel="stylesheet" href="mine.css">
 </head>
 <body>
@@ -105,6 +106,12 @@
 					<img src="./img/mad_tea_party.jpg"
 							 alt="people drinking tea, in a sense" style="width: 7em"/>
 				</section>
+				<section>
+					<pre><code data-trim data-noescape>
+            def a(a **kw):
+                print(a, kw)
+					</code></pre>
+				</section>
 			</section>
 
 			<!-- Loggers, batch functions and other checkpoints [queen croquet] -->
@@ -125,7 +132,7 @@
 				Reveal.initialize({
 					history: true,
 					slideNumber: true,
-					},
+					plugins: [ RevealHighlight ],
 				});
 				</script>
 			</body>
