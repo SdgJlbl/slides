@@ -132,22 +132,22 @@
 
 		</div>
 	</div>
-				<script src="../node_modules/reveal.js/dist/reveal.js"></script>
-				<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
-				<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
-				<script>
-				Reveal.initialize({
-					history: true,
-					slideNumber: true,
-					plugins: [ RevealHighlight ],
-				});
-				document.getElementsByTagName("code").forEach(element => {
-					var dot = document.createElement("div");
-					dot.classList = "dot"
-					element.prepend(dot);
-					element.prepend(dot.cloneNode());
-					element.prepend(dot.cloneNode());
-				});
-				</script>
-			</body>
-			</html>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+	<script>
+	Reveal.initialize({
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight ],
+	});
+	document.getElementsByTagName("code").forEach(element => {
+		var dot = document.createElement("div");
+		dot.classList = "dot"
+		element.prepend(dot);
+		element.prepend(dot.cloneNode());
+		element.prepend(dot.cloneNode());
+	});
+	</script>
+</body>
+</html>

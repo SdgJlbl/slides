@@ -2,7 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<link rel="stylesheet" href="../node_modules/reveal.js/css/reveal.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
 	<link rel="stylesheet" href="mine.css">
 	<style media="screen">
 		strong {
@@ -525,15 +526,13 @@
 			</section>
 		</div>
 	</div>
-				<script src="../node_modules/reveal.js/js/reveal.js"></script>
-				<script>
-				Reveal.initialize({
-					history: true,
-					slideNumber: true,
-					dependencies: [
-							{ src: '../node_modules/reveal.js/plugin/notes/notes.js', async: true }
-						]
-				});
-				</script>
-			</body>
-			</html>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script>
+	Reveal.initialize({
+		history: true,
+		slideNumber: true,
+	});
+	</script>
+</body>
+</html>
