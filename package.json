@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/SdgJlbl/slides#readme",
   "dependencies": {
-    "mathjax": "^2.7.0",
-    "reveal.js": "^4.3.0"
+    "mathjax": "^2.7",
+    "reveal.js": "*"
   }
 }
