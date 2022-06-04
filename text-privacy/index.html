@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/monokai.css">
+	<link rel="stylesheet" href="mine.css">
+	<style media="screen">
+		strong {
+			color: #191715;
+		}
+		.red {
+			color: #DB162F;
+		}
+		.blue {
+			color: #37879A;
+		}
+		.reveal .emph {
+			color: #37879A;
+			font-family: "Unica One";
+		}
+		.lightgray {
+			color: #8AB0AB;
+		}
+		.reveal p.large {
+			font-size: 150%;
+		}
+		.reveal p.email {
+			font-family: monospace;
+			font-size: 80%;
+		}
+		.reveal img.embedded {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		.reveal img.aligned {
+			display: inline-block;
+			margin: 0;
+		}
+		.reveal img.no-border {
+			border: none;
+			box-shadow: none;
+		}
+		.reveal p.references {
+			margin-top: 2em;
+			text-align: right;
+		}
+		.reveal pre {
+			width: 100%;
+			font-size: 1.6rem;
+		}
+		.reveal span.unicode {
+			font-size: 3rem;
+			vertical-align: middle;
+		}
+		.slides .footer{
+		  position:absolute;
+			font-size: 60%;
+		  bottom: -50%;
+		}
+		#left {
+		  left:-8.33%;
+		  text-align: left;
+		  float: left;
+		  width:40%;
+		  z-index:-10;
+		}
+
+	#right {
+		  left:31.25%;
+		  top: 75px;
+		  float: right;
+		  text-align: left;
+		  z-index:-10;
+		  width:60%;
+		}
+		.reveal section img.peopledoc-logo {
+			border: none;
+			background-color: transparent;
+			height: 1em;
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			vertical-align: middle;
+			margin-left: 0.2em;
+		}
+		.half {
+			flex-direction: row;
+			justify-content: center;
+			flex-basis: 50%;
+		}
+		.two-halves {
+			display: flex;
+		}
+		.fragment.current-visible.visible:not(.current-fragment) {
+		    display: none;
+		    height:0px;
+		    line-height: 0px;
+		    font-size: 0px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Privacy-preserving text analysis</h1>
+				<h4>Sarah Diot-Girard</h4>
+			</section>
+			<section>
+				<h2>About me</h2>
+				<ul>
+					<li>Data scientist at <img class="icon" src="./img/pdoc-logo.png"
+											  alt="PeopleDoc logo" style="width: 4em"/></li>
+					<li>Interested in devops and ethics</li>
+				</ul>
+				<p>
+					<img class="icon" src="./img/GitHub-logo.png"
+						 alt="GitHub logo" style="width: 1em"/>
+					<a href="https://github.com/SdgJlbl">@SdgJlbl</a>
+				</p>
+			</section>
+			<!-- Why? -->
+			<section>
+				<section>
+					<h2>Motivation</h2>
+					<p class="fragment" data-fragment-index="1">Distinguish between <strong>legitimate owls</strong> and <br>
+						<strong>SPAM</strong> <span style="font-size: smaller">(Strigidae* Proliferating Adverse Messages)</span>
+					</p>
+					<p class="fragment" data-fragment-index="2">while preserving privacy of owl communications</p>
+					<footer class="fragment" data-fragment-index="1" style="font-size: 70%">*"Strigidae" is a fancy word for "owl"</footer>
+					<aside class="notes">
+						You're the headmaster of a boarding school and your students receive letters every day.
+						But lately, you have been noticing an increase in advertisments, and unwanted solicitations, and
+						your students are complaining. Even their owls are complaining. Ah, yes, their owls. Did I
+						mention you're the headmaster of a <strong>magical</strong> school ? Heck, you're Dumbledore.
+						So you want to set up a filter to distinguish between legitimate owls and SPAM which stand for
+						(Strigidae Proliferating Adverse Messages)
+					</aside>
+				</section>
+				<section>
+					<p>The problem is getting out of hand</p>
+					<aside class="notes">
+						The increase in wing flutters threaten the peace in the great hall at breakfast time.
+					</aside>
+				</section>
+				<section>
+					<p>You try a rule-based approach</p>
+					<aside class="notes">
+						It's not accurate and flexible enough.
+						Only collect (and use) sensitive data if absolutely necessary.
+					</aside>
+				</section>
+				<section>
+					<p>You have to collect some private information</p>
+				</section>
+				<section>
+					<h3>Best way of doing <br>privacy-preserving ML</h3>
+					<p class="fragment"> Don't collect private information</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Encryption</h2>
+					<aside class="notes">
+						You are co-responsible for the secure keeping of data you use.
+						Enforce security best practices, seek help from your IT security team.
+						Data is encrypted at rest, but what about when training a model?
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Dataset anonymisation</h2>
+					<aside class="notes">
+						You need to remove as much private information as possible from the dataset.
+						You ask help from other people in Hogwarts.
+						Ms Pomfrey has some experience in storing sensitive (medical) information.
+					</aside>
+				</section>
+				<section>
+					<h3>PII and sensitive attributes</h3>
+					<ul>
+						<li><strong>Personally Identifying Information</strong>: values that identify an individual</li>
+						<li class="fragment"><strong>Sensitive attributes</strong>: values linked to an individual that should remain private</li>
+					</ul>
+					<aside class="notes">
+						PII = names, addresses, emails, IP, MAC addresses, cookies ID...
+						sensitive attr -> medical status, financial information, ...
+					</aside>
+				</section>
+				<section>
+					<h3>PII removal in structured data</h3>
+					<ul>
+						<li class="fragment">Masking</li>
+						<li class="fragment">Hashing</li>
+						<li class="fragment">Faking</li>
+						<li class="fragment">Mapping</li>
+					</ul>
+					<aside class="notes">
+						Faker python library;
+						mapping -> the data scientist does not need the information, but some other department does (billing)
+					</aside>
+				</section>
+				<section>
+					<h3>PII removal in text</h3>
+					<p class="fragment">Determine which tokens are sensitive</p>
+				</section>
+				<section>
+					<h3>Dictionary-based PII removal</h3>
+					<p>Remove all names of Hogwarts students and staff</p>
+					<aside class="notes">
+						Is not perfect since you are not removing friends and relatives names, but a good first step;
+						bad for minorities;
+						More conservative: use anti-dictionaries (anything that is not in the dictionary is removed)
+					</aside>
+				</section>
+				<section>
+					<h3>Rule-based PII removal</h3>
+					<p>Use the structure of the documents</p>
+					<aside class="notes">
+						Think of forms, reports, IM logs, CV... anything with a header or fields
+					</aside>
+				</section>
+				<section>
+					<h3>Regular expressions</h3>
+					<p>hermione.granger@aowl.co.uk</p>
+					<pre class="fragment"><code>([a-z0-9\.\-\+])*@([a-z0-9])*(.([a-z])*)+</code></pre>
+					<aside class="notes">
+						works great for emails, tel numbers, SS numbers and other ids
+					</aside>
+				</section>
+				<section>
+					<h3>Named Entity Recognition</h3>
+					<img src="img/ner.png" alt="Example of NER with spaCy">
+					<aside class="notes">
+						a variety of named and numeric entities, including companies, locations, organizations and products
+						Out-of-the-shelf libraries (spaCy, ...)
+						choose recall over precision -> better to have false positive
+						Replace masked values with generic tokens (PER, LOC, ...) or fake values
+					</aside>
+				</section>
+				<section>
+					<h3>Ad-hoc pseudonymisation algorithms</h3>
+					<div class="fragment">
+						<p><strong>+</strong> improved accuracy on your use-case</p>
+						<p><strong>-</strong> requires manual annotation</p>
+					</div>
+					<aside class="notes">
+						NER works best on typical text (news articles, ...)
+						If you're working with exotic data (CV, medical reports, ...)
+						Domain-specific tools
+						annotation -> time-consuming + exposes data
+					</aside>
+				</section>
+				<section>
+					<h3>An extract from Ms Pomfrey records</h3>
+					<table>
+						<thead>
+							<tr><th>ID</th><th>Age</th><th>Gender</th><th>House</th><th>Magical Disease</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><em>1</em></td><td>15</td><td>M</td><td>Slytherin</td><td>Dragon pox</td></tr>
+							<tr><td><em>2</em></td><td>19</td><td>M</td><td>Hufflepuff</td><td>Black cat flu</td></tr>
+							<tr><td><em>3</em></td><td>12</td><td>F</td><td>Gryffindor</td><td>Levitation sickness</td></tr>
+							<tr><td><em>4</em></td><td>18</td><td>F</td><td>Slytherin</td><td>Petrification</td></tr>
+							<tr><td><em>5</em></td><td>14</td><td>M</td><td>Gryffindor</td><td>Hippogriff bite</td></tr>
+							<tr><td><em>6</em></td><td>14</td><td>M</td><td>Gryffindor</td><td>Dragon pox</td></tr>
+							<tr><td><em>7</em></td><td>19</td><td>M</td><td>Ravenclaw</td><td>Black cat flu</td></tr>
+							<tr><td><em>8</em></td><td>13</td><td>F</td><td>Ravenclaw</td><td>Levitation sickness</td></tr>
+							<tr><td><em>9</em></td><td>17</td><td>F</td><td>Slytherin</td><td>Lycanthropy</td></tr>
+							<tr><td><em>10</em></td><td>15</td><td>M</td><td>Gryffindor</td><td>Hippogriff bite</td></tr>
+						</tbody>
+					</table>
+
+					<p class="fragment">What can you tell me about Harry, a 15-year-old Gryffindor boy?</p>
+					<aside class="notes">
+						Pseudonymisation is a first step but not enough
+					</aside>
+				</section>
+				<section>
+					<h3>Anonymisation in structured data</h3>
+					<p>Some combinations of pseudo-identifiers may be unique</p>
+					<aside class="notes">
+						pseudo-identifiers: age, gender, zipcode, ...
+					</aside>
+				</section>
+				<section>
+					<h3><em>k</em>-anonymity</h3>
+					<p>No combination of public attributes <br>singles out <strong>less than <em>k</em> rows</strong> in your dataset</p>
+				</section>
+				<section>
+					<h3><em>k</em>-anonymity</h3>
+					<p>Use ranges or aggregates instead of exact values</p>
+					<aside class="notes">
+						don't need exact values
+					</aside>
+				</section>
+				<section>
+					<h3>Enforcing 2-anonymity</h3>
+					<table>
+						<thead>
+							<tr><th>ID</th><th>Age</th><th>Gender</th><th>House</th><th>Magical Disease</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><em>1</em></td><td>15-20</td><td>M</td><td>Slyth./Griff.</td><td>Dragon pox</td></tr>
+							<tr><td><em>2</em></td><td>15-20</td><td>M</td><td>Huff./Rav.</td><td>Black cat flu</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>3</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
+							<tr><td><em>4</em></td><td>15-20</td><td>F</td><td>Slyth./Griff.</td><td>Petrification</td></tr>
+							<tr><td><em>5</em></td><td>10-14</td><td>M</td><td>Slyth./Griff.</td><td>Hippogriff bite</td></tr>
+							<tr><td><em>6</em></td><td>10-14</td><td>M</td><td>Slyth./Griff.</td><td>Dragon pox</td></tr>
+							<tr><td><em>7</em></td><td>15-20</td><td>M</td><td>Huff./Rav.</td><td>Black cat flu</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>8</em></td><td>10-14</td><td>F</td><td>Griff./Rav.</td><td>Levitation sickness</td></tr>
+							<tr><td><em>9</em></td><td>15-20</td><td>F</td><td>Slyth./Griff.</td><td>Lycanthropy</td></tr>
+							<tr><td><em>10</em></td><td>15-20</td><td>M</td><td>Slyth./Griff.</td><td>Hippogriff bite</td></tr>
+						</tbody>
+					</table>
+					<p class="fragment" data-fragment-index="1">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
+				</section>
+				<section>
+					<h3><em>l</em>-diversity</h3>
+					<p class="fragment">Each <em>k</em>-anonymous group contains at least<br>
+						<strong><em>l</em> different values</strong> for a given sensitive attribute</p>
+					<aside class="notes">
+						k- anonymity offers plausible deniability to individuals
+						all k individuals in the same group can share the same value for a protected attribute
+						l-diversity ensures that each k-anonymous group contains at least l different values of a sensitive attribute
+					</aside>
+				</section>
+				<section>
+					<h3>Enforcing 2-diversity</h3>
+					<table>
+						<thead>
+							<tr><th>ID</th><th>Age</th><th>Gender</th><th>House</th><th>Magical Disease</th></tr>
+						</thead>
+						<tbody>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>3</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr><td><em>5</em></td><td>10-14</td><td>M</td><td>\</td><td>Hippogriff bite</td></tr>
+							<tr><td><em>6</em></td><td>10-14</td><td>M</td><td>\</td><td>Dragon pox</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>8</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr><td><em>12</em></td><td>10-14</td><td>M</td><td>\</td><td>Common cold</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>18</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr><td><em>21</em></td><td>10-14</td><td>M</td><td>\</td><td>Black cat flu</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>25</em></td><td>10-14</td><td>F</td><td>\</td><td>Levitation sickness</td></tr>
+							<tr class="fragment grow" data-fragment-index="2"><td><em>28</em></td><td>10-14</td><td>F</td><td>\</td><td>Dragon pox</td></tr>
+							<tr><td><em>30</em></td><td>10-14</td><td>M</td><td>\</td><td>Hippogriff bite</td></tr>
+						</tbody>
+					</table>
+					<p class="fragment" data-fragment-index="1">What can you tell me about Luna, a 13-year-old Ravenclaw girl?</p>
+				</section>
+				<section>
+					<h3><em>t</em>-closeness</h3>
+					<p><em>l</em>-diversity does not protect from statistical attacks</p>
+				</section>
+				<section>
+					<h3><em>t</em>-closeness</h3>
+					<p>The <strong>distribution</strong> of the sensitive attribute in any group <br>is close to the overall distribution of the attribute</p>
+					<aside class="notes">
+						for a given metric
+					</aside>
+				</section>
+				<section>
+					<h3>Anonymisation in structured data</h3>
+					<p>Trade-off between dataset value and privacy</p>
+					<aside class="notes">
+						k-diversity, l-diversity and t-closeness all limit the amount of information
+						a legitimate user can get from the data.
+					</aside>
+				</section>
+				<section>
+					<h3>What about anonymisation in text?</h3>
+				</section>
+				<section>
+					<p>Minerva McGonagall</p>
+					<p class="fragment">head of the Gryffindor House</p>
+					<aside class="notes">
+						What do we want to remove? the whole phrase? only Gryffindor? -> limit to 4 persons
+					</aside>
+				</section>
+				<section>
+					<h3>Anonymisation in text</h3>
+					<p>Extract pseudo-identifiers</p>
+					<p>Mask or aggregate them</p>
+					<aside class="notes">
+						if semi-structured, mask or aggregate pseudo-identifier (eg age in CV, college in CV...)
+						use NER or RegEx to mask or aggregate pseudo-identifier
+						very application / dataset dependant but think about it
+					</aside>
+				</section>
+				<section>
+					<h3>Is it enough?</h3>
+					<p class="fragment">Authorship attribution algorithms...</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Privacy-preserving models</h2>
+					<aside class="notes">
+						Your dataset has been pseudonymised, but not thoroughly anonymised.
+						Your ML model can still leak information.
+						Especially if it's exposed outside of a controlled env (mobile devices, browser...)
+					</aside>
+				</section>
+				<section>
+					<h3>Differential privacy</h3>
+					<p>Mathematical framework to quantify the <strong>privacy loss</strong></p>
+					<aside class="notes">
+						of a procedure/ algorithm
+					</aside>
+					</section>
+				<section>
+					<h3>Differential privacy</h3>
+					\[ \Pr[\mathscr{K}(D_1) \in S] ≤ \exp(\epsilon) × \Pr[\mathscr{K}(D_2) \in S]\]
+
+					<aside class="notes">
+						D_1 = D_2 + 1
+						K -> randomized process
+						Pr -> probability space
+					</aside>
+				</section>
+				<section>
+					<h3>Differential privacy</h3>
+					<p>Results should not depend "too much" <br>on the data of any one individual</p>
+				</section>
+				<section>
+					<h3>A non-differential private algorithm</h3>
+					<h5>Maximum a posteriori</h5>
+					<ul>
+						<li class="fragment"><em>n</em> first samples are <strong>SPAM</strong></li>
+						<li class="fragment"><span style="font-variant: small-caps">prediction function</span>: <strong>SPAM</strong> with probability 1</li>
+						<li class="fragment"><em>n</em> +1-th sample: <strong>not SPAM</strong></li>
+						<li class="fragment"><span style="font-variant: small-caps">updated prediction function</span>: <strong>SPAM</strong> with probability \(\frac{n}{n+1}\), <br>
+							<strong>not SPAM</strong> with probability \(\frac{1}{n+1}\)</li>
+					</ul>
+					<aside class="notes">
+						HIV status
+					</aside>
+				</section>
+				<section>
+					<h3>Differential privacy <br>when collecting data</h3>
+					<p>Did you cheat to your OWL test?</p>
+					<img src="img/differential_privacy.png" alt="a differential private procedure">
+					<aside class="notes">
+						If you know p and k, you can recover true statistics with a limited precision loss
+					</aside>
+				</section>
+				<section>
+					<h3>Differential privacy <br>when storing data</h3>
+					<p>Apply a differential private procedure to anonymize a dataset</p>
+				</section>
+				<section>
+					<h3>Differential private models</h3>
+					<h5>Stochastic gradient descent</h5>
+					<ul>
+						<li>Gradient clipping on each sample</li>
+						<li class="fragment">Add random noise to the clipped gradients</li>
+					</ul>
+					<aside class="notes">
+						1.limit how much each individual training point can influence the resulting
+							gradient computation
+						2.make it statistically impossible to
+							know whether or not a particular point was included in the training set by comparing the updates
+							stochastic gradient descent applies
+						+ micro-batches for performance
+						+ additional hyperparamters: norm_clip, noise_multiplier, micro_batches
+						+ accounting to compute the privacy budget
+						-> TF privacy library
+					</aside>
+				</section>
+				<section>
+					<h3>Private aggregation of teacher ensembles (PATE)</h3>
+					<img src="img/pate1.png">
+					<aside class="notes">
+						If strong consensus, noise does not matter; else, noise protects privacy (edge cases)
+						Final API is differential private, but if teachers are exposed, not
+					</aside>
+				</section>
+				<section>
+					<h3>Private aggregation of teacher ensembles (PATE)</h3>
+					<img src="img/pate2.png">
+					<aside class="notes">
+						We train the student on unlabeled (hence public) data, labeled by teachers' consensus
+						Student model is self-sufficient and can be exposed
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Training a model outside of your environment</h2>
+					<aside class="notes">
+						You want to train a model on sensitive data, but you cannot do it in a controlled environment
+						(ie you need to train in the cloud)
+					</aside>
+				</section>
+				<section>
+					<h3>Federated learning</h3>
+					<h5>Learning without sharing data</h5>
+					<img src="img/federated_learning.png">
+					<aside class="notes">
+						use-case: hospitals learning a global model, decentralized learning;
+						privacy attack (from malicious servers) and can be backdoor by malicious clients;
+						privacy -> preserved by encryption, but easier to backdoor
+					</aside>
+				</section>
+				<section>
+					<h3>Homomorphic encryption</h3>
+					<h5>Learning without exposing data</h5>
+					<img src="img/homomorphic_encryption.png">
+					<aside class="notes">
+						homomorphism function that preserves some operations (additions and multiplications)
+					</aside>
+				</section>
+				<section>
+					<h3>Homomorphic encryption limitations</h3>
+					<ul>
+						<li>Managing noise levels</li>
+						<li class="fragment">Non-linear operations</li>
+						<li class="fragment">Performances</li>
+					</ul>
+					<aside class="notes">
+						noise (protection against chosen plaintext attack)  -> bootstrapping = encrypting + decrypting inplace;
+						looking for a fully homomorphic bootstrappable encryption scheme
+					</aside>
+				</section>
+			</section>
+			<!--
+				Goals:
+				0) security measures (encryptions...)
+				1°) anonymize datasets
+					a) pseudonymisation in structured data
+					b) pseudonymisation in unstructured text data
+					c) anonymisation in structured data (k-anonymity)
+					d) anonymisation in unstructured data (authorship attribution)
+				2°) expose safely a model
+					a) differential privacy
+					b) aggregation of teachers
+				3°) train a model outside of my environment without exposing my data
+					a) federated learning
+					b) homorphic encryption
+
+			-->
+			<section>
+				<h3>In a nutshell</h3>
+				<ul>
+					<li class="fragment">True anonymisation is hard</li>
+					<li class="fragment">Beware of edge cases</li>
+					<li class="fragment">Bugs can ruin all your efforts</li>
+					<li class="fragment">It's always a trade-off</li>
+				</ul>
+				<aside class="notes">
+					pseudonymisation is not enough;
+					eg foreign first names;
+					edge cases -> overfitting;
+					between privacy and utility / accuracy
+				</aside>
+			</section>
+			<section>
+				<h3>Future perspectives</h3>
+				<ul>
+					<li class="fragment">How to evaluate the impact on your use-case?</li>
+					<li class="fragment">How to generate privacy-preserving synthetic data? <br>With which guarantees?</li>
+					<li class="fragment">How to quantify privacy loss without accessing the values?</li>
+				</ul>
+				<aside class="notes">
+					eg deidentification for clinical data -> loss of concept < 3%);
+				</aside>
+			</section>
+			<section>
+				<h3>And this SPAM problem?</h3>
+				<p>Well, maybe you do want to buy a Nimbus 2000 after all...</p>
+			</section>
+
+			<section>
+				<h2>Questions?</h2>
+				<p><img class="icon" src="./img/GitHub-logo.png"
+							 alt="GitHub logo" style="width: 1em"/>
+						<a href="https://github.com/SdgJlbl">@SdgJlbl</a></p>
+				<p><img class="icon" src="./img/pdoc-logo.png"
+											  alt="PeopleDoc logo" style="width: 4em"/></p>
+				<footer style="font-size: 50%">
+					Slides available on sdg.jlbl.net
+				</footer>
+			</section>
+			<section>
+				<h3>Bibliography</h3>
+				<div style="font-size: 50%">
+					<p><em>k-anonymity: a model for protecting privacy</em>, Latanya Sweeney (2002)</p>
+					<p><em>Mondrian Multidimensional k-Anonymity</em>, Kristen LeFevre, David J. DeWitt and Raghu Ramakrishnan (2006)</p>
+					<p><em>t-Closeness: Privacy beyond k-anonymity and l-diversity</em>, Ninghui Li, Tiancheng Li and Suresh Venkatasubramanian (2007)</p>
+					<p><em> The Algorithmic Foundations of Differential Privacy</em>, Cynthia Dwork and Aaron Roth (2014)</p>
+					<p><em>Deep learning with differential privacy</em>, Martin Abadi, Andy Chu, Ian Goodfellow, H. Brendan McMahan, Ilya Mironov, Kunal Talwar and Li Zhang (2016)</p>
+					<p><em>Semi-supervised knowledge transfer for deep learning from private training data</em>, Nicolas Papernot, Martín Abadi, Ulfar Erlingsson, Ian Goodfellow and Kunal Talwar (2016)</p>
+					<p><em> Beyond Inferring Class Representatives: User-Level Privacy Leakage From Federated Learning</em>, Zhibo Wang, Mengkai Song, Zhang Zhifei, Yang Song, Qian Wang and Hairong Qi (2019)</p>
+					<p><em>Practical secure aggregation for privacy-preserving machine learning</em>, Keith Bonawitz, Vladimir Ivanov, Ben Kreuter, Antonio Marcedone, H. Brendan McMahan, Sarvar Patel, Daniel Ramage, Aaron Segal and Karn Seth (2017)</p>
+				</div>
+			</section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/math/math.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+
+	<script>
+	Reveal.initialize({
+		mathjax2: {
+			mathjax: '../node_modules/mathjax/MathJax.js',
+			config: 'TeX-AMS_HTML-full',
+		},
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight, RevealMath.MathJax2 ],
+	});
+	</script>
+</body>
+</html>

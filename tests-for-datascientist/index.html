@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/monokai.css">
+	<link rel="stylesheet" href="mine.css">
+	<style media="screen">
+		strong {
+			color: #191715;
+		}
+		.red {
+			color: #DB162F;
+		}
+		.blue {
+			color: #37879A;
+		}
+		.reveal .emph {
+			color: #37879A;
+			font-family: "Unica One";
+		}
+		.lightgray {
+			color: #8AB0AB;
+		}
+		.reveal p.large {
+			font-size: 150%;
+		}
+		.reveal p.email {
+			font-family: monospace;
+			font-size: 80%;
+		}
+		.reveal img.embedded {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		.reveal img.aligned {
+			display: inline-block;
+			margin: 0;
+		}
+		.reveal img.no-border {
+			border: none;
+			box-shadow: none;
+		}
+		.reveal p.references {
+			margin-top: 2em;
+			text-align: right;
+		}
+		.reveal pre {
+			width: 100%;
+			font-size: 1.6rem;
+		}
+		.reveal span.unicode {
+			font-size: 3rem;
+			vertical-align: middle;
+		}
+		.slides .footer{
+		  position:absolute;
+			font-size: 60%;
+		  bottom: -50%;
+		}
+		#left {
+		  left:-8.33%;
+		  text-align: left;
+		  float: left;
+		  width:40%;
+		  z-index:-10;
+		}
+
+	#right {
+		  left:31.25%;
+		  top: 75px;
+		  float: right;
+		  text-align: left;
+		  z-index:-10;
+		  width:60%;
+		}
+		.reveal section img.peopledoc-logo {
+			border: none;
+			background-color: transparent;
+			height: 1em;
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			vertical-align: middle;
+			margin-left: 0.2em;
+		}
+		.half {
+			flex-direction: row;
+			justify-content: center;
+			flex-basis: 50%;
+		}
+		.two-halves {
+			display: flex;
+		}
+		.fragment.current-visible.visible:not(.current-fragment) {
+		    display: none;
+		    height:0px;
+		    line-height: 0px;
+		    font-size: 0px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Introduction to tests for data scientists</h1>
+				<h4>Sarah Diot-Girard</h4>
+			</section>
+			<section>
+				<h2>About me</h2>
+				<ul>
+					<li>Data scientist at <img class="icon" src="./img/pdoc-logo.png"
+											  alt="PeopleDoc logo" style="width: 4em"/></li>
+					<li>Interested in devops and ethics</li>
+					<li><img class="icon" src="./img/GitHub-logo.png"
+							 alt="GitHub logo" style="width: 1em"/>
+						<a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
+				</ul>
+			</section>
+			<!-- Why? What? -->
+			<section>
+				<section>
+					<h2>Prologue</h2>
+					<h3>Definitions and concepts</h3>
+				</section>
+				<section>
+					<h3>Why test?</h3>
+					<p>Testing by users is no longer a thing</p>
+				</section>
+				<section>
+					<h3>Why test?</h3>
+					<p>ML algorithms fail silently</p>
+				</section>
+				<section>
+					<h3>Why test?</h3>
+					<p>Bugs in data + bugs in code = a lot of bugs</p>
+				</section>
+				<section>
+					<h3>What is a test?</h3>
+					<p>
+						A piece of software </br>
+						that can either <strong><span class="blue">pass</span></strong>
+						or <strong><span class="red">fail</span></strong> </br>
+						and whose outcome is correlated </br>
+						with functional correctness
+					</p>
+				</section>
+				<section>
+					<h3>What is a good test?</h3>
+					<ul>
+						<li>Readable and simple</li>
+						<li class="fragment" data-fragment-index="1">Thorough</li>
+						<li class="fragment" data-fragment-index="2">Specific <br>
+							<span class="fragment current-visible"  data-fragment-index="3" style="position:absolute;top:2em;left:2em;">
+								<span class="fragment fade-out" data-fragment-index="4">
+									<img src="img/car_dashboard.jpg" alt="A car dashboard" style="width: 90%">
+								</span> </span></li>
+						<li class="fragment" data-fragment-index="5">
+                            <span class="fragment highlight-blue" data-fragment-index="8">Repeatable (stable)</span></li>
+						<li class="fragment" data-fragment-index="6">Isolated</li>
+						<li class="fragment" data-fragment-index="7">
+                            <span class="fragment highlight-blue" data-fragment-index="9">Fast</span></li>
+					</ul>
+					<aside class="notes">
+						repeatable -> once it fails, it'll fail till you fix the bug;
+						isolated -> if it fails in your test suite, it fails on its own -> you can debug each test
+						one-by-one
+					</aside>
+				</section>
+				<section>
+					<img src="img/mindmap.jpg" alt="Mindmap of test-related topics" style="width: 80%">
+				</section>
+				<section>
+					<h3>Topics we won't cover</h3>
+					<ul>
+						<li class="fragment">Debugging your maths </li>
+						<li class="fragment">How to set up a CI</li>
+						<li class="fragment">Data monitoring</li>
+						<li class="fragment">Test-driven development</li>
+						<li class="fragment">Coverage and mutation testing</li>
+					</ul>
+					<aside class="notes">
+						Math bug: using a softmax output layer on a regression problem
+						or setting your learning rate too high and getting instabilities
+					</aside>
+				</section>
+				<section>
+					<h3>Topics we will cover</h3>
+						<p>Testing a ML pipeline</p>
+					<img src="img/pipeline1.png"
+						 alt="data loading -> preprocessing -> ML algorithm -> API interface"
+						 style="width: 100%">
+				</section>
+			</section>
+			<!-- The incredible synergy of unit tests and functional programming -->
+			<section>
+				<section>
+					<h2>Chapter 1</h2>
+					<h3>Unit tests for preprocessing</h3>
+					<img src="img/pipeline2.png"
+						 alt="data loading -> preprocessing -> ML algorithm -> API interface"
+						 style="width: 100%">
+				</section>
+				<section>
+					<h3>Preprocessing</h3>
+					<ul>
+						<li>Handling missing values</li>
+						<li>Encoding labels</li>
+						<li>Normalizing values</li>
+						<li>...</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Preprocessing</h3>
+					<p>All these operations can be written as <em>functions</em>.</p>
+				</section>
+				<section>
+					<pre><code>
+df_filled = fill_missing_values(df_raw, how='average')
+
+df_cleaned = remove_outliers(df_filled)
+					</code></pre>
+				</section>
+				<section>
+					<h3>Functional programming</h3>
+					<p> y = f(x)</p>
+					<p class="fragment">-> no side effects</p>
+				</section>
+				<section>
+					<pre><code>
+df = fill_missing_values(df_raw, how='average') <span class="fragment blue unicode">&#10004;</span>
+
+fill_missing_values(df_raw, how='average') <span class="fragment red unicode">&#10007;</span>
+
+df = fill_missing_values('raw_df.csv', how='average') <span class="fragment red unicode">&#10007;</span>
+
+df_out, label_mapping = encode_labels(df_in)  <span class="fragment blue unicode">&#10004;</span>
+					</code></pre>
+					<p class="fragment">Output(s) depend only on input(s)</p>
+					<aside class="notes">
+						2) modify the DataFrame in place
+						3)  I/O are side-effects
+					</aside>
+				</section>
+
+				<section>
+					<h3>Unit tests</h3>
+					<p>... test units of source code</p>
+				</section>
+				<section>
+					<h3>Unit tests</h3>
+					<p>... work great with functional programming</p>
+					<aside class="notes">
+						because the logic of each function can be tested thoroughly
+					</aside>
+				</section>
+				<section>
+					<h3>Unit tests</h3>
+					<p>Think about your invariants!</p>
+					<p class="fragment"> Property-based testing -> <code>hypothesis</code></p>
+					<aside class="notes">
+						After you've taken care of missing values -> no more mising value
+						Normalisation -> check everything between 0 and 1
+					</aside>
+				</section>
+				<section>
+					<pre><code>import numpy as np
+from hypothesis import given
+from hypothesis.extra.numpy import arrays
+
+def normalize(arr):
+    return np.zeros(arr.shape)
+
+@given(arrays(dtype=float, shape=(3,4)))
+def test_normalize_is_between_bounds(input):
+    output = normalize(input)
+    assert np.all(output >= 0)
+    assert np.all(output <= 1)
+
+@given(arrays(dtype=float, shape=(3,4)))
+def test_normalize_is_idempotent(a):
+    normalized_input = normalize(input)
+    output = normalize(normalized_input)
+    assert np.all(output == normalized_input)</code></pre>
+				</section>
+				<section>
+					<p>Add a few trivial tests with simple examples</p>
+				</section>
+			</section>
+
+			<!-- Is your algorithm buggy? -->
+			<section>
+				<section>
+					<h2>Chapter 2</h2>
+					<h3>ML algorithms and their plight</h3>
+					<img src="img/pipeline3.png"
+						 alt="data loading -> preprocessing -> ML algorithm -> API interface"
+						 style="width: 100%">
+				</section>
+				<section>
+					<h3>Algorithms</h3>
+					<p class="fragment"> are hard to unit test</p>
+				</section>
+				<section>
+					<h3>Algorithms</h3>
+					<ul>
+						<li>... are iterative processes</li>
+						<li class="fragment">... are stochastic</li>
+						<li class="fragment">... suffer from the oracle problem</li>
+						<li class="fragment">... are slow</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Algorithms are iterative</h3>
+					<p>Unit-test what you can</p>
+					<aside class="notes">
+						<p>Check that loss decreases on one iteration</p>
+						<p>Unit-test auxiliary functions</p>
+					</aside>
+				</section>
+				<section>
+					<h3>Component tests</h3>
+					<p>... test whole chunks of your code</p>
+					<p class="fragment">(data loading, preprocessing, model training...)</p>
+				</section>
+				<section>
+					<h3>Algorithms are stochastic</h3>
+					<p>Fix random seed</p>
+					<p class="fragment">Average multiple runs</p>
+					<aside class="notes">
+						and we want our tests to be repeatable
+					</aside>
+				</section>
+				<section>
+					<h3>Algorithms don't have a test oracle</h3>
+					<p>Differential testing</p>
+					<p>Metamorphic testing</p>
+					<p>Reference tests</p>
+				</section>
+				<section>
+					<h3>Differential testing</h3>
+                    <p>Check multiple implementations <br> against one another</p>
+				</section>
+				<section>
+					<h3>Differential testing</h3>
+                    <p>Check for non-regression between <br>your old implementation and your new one</p>
+					<p class="fragment">Check against a random or uniform baseline</p>
+				</section>
+				<section>
+					<h3>Metamorphic testing</h3>
+                    <p>Run the same implementation multiple times with modified input</p>
+					\[ \Phi (f(x)) = f( \phi (x)) \]
+				</section>
+				<section>
+					<h3>Metamorphic testing</h3>
+					<pre><code>
+def test_compute_variance():
+
+  x = np.random.rand(25)
+
+  assert compute_variance(x * -1) == compute_variance(x)
+
+  assert compute_variance(2 * x) == 4 * compute_variance(x)
+					</code></pre>
+				</section>
+				<section>
+					<h3>Reference tests</h3>
+					<p>Store input and reference output</p>
+                    <p class="fragment">Check that computed output matches reference output</p>
+				</section>
+				<section>
+					<h3>The necessary evil of reference tests</h3>
+					<ul>
+						<li>Low coverage</li>
+						<li>Hard to maintain</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Reference tests</h3>
+					<p>... can be kept up-to-date with <code>tdda</code></p>
+				</section>
+				<section>
+					<h3>Algorithms are slow</h3>
+					<p>And many mitigation strategies make them slower</p>
+					<aside class="notes">
+						adding a slow test should be a mindful decision
+					</aside>
+				</section>
+				<section>
+					<p>Have two test suites:
+					<ul>
+						<li>a fast one that runs at each modification</li>
+						<li>a slow one running every night</li>
+					</ul>
+					</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Chapter 3</h2>
+					<h3>I/O and end-to-end tests</h3>
+					<img src="img/pipeline4.png"
+						 alt="data loading -> preprocessing -> ML algorithm -> API interface"
+						 style="width: 100%">
+				</section>
+				<section>
+					<h3>How to test I/O?</h3>
+					<p>Functional programming won't work <br>because of side-effect</p>
+					<p>Mocking can help</p>
+				</section>
+				<section>
+					<h3>Mocks</h3>
+					<p>... mimic the behaviour of an object in a controlled way</p>
+                    <aside class="notes">
+                        Mocks are ways of cheating that allow you to call a function and get a predetermined result
+                        without actually executing the function.
+                        eg load a file from disk
+                        also great to mock slow functions in unit tests
+                    </aside>
+				</section>
+				<section>
+				<pre><code>
+def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
+    ...
+
+
+def model_training(arr: np.ndarray):
+    ...
+				</code></pre>
+				</section>
+				<section>
+					<h3>Testing the whole pipeline</h3>
+					<p class="fragment">End-to-end tests</p>
+				</section>
+				<section data-transition="slide-in none-out">
+					<h3>Test hierarchy</h3>
+					<img src="img/pyramid1.png" alt="test pyramid" style="width: 100%">
+				</section>
+				<section data-transition="none">
+					<h3>Test hierarchy</h3>
+					<img src="img/pyramid2.png" alt="test pyramid" style="width: 100%">
+				</section>
+				<section data-transition="none">
+					<h3>Test hierarchy</h3>
+					<img src="img/pyramid3.png" alt="test pyramid" style="width: 100%">
+				</section>
+				<section data-transition="none" >
+					<h3>Test hierarchy</h3>
+					<img src="img/pyramid4.png" alt="test pyramid" style="width: 100%">
+				</section>
+				<section>
+					<h3>Setting up a CI</h3>
+					<p>Automated tests are really automatic when they are automatically run</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Epilogue</h2>
+					<h3>Tips and tricks <br>for better testing of ML pipelines</h3>
+				</section>
+				<section>
+					<h4>Have some automated tests</h4>
+					<p>Anything is better than nothing</p>
+				</section>
+				<section>
+					<h4>Have a CI</h4>
+					<p>Else your tests won't run as often <br>as they should</p>
+				</section>
+				<section>
+					<h4>Testing ML algorithms <strong>is</strong> hard</h4>
+					<p>But not hopeless</p>
+				</section>
+				<section>
+					<h4>Befriend software engineers</h4>
+					<p>They are happy to share their knowledge</p>
+				</section>
+			</section>
+			<section>
+				<h3>That's all for me</h3>
+				<p><img class="icon" src="./img/GitHub-logo.png"
+							 alt="GitHub logo" style="width: 1em"/>
+						<a href="https://github.com/SdgJlbl">@SdgJlbl</a></p>
+				<p><img class="icon" src="./img/pdoc-logo.png"
+											  alt="PeopleDoc logo" style="width: 4em"/></p>
+			</section>
+			<section>
+				<h3>To go further</h3>
+				<p class="references"></p>
+				<p><em>Testing and validating machine learning classifiers by metamorphic testing</em>, X. Xie et al</p>
+				<p><em>On testing machine learning programs</em>, H. Ben Braieka and F. Khomh</p>
+				<p><a href="//hypothesis.readthedocs.io/en/latest/">Documentation of <code>hypothesis</code></a></p>
+				<p><a href="//tdda.readthedocs.io/en/v1.0.30/">Documentation of <code>tdda</code></a></p>
+			</section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/math/math.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+
+	<script>
+	Reveal.initialize({
+		mathjax2: {
+			mathjax: '../node_modules/mathjax/MathJax.js',
+			config: 'TeX-AMS_HTML-full',
+		},
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight, RevealMath.MathJax2 ],
+	});
+	</script>
+</body>
+</html>

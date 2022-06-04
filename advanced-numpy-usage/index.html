@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="mine.css">
+	<style media="screen">
+		strong {
+			color: #eee8d5;;
+		}
+		.red {
+			color: #e3170a;
+		}
+		.blue {
+			color: #279eae;
+		}
+		.reveal p.large {
+			font-size: 150%;
+		}
+		.reveal p.email {
+			font-family: monospace;
+			font-size: 80%;
+		}
+		.reveal img.embedded {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		.reveal img.aligned {
+			display: inline-block;
+			margin: 0;
+		}
+		.reveal img.no-border {
+			border: none;
+			box-shadow: none;
+		}
+		.reveal p.references {
+			margin-top: 2em;
+			text-align: right;
+		}
+		.slides .footer{
+		  position:absolute;
+			font-size: 60%;
+		  bottom: -50%;
+		}
+		#left {
+		  left:-8.33%;
+		  text-align: left;
+		  float: left;
+		  width:40%;
+		  z-index:-10;
+		}
+
+	#right {
+		  left:31.25%;
+		  top: 75px;
+		  float: right;
+		  text-align: left;
+		  z-index:-10;
+		  width:60%;
+		}
+		.reveal section img.peopledoc-logo {
+			border: none;
+			background-color: none;
+			height: 1em;
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			vertical-align: middle;
+			margin-left: 0.2em;
+		}
+		.half {
+			flex-direction: row;
+			justify-content: center;
+			flex-basis: 50%;
+		}
+		.two-halves {
+			display: flex;
+		}
+		.fragment.current-visible.visible:not(.current-fragment) {
+		    display: none;
+		    height:0px;
+		    line-height: 0px;
+		    font-size: 0px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+					Your party has been wandering in </br> the Swamp of Sluggish Iterations for several hours...
+
+			</section>
+			<section>
+					... when the mage stumbbles upon a grimoire.
+
+			</section>
+
+			<section>
+				<!-- Book "The Secrets of NumPy"-->
+					<img class="no-border" src="img/book.png" alt="Book the Secrets of NumPy" style="width: 60%">
+			</section>
+			<section>
+				Hi, my name is Sarah Diot-Girard, </br> and I'll be your game master today.
+			</section>
+			<section>
+				<section>
+					<h2> Prologue </h2>
+				</section>
+				<section>
+					So you were wandering through </br> the Swamp of Sluggish Iterations.
+				</section>
+				<section>
+						<div class="two-halves">
+							<div class="half">
+								<img class="no-border" src="img/palouf.png" alt="picture of the paladin" >
+							</div>
+							<div class="half">
+								<i>"We should convert all of our loot values in silver pieces," </i> </br>
+								said the paladin, </br>
+								<i> "we will be so much wealthier."</i>
+							</div>
+						</div>
+				</section>
+				<section>
+					1 gold piece = 12 silver pieces
+				</section>
+				<section>
+					<img class="no-border" src="img/pure_python.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					And now, it's taking forever to compute...
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/mage.png" alt="picture of the mage" >
+						</div>
+						<div class="half">
+							<i>"Uh, oh, it's fascinating," </i> </br>
+							says the mage, </br>
+							<i> "NumPy arrays are stored much more efficiently in memory."</i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img class="no-border" src="img/array_vs_list.png" alt="" style="width: 100%">
+					<small>Image from <a href="https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/">
+						Pythonic Perambulations</a></small>
+
+					<!--  -->
+				</section>
+				<section>
+					Oh, look, here stands proudly a tall tower. </br> That might be your way out of this stinky swamp.
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2> The Tower of Vectorization </h2>
+				</section>
+				<section>
+					You should never use for loops when using NumPy arrays.
+				</section>
+				<section>
+					<img  class="no-border" src="img/gold_to_silver.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					Well, maybe we can use this newly found talent to compute loot share for all members of the party.
+				</section>
+				<section>
+					<!-- Picture with the adventurer party and appropriate loot share -->
+					<!-- Barbarian -> 2; Bard -> .7; Ranger -> 1.3; Thief -> 1; Wizard -> 1-->
+
+					<img  class="no-border" src="img/groupe.png" alt="" style="width: 60%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/broadcasting1.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					Oh no, it is not working.
+
+					You approach the Tower of Vectorization only to find yourself trapped into...
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>The Maze of Indexing and Broadcasting</h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/mage.png" alt="picture of the mage " >
+						</div>
+						<div class="half">
+							<i>"Oh, I now understand how vectorization is working!" </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					Broadcasting is the mecanism used by NumPy </br>to match the dimensions of two arrays.
+				</br>
+					(Scalars are just zero-dimension arrays.)
+				</section>
+				<section>
+					<!-- Schema from 12 to [12, 12, 12] -->
+					<img  class="no-border" src="img/broadcasting2.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<p>Vectors are of dimension 1.</p>
+
+					<img  class="no-border" src="img/vector_shape.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<p>We can switch from row vectors to column vectors </br> using np.newaxis.</p>
+					<img  class="no-border" src="img/newaxis.png" alt="" style="width: 70%">
+				</section>
+				<section>
+					<p>Or None.</p>
+					<img  class="no-border" src="img/newaxis_none.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/broadcasting3.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					For higher dimensional vectors,</br> np.transpose or .T do the trick (no copy is needed).
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/shaman.png" alt="image of the party leader" >
+						</div>
+						<div class="half">
+							<i>"I want to lead this party </br>in a data-driven way. </br>
+								Let's compute the weighted attributes for each member of the group." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<!-- example with characters attributes  + weights -->
+						<img  class="no-border" src="img/character_attributes.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/barde.png" alt="image of the bard" >
+						</div>
+						<div class="half">
+							<i>"Can I point out that we only considered positive outcomes so far? </br>
+								Here is the full data." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/boolean_index.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					Integer or boolean arrays can be used </br>to index NumPy arrays.
+				</section>
+				<section>
+					<p>Can we select loot values between 5 and 30?</p>
+					<img  class="no-border" src="img/between5and30.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/ranger.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"I have compiled difficulty levels for the closest dungeons." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<p>What are the difficulty values of dungeons  1, 4 and 7 </br>for floors 0, 2 and 3?</p>
+					<img  class="no-border" src="img/dungeon_difficulties.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/ranger.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"I have added which objects can be found in each floor." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<p>Where can I find object 8? </br>
+					Which objects are available in the range 10 to 20?</p>
+					<img  class="no-border" src="img/objects_in_dungeons.png" alt="" style="width: 100%">
+
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/shaman.png" alt="image of the party leader" >
+						</div>
+						<div class="half">
+							<i>"Can I sort character attributes by heath points?" </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/argsort.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<p>From a detailed table, can I get how many pieces each one got in last floors of dungeons?</p>
+					<img  class="no-border" src="img/selectors.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<p>We want to compute the contribution of each attribute point to the loot.</p>
+					<img  class="no-border" src="img/einsum1.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<p>You can also use Einstein notation.</p>
+					<img  class="no-border" src="img/einsum2.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/ranger.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"Oops, we have forgotten change rates!" </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/devises.png" alt="" style="width: 86%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/mage.png" alt="image of the mage" >
+						</div>
+						<div class="half">
+							<i>"I've got one last performance trick." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/C-vs-F-order.png" alt="" style="width: 80%">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>The Dark Forest of Strides </h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/ranger.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"I've recorded our speed at regular intervals during the past days. </br>
+								However, the measurements are noisy!" </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<p>We want to compute the windowed average on 5 measurements.</p>
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_avg.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_avg_cumsum.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_avg_convo.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_avg_strides.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_median_strides.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<p>Strides are virtual views on your array<br>that add virtual dimensions without
+						copying anything.</p>
+					<p>They are tricky to use<br>but can give huge performance boosts.</p>
+				</section>
+				<section>
+					<img  class="no-border" src="img/strides.svg" alt="" style="width: 100%">
+					<small>Image from <a href="http://paris-swc.github.io/advanced-numpy-lesson/04-container.html">
+						Software Carpentry</a></small>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>The Village of Ufuncs </h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/mage.png" alt="image of the mage" >
+						</div>
+						<div class="half">
+							<i>"Uh oh, listen to that! </br>
+								Universal functions are vectorized functions that operates on arrays element-wise." </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<p> NumPy comes with a whole lot of unary and binary ufuncs
+						(add, multiply, exponential, trigonometric functions, arithmetic operations, comparisons).</p>
+					<p> They support broadcasting,<br/> reduce and accumulate operations. </p>
+				</section>
+				<section>
+					<p> What about more exotic ufuncs? </p>
+					<img  class="no-border" src="img/closest_apply.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/closest_vectorize.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/closest_numpy.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/closest_numba.png" alt="" style="width: 80%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/ufuncs.png" alt="" style="width: 80%">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2> The Shrine of Jit compiling </h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/shaman.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"What's the most optimal path between dungeons?</br>
+								We'll need to compute an awful lot of distances"
+							</i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/euclid_naive.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/euclid_vect.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/euclid_sklearn.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/euclid_jit.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/shaman.png" alt="image of the ranger" >
+						</div>
+						<div class="half">
+							<i>"What if I want to use a more complex cost function?"</i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<img  class="no-border" src="img/poinc_naive.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/poinc_numpy.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/poinc_numba.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<p> Remember the running average we computed earlier? </br>
+						Numba can help with that too! </p>
+				</section>
+				<section>
+					<img  class="no-border" src="img/time_window_avg.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_avg_numba.png" alt="" style="width: 100%">
+				</section>
+				<section>
+					<img  class="no-border" src="img/window_median_numba.png" alt="" style="width: 100%">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Epilogue</h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div class="half">
+							<img class="no-border" src="img/barde.png" alt="image of the bard" >
+						</div>
+						<div class="half">
+							<i>"As this story </br> comes to its end, </br> hereby lies </br> what you should remember!" </i>
+						</div>
+					</div>
+				</section>
+				<section>
+					<p>For best performance, get out of Python as quickly as possible, and do not go back till the end.</p>
+					<p> Embrace the world of NumPy fully! </p>
+				</section>
+				<section>
+					<p> Almost everything you want to do </br>probably already has an implementation...</br>
+						in NumPy, in SciPy or in scikit-learn.</p>
+					<p> Use it, it'll always be faster (and not bugged)!</p>
+				</section>
+				<section>
+					<p> When in difficulty, Numba will help you. </p>
+					<p> At least, it's worth a try.</p>
+				</section>
+			</section>
+			<section>
+				<p class="large"> Thank you for participating </br> in this adventure! <p>
+				<p class="email"> <a href="mailto:sarah.diot-girard@people-doc.com"> sarah.diot-girard@people-doc.com </a></p>
+				<p><img src="img/logo_people_doc.png" alt="" style="width: 20%; border: none; background-color: white; outline: .5em solid white; margin-top: 2em;"/> </p>
+				<p> <small> We're hiring ! </br>
+				And we have a RPG club! </small></p>
+
+				<p><small> Characters illustrations from <a href=https://imgur.com/gallery/h7l2U> here </a>. </small></p>
+			</section>
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script>
+	Reveal.initialize({
+		history: true,
+		slideNumber: true,
+	});
+	</script>
+</body>
+</html>

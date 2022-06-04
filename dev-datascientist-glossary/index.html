@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/monokai.css">
+	<link rel="stylesheet" href="mine.css">
+	<style media="screen">
+		.red {
+			color: #DB162F;
+		}
+		.blue {
+			color: #37879A;
+		}
+		.reveal .emph {
+			color: #37879A;
+			font-family: "Unica One";
+		}
+		.lightgray {
+			color: #8AB0AB;
+		}
+		.reveal p.large {
+			font-size: 150%;
+		}
+		.reveal p.email {
+			font-family: monospace;
+			font-size: 80%;
+		}
+		.reveal img.embedded {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		.reveal img.aligned {
+			display: inline-block;
+			margin: 0;
+		}
+		.reveal p.references {
+			margin-top: 2em;
+			text-align: right;
+			font-size: 50%;
+		}
+		.slides .footer{
+		  position:absolute;
+			font-size: 60%;
+		  bottom: -50%;
+		}
+		#left {
+		  left:-8.33%;
+		  text-align: left;
+		  float: left;
+		  width:50%;
+		  z-index:-10;
+		}
+
+		#right {
+		  left:31.25%;
+		  top: 75px;
+		  float: right;
+		  text-align: left;
+		  z-index:-10;
+		  width:50%;
+		}
+		.reveal section img.peopledoc-logo {
+			border: none;
+			height: 1em;
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			vertical-align: middle;
+			margin-left: 0.2em;
+		}
+		.half {
+			flex-direction: row;
+			justify-content: center;
+			flex-basis: 50%;
+		}
+		.two-halves {
+			display: flex;
+		}
+		.fragment.current-visible.visible:not(.current-fragment) {
+		    display: none;
+		    height:0px;
+		    line-height: 0px;
+		    font-size: 0px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<section>
+					<h1>De la polysémie en milieu hybride</h1>
+					<h4>Sarah Diot-Girard</h4>
+					<aside class="notes">
+						Bonjour à tous et merci de m'accueillir pour cette première conf à distance de la DjangoCong
+						#muchInnovation
+						Je suis scientifique de la donnée.
+					</aside>
+				</section>
+				<section>
+					<h3>#MauvaiseTraductionLittérale</h3>
+					<aside class="notes">
+						Désolée talk en franglais
+						J'utilise Python au quotidien.
+					</aside>
+				</section>
+				<section>
+					<img src="img/webPython.png" alt="Web Python logos" style="width: 90%">
+					<aside class="notes">
+						sans jamais me servir de ça.
+					</aside>
+				</section>
+				<section>
+					<img src="img/SciPython.png" alt="Scientific Python logos" style="width: 90%">
+					<aside class="notes">
+						Mon ordinaire, c'est plutôt ça.
+
+						Fun fact: j'ai moins de followers Twitter que mon chat
+					</aside>
+				</section>
+				<section>
+					<img src="img/iggdra.jpg" alt="A picture of my cat" style="width: 70%">
+					<p class="fragment">
+						<img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@Iggdrapatate</p>
+					<aside class="notes">
+						Bref après cette introduction trop longue et pas du tout assez structurée,
+						nous allons parler de
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>De la polysémie en milieu hybride</h1>
+					<h4>Sarah Diot-Girard</h4>
+					<aside class="notes">
+						ou autrement dit, de ce qu'il se passe quand on injecte un ou une data scientist dans un milieu
+						composé de développeurs web.
+						Anecdote sur les modèles
+					</aside>
+				</section>
+				<section>
+					<h2>Modèle</h2>
+				</section>
+				<section>
+					<pre><code>
+CREATE TABLE cat_nap(
+		id serial,
+		cat_ref varchar,
+		duration_range tstzrange not null,
+		PRIMARY KEY (id),
+		FOREIGN KEY (cat_ref) REFERENCES cat_name(cat_ref)
+		);
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="python">
+from django.db import models
+
+
+class CatNap(models.Model):
+	cat_ref = models.ForeignKey(CatName, on_delete=models.CASCADE)
+	duration_range = models.DateRangeField()
+					</code></pre>
+				</section>
+				<section>
+						\[ \mbox{cat_nap_length} = f_\theta(\mbox{cat_age}, \mbox{last_nap_time}, ...) \]
+				</section>
+				<section>
+					<blockquote cite="https://core.ac.uk/download/pdf/161437876.pdf" style="font-size: 70%">
+						One complication in our work arose due to conflicting technical nomenclature: </br>
+						"testing", "regression", "validation", "model" </br>
+						and other relevant terms have very different
+						meanings to machine learning experts </br> than they do to software engineers.
+					</blockquote>
+					<p class="references">
+						<em>Testing and Validating Machine Learning Classifiers by Metamorphic Testing</em>, </br>
+						Xie et al.</p>
+				</section>
+				<section>
+					<h2>Notebook</h2>
+				</section>
+				<section>
+					<img src="img/notebook.jpg" alt="A computer notebook" style="width: 60%">
+				</section>
+				<section>
+					<img src="img/jupyter_notebook.png" alt="A JuPyTer notebook" style="width: 100%">
+				</section>
+				<section>
+					<h2>ML</h2>
+				</section>
+				<section>
+					<h2>Mailing List</h2>
+				</section>
+				<section>
+					<h2>Machine Learning</h2>
+				</section>
+				<section>
+					<h2>DL</h2>
+				</section>
+				<section>
+					<h2>Download</h2>
+				</section>
+				<section>
+					<h2>Deep Learning</h2>
+				</section>
+				<section>
+					<h2>Gradient</h2>
+				</section>
+				<section>
+					<img src="img/color-gradient.jpg" alt="A color gradient" style="width: 80%">
+				</section>
+				<section>
+					\[ a_{n+1} = a_{n} - \gamma \nabla F(a_n)\]
+					<aside class="notes">
+						gradient ~= dérivée en multidimensionnel
+					</aside>
+				</section>
+				<section>
+					<img src="img/gradient-descent.png" alt="An illustration of gradient descent" style="width: 80%">
+				</section>
+				<section>
+					<p> <em>Machine Learning : </em> programmation non explicite utilisant les patterns présents
+						dans les données pour entraîner le comportement souhaité</p>
+				</section>
+				<section>
+					<img src="img/modelML" alt="Data + hyperparameters in algorithm -> model" style="width: 100%">
+					<aside class="notes">
+						le jeu de données est parcouru plusieurs fois par l'algorithme
+						qui ajuste itérativement les poids
+						par une procédure d'optimisation pour réduire la loss (l'erreur)
+						= apprentissage
+						rôle du DS: le choix de l'algorithme et les hyperparamètres
+					</aside>
+				</section>
+				<section>
+					<p> <em>Modèle n.m. : </em> truc produit par la combinaison d'un <strong>algorithme</strong>,
+						d'<strong>hyperparamètres</strong> choisis par l'utilisateur·trice
+						et de <strong> paramètres (ou poids) appris</strong> sur un jeu de données </p>
+				</section>
+				<section>
+
+					<img src="img/gradient-descent.png" alt="An illustration of gradient descent" style="width: 80%">
+					<aside class="notes">
+						Gradient : "dérivée" de fonction multidimensionnelle
+						Descente de gradient : méthode d'optimisation utilisée en ML pour minimiser itérativement
+						la loss function(truc corrélé avec le taux d'erreur)
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>On a un problème de perf dans notre cluster!</h2>
+				</section>
+				<section>
+					<img src="img/bad_cluster.png" alt="Bad cluster, bad" style="width: 80%">
+					<aside class="notes">
+						Cluster = machines physiques
+						Performance : temps de réponse, memory usage, CPU usage
+					</aside>
+				</section>
+				<section>
+					<img src="img/bad_clustering.png" alt="A bad cluster of points" style="width: 60%">
+					<aside class="notes">
+						Cluster de points (ou de samples), souvent en espace à haute dimension
+						Performance = qualité du résultat de l'apprentissage
+					</aside>
+				</section>
+				<section>
+					<img src="img/good_clustering.png" alt="A good cluster of points" style="width: 60%">
+				</section>
+				<section>
+					<h2>Apprentissage supervisé vs non-supervisé</h2>
+					<aside class="notes">
+						Exemples annotés ou pas
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<p>Trouvé dans le backlog : </p>
+					<h2>Boostrap des statistiques</h2>
+				</section>
+				<section>
+					<img src="img/analytics.png" alt="snapshot of Google analytics" style="width: 80%">
+				</section>
+				<section>
+					<p><em> Bootstrap (statistiques) : </em> </br>
+						méthode d'inférence statistique basée sur la réplication
+						multiple des données selon les techniques de rééchantillonnage </p>
+				</section>
+                <section>
+                    <h3>Population</h3>
+					<img src="img/population.png" alt="A Gaussian distribution for a metric"
+						 style="width: 50%; vertical-align: middle;">
+					<span class="fragment"> \( \mu = 11\)</span>
+                </section>
+                <section>
+                    <h3>Echantillon</h3>
+					<img src="img/sample.png" alt="A sample from the previous population" style="width: 50%">
+                </section>
+				<section>
+					<p>Erreur standard d'une grandeur statistique:</p>
+					<script type="math/tex; mode=display">
+						 SE(\bar{x}) = \frac{s}{\sqrt{n}} \mbox{ where }
+						s = \sqrt{\sum_{i=1}^n \frac{(x_i - \bar{x})^2}{n-1} }
+					</script>
+				</section>
+                <section>
+                    <h3>Echantillon</h3>
+					<div class="two-halves">
+						<div id="left">
+							<img src="img/sample.png" alt="A sample from the previous population"
+								 style="width: 100%">
+						</div>
+						<div id="right">
+							<br><br>
+							\[ \bar{x} = 10.7 \]
+							\[ SE(\bar{x}) = 1.6 \]
+						</div>
+					</div>
+                </section>
+				<section>
+					<h3>Rééchantillonnage </h3>
+					<img src="img/bootstrap1.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap2.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap3.png" alt="A sample from the previous sample" style="width: 30%">
+				</section>
+				<section>
+					<img src="img/bootstrap1.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap2.png" alt="A sample from the previous sample" style="width: 30%">
+					<img src="img/bootstrap3.png" alt="A sample from the previous sample" style="width: 30%">
+					\[ \hat{\mu_1} = 9.25 \hspace{1.5cm} \hat{\mu_2} = 12.25  \hspace{1.5cm} \hat{\mu_3} = 8.5\]
+					\[ \bar{\mu} = 10  \hspace{3cm} SE(\bar{\mu}) = 1.98\]
+				</section>
+				<section>
+					<p>Estimation par bootstrap</p>
+					<script type="math/tex; mode=display">
+						 SE(\bar{\theta }) = \sqrt{\sum_{b=1}^B \frac{(\hat{\theta _b} - \bar{\theta})^2}{B-1} } \mbox{ where }
+						\bar{\theta} = \sum_{b=1}^B \frac{\hat{\theta _b}}{B}
+					</script>
+				</section>
+				<section>
+					<h2>Fréquentiste vs Bayésien</h2>
+					<aside class="notes">Just kidding, les stats fréquentistes sont obscures et absconces
+					et les Bayésiens ont raison.</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Variable</h2>
+					<aside class="notes">
+						Toujours compliqué de trouver un nom explicite mais pas trop long...
+					</aside>
+				</section>
+				<section>
+					<pre><code>
+cat_nap_length_per_day_in_minutes = cat_nap_length_per_day / 60
+average_cat_nap_length_per_day_in_minutes =
+	sum(cat_nap_length_per_day_in_minutes) / len(cat_nap_length_per_day_in_minutes)
+					</code></pre>
+					<aside class="notes">
+						Le truc impossible à nommer
+						On n'en a jamais assez
+					</aside>
+				</section>
+				<section>
+					<img src="img/variables.png" alt="A dataframe with columns named x_1, x_2, ..." style="width: 80%">
+					<aside class="notes">
+						On a un autre pb de nommage de variables...
+						On récupère des fichiers comme ça, et bonne chance pour comprendre ce qui se passe.
+						+ quand on a trop de variables -> curse of dimensionality
+					</aside>
+				</section>
+				<section>
+					<h2>Feature</h2>
+				</section>
+				<section>
+					<h3>Feature (dev)</h3>
+					<ul>
+						<li>Vous auriez dû la livrer avant-hier.</li>
+						<li class="fragment">Crée de la dette technique.</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Feature (ML)</h3>
+					<ul>
+						<li><code>df['dow'] = df['created_at'].dt.dayofweek</code></li>
+						<li class="fragment">Crée de la dette technique.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Classe</h2>
+				</section>
+				<section>
+					<pre><code>
+import datetime
+
+class CatNap():
+  def __init__(self, start_time):
+    self.start_time = start_time
+	self.end_time = None
+	self.duration = None
+
+  def end_nap():
+	self.end_time = datetime.datetime.now()
+	self.duration = (self.end_time - self.start_time).total_seconds()
+					</code></pre>
+				</section>
+				<section>
+					<img src="img/class.png" alt="A dataframe for classification" style="width: 80%">
+					<aside class="notes">
+						classe = catégorie (de trucs qu'on veut prédire)
+					</aside>
+				</section>
+				<section>
+					<h2>Label</h2>
+				</section>
+				<section>
+					<pre><code data-trim>
+<form>
+  <label for="cat">Are you a cat?</label>
+  <input type="checkbox" name="cat" id="cat">
+</form>
+					</code></pre>
+				</section>
+				<section>
+					<img src="img/label.png" alt="A dataframe for classification" style="width: 80%">
+                </section>
+			</section>
+			<section>
+				<section>
+					<h2>Test et validation</h2>
+				</section>
+				<section>
+					<img src="img/pytest_logo.png" alt="Pytest logo" style="width: 60%">
+				</section>
+				<section>
+					<img src="img/form.png" alt="An HTML form" style="width: 60%">
+				</section>
+				<section>
+					<img src="img/test_val.png" alt="train/val/test splits" style="width: 100%">
+				</section>
+				<section>
+					<img src="img/overfitting.png" alt="overfitting" style="width: 100%">
+				</section>
+				<section>
+					<img src="img/test_val.png" alt="train/val/test splits" style="width: 100%">
+				</section>
+				<section>
+					<h2>Régression</h2>
+				</section>
+				<section>
+					<img src="img/regressionCI.png" alt="regression in circleCI" style="width: 10%">
+				</section>
+				<section>
+					<h2>Classification vs régression</h2>
+				</section>
+				<section>
+					<div class="two-halves">
+						<div id="left">
+							<img src="img/classification.png" alt="classification" style="width: 85%">
+						</div>
+						<div id="right">
+							<img src="img/regression.png" alt="regression" style="width: 100%" class="fragment">
+						</div>
+					</div>
+
+				</section>
+				<section>
+					<h2>Régression logistique</h2>
+				</section>
+				<section>
+					<img src="img/logistic_regression.jpg" alt="Une illustration de régression logistique" style="width: 50%">
+					<aside class="notes">
+						Régression logistique
+					</aside>
+				</section>
+			</section>
+			<section>
+				<p class="fragment">Ecrivez un glossaire</p>
+				<aside class="notes">
+					bien pour les nouveaux Pythonistes, les dev qui viennent d'un autre langage, les nouveaux contributeurs,
+					clarifier la communication au sein de l'équipe...
+				</aside>
+			</section>
+			<section>
+				<h2>Merci pour votre attention !</h2>
+				<p>Et désolée pour les blagues pas drôles...</p>
+				<p><img class="icon" src="img/GitHub-logo.png" alt="Logo GitHub" style="width: 1em">@SdgJlbl</p>
+				<p><img class="icon" src="img/Twitter_logo.png" alt="Logo Twitter" style="width: 1em">@SdgJlbl</p>
+				<p><img class="icon" src="img/pdoc-logo.png" alt="Logo PeopleDoc" style="width: 4em"></p>
+				<p style="font-size: medium">Merci à @ewjoachim pour les graphiques 😻</p>
+			</section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/math/math.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+
+	<script>
+	Reveal.initialize({
+		mathjax2: {
+			mathjax: '../node_modules/mathjax/MathJax.js',
+			config: 'TeX-AMS_HTML-full',
+		},
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight, RevealMath.MathJax2 ],
+	});
+	</script>
+</body>
+</html>
