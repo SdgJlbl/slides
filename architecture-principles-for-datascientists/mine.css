@@ -98,12 +98,6 @@
   src: local('Odibee Sans'), url('../fonts/odibee-sans/odibee-sans-v14-latin-regular.woff2') format('woff2'), url('../fonts/odibee/odibee-sans-v14-latin-regular.woff') format('woff'), url('../fonts/odibee/odibee-sans-v14-latin-regular.ttf') format('truetype');
 }
 
-
-
-section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-    color: #faebd7;
-}
-
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
@@ -129,6 +123,10 @@ body.reveal-viewport {
     color: #faebd7;
     background: #3c4b5f;
     text-shadow: none;
+}
+
+.reveal .slides {
+    height: 100%;
 }
 
 .reveal .slides > section,
@@ -281,58 +279,77 @@ body.reveal-viewport {
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
 }
 
-.reveal code {
+.reveal pre {
+    border-radius: 5px;
+    background: #0F1D3E;
+}
+
+.reveal pre code {
     font-family: 'Cutive Mono';
     font-weight: 600;
     text-transform: none;
     font-size: 18px;
-}
 
-.reveal pre code {
     display: block;
     padding: 2em;
-    padding-top: 3em;
-    border-radius: 5px;
+    padding-top: 40px;
     overflow: auto;
-    max-height: 550px;
     word-wrap: normal;
+}
+.reveal pre h3 {
+    display: block;
+    font-family: 'Cutive Mono';
+    color: #ddd;
+    margin: 0 auto;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    position: absolute;
 }
 .reveal section.full-screen-code pre.code-wrapper {
     margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .reveal section.full-screen-code code {
     line-height: 1.1em;
+    font-size: 1.1em;
 }
 
+.reveal section.full-screen-code {
+    width: 100%;
+}
 
 .dot {
   display: inline-block;
-  width: .5em;
-  height: .5em;
+  width: 10px;
+  height: 10px;
   background: #f9f9f9;
   border-radius: 50%;
   margin: 0 4px 0 0;
   position: absolute;
-  top: .8em;
+  top: 10px;
 }
 
 .dot:nth-child(1) {
     background: #FF6057;
     border: 1px solid #E14640;
-    left: 1em;
+    left: 10px;
   }
 
 .dot:nth-child(2) {
     background: #FFBD2E;
     border: 1px solid #DFA123;
-    left: 1.9em;
+    left: 30px;
   }
 
 .dot:nth-child(3) {
     background: #27C93F;
     border: 1px solid #1DAD2B;
-    left: 2.8em;
+    left: 50px;
 }
 
 
