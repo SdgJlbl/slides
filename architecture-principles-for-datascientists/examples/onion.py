@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import joblib
 
@@ -38,24 +37,25 @@ def load_scaler(parameters_file):
     return scaler
 
 
+def load_data(input_file):
+    df = pd.read_csv(input_file, index_col=0)
+    return df.drop(columns="label"), df["label"]
+
+
 def main():
-    input_file = "input.csv"
     preprocess_file = "scaler.csv"
     model_name = "saved_model.pkl"
-    df = pd.read_csv(input_file, index_col=0)
-    X_train, X_test, y_train, y_test = train_test_split(
-        df.drop(columns="label"),
-        df["label"],
-        stratify=df["label"],
-    )
+    X_train, y_train = load_data("trainset.csv")
+    X_test, y_test = load_data("testset.csv")
+
     # preprocessing
     X_train_cleaned, scaling_parameters = standardise_data(X_train)
     scaling_parameters.to_csv(preprocess_file)
 
-    #training
+    # training
     model = train_classifier(X_train_cleaned, y_train)
     joblib.dump(model, model_name)
 
     # evaluating
     scaler = load_scaler(preprocess_file)
-    print(evaluate(scaler, model_name, X_test, y_test))
+    print(evaluate(scaler, model, X_test, y_test))

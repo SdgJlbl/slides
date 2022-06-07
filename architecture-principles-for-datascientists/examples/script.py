@@ -1,13 +1,14 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 
-df = pd.read_csv("input.csv", index_col=0)
-X_train, X_test, y_train, y_test = train_test_split(
-    df.drop(columns="label"), df["label"], stratify=df["label"]
-)
+df_train = pd.read_csv("trainset.csv", index_col=0)
+df_test = pd.read_csv("testset.csv", index_col=0)
+X_train = df_train.drop(columns="label")
+X_test = df_test.drop(columns="label")
+y_train = df_train["label"]
+y_test = df_test["label"]
 
 # standardize the date to avoid badly conditioned matrices
 scaler = StandardScaler()

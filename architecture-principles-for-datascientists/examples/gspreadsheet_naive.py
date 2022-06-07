@@ -1,33 +1,25 @@
-import gspread, gspread_dataframe
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from sklearn.metrics import confusion_matrix
+import numpy as np
 
 
-def update_data(gsheet_name, metrics, confusion_matrix):
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        "credentials.json", scope=["https://www.googleapis.com/auth/spreadsheets"]
-    )
+def update_confusion_matrix(gsheet_name, y_true, y_pred):
+    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json")
     client = gspread.authorize(creds)
+    gspreadsheet = client.open(gsheet_name)
+    worksheet = gspreadsheet.worksheet("Confusion matrix")
 
-    try:
-        gspreadsheet = client.open(gsheet_name)
-    except gspread.exceptions.SpreadsheetNotFound as e:
-        raise Exception(
-            "Spreadsheet not found, Please check permissions", e
-        )
-
-    # Map sheet name to worksheet object
-    worksheet_dict = {
-        sheet.title: sheet for sheet in gspreadsheet.worksheets()}
+    # get current values
+    current_conf_mat = np.array(worksheet.get(area="B2:D4"))
 
     # update confusion matrix
-    current_conf_mat = gspread_dataframe.get_as_dataframe(worksheet_dict["Confusion matrix"])
-    new_conf_mat = confusion_matrix + current_conf_mat
-    gspread_dataframe.set_with_dataframe(
-        worksheet_dict["Confusion matrix"], new_conf_mat, resize=True
-    )
+    conf_mat = confusion_matrix(y_true, y_pred)
+    new_conf_mat = conf_mat + current_conf_mat
 
-    # save metrics
-    worksheet_dict["Metrics"].clear()
-    gspread_dataframe.set_with_dataframe(
-        worksheet_dict["Metrics"], metrics, resize=True
-    )
+    # save confusion matrix
+    worksheet.update(area="B2:D4", values=new_conf_mat.to_list())
+
+
+def main(gsheet_name, y_true, y_pred):
+    update_confusion_matrix(gsheet_name, y_true, y_pred)

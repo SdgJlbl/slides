@@ -2,18 +2,15 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import joblib
 
 
 def standardise_data(input_file):
     df = pd.read_csv(input_file, index_col=0)
-    X_train, X_test, y_train, y_test = train_test_split(
-        df.drop(columns="label"),
-        df["label"],
-        stratify=df["label"],
-    )
+    X_train = df.drop(columns="label")
+    y_train = df["label"]
+
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     parameters = pd.DataFrame(
@@ -22,8 +19,7 @@ def standardise_data(input_file):
         index=["mean", "scale"],
     )
     parameters.to_csv("standardisation_parameters.csv")
-    X_test_scaled = scaler.transform(X_test)
-    return X_train_scaled, X_test_scaled, y_train, y_test
+    return X_train_scaled, y_train
 
 
 def train_classifier(cleaned_data, labels, model_name):
@@ -32,13 +28,15 @@ def train_classifier(cleaned_data, labels, model_name):
     joblib.dump(classifier, model_name)
 
 
-def evaluate(model, data, label):
+def evaluate(model, input_file):
     classifier = joblib.load(model)
-    return confusion_matrix(label, classifier.predict(data))
+    df = pd.read_csv(input_file, index_col=0)
+    X = df.drop(columns="label")
+    y = df["label"]
+    return confusion_matrix(y, classifier.predict(X))
 
 
 def main():
-    X_train, X_test, y_train, y_test = standardise_data("input.csv")
-    model_name = "saved_model.pkl"
-    train_classifier(X_train, y_train, model_name)
-    print(evaluate(model_name, X_test, y_test))
+    X_train, y_train = standardise_data("trainset.csv")
+    train_classifier(X_train, y_train, "saved_model.pkl")
+    print(evaluate("saved_model.pkl", "testset.csv"))

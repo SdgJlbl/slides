@@ -17,12 +17,11 @@ class GsheetWriter:
     def __init__(self, google_keyfile_dict, gsheet_name):
         self.credentials = ServiceAccountCredentials.from_json_keyfile_dict(
             keyfile_dict=google_keyfile_dict,
-            scopes=["https://www.googleapis.com/auth/spreadsheets"]
+            scopes=["https://www.googleapis.com/auth/spreadsheets"],
         )
         self.client = gspread.authorize(self.credentials)
         self.gsheet_name = gsheet_name
         self._gsheet = None
-
 
     @property
     def gsheet(self):
@@ -50,12 +49,9 @@ class GsheetWriter:
         if update:
             current_content = get_as_dataframe(worksheet)
             updated_content = current_content + worksheet_content
-            set_with_dataframe(
-                worksheet, updated_content, resize=True
-            )
+            set_with_dataframe(worksheet, updated_content, resize=True)
         else:
-            set_with_dataframe(
-                worksheet, worksheet_content, resize=True)
+            set_with_dataframe(worksheet, worksheet_content, resize=True)
 
 
 def update_data(writer, metrics, confusion_matrix):
@@ -65,9 +61,7 @@ def update_data(writer, metrics, confusion_matrix):
             contents=confusion_matrix,
             update=True,
         ),
-        WorksheetUpdate(
-            name="Metrics", contents=metrics
-        ),
+        WorksheetUpdate(name="Metrics", contents=metrics),
     ]
     for worksheet_update in worksheet_updates:
         writer.update_worksheet(worksheet_update=worksheet_update)

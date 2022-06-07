@@ -296,18 +296,6 @@ body.reveal-viewport {
     overflow: auto;
     word-wrap: normal;
 }
-.reveal pre h3 {
-    display: block;
-    font-family: 'Cutive Mono';
-    color: #ddd;
-    margin: 0 auto;
-    font-size: 1.4em;
-    font-weight: bold;
-    text-align: center;
-    top: 0;
-    width: 100%;
-    position: absolute;
-}
 .reveal section.full-screen-code pre.code-wrapper {
     margin: 0;
     width: 100%;
@@ -578,4 +566,14 @@ Code style
 .hljs-type,
 .hljs-selector-id {
   font-weight: bold;
+}
+
+/* define two columns */
+.half {
+    flex-direction: row;
+    justify-content: center;
+    flex-basis: 50%;
+}
+.two-halves {
+    display: flex;
 }
