@@ -140,7 +140,8 @@ body.reveal-viewport {
  *********************************************/
 .reveal h1,
 .reveal h2,
-.reveal h3{
+.reveal h3,
+.reveal h5 {
     margin: 0 0 20px 0;
     font-family: "Zen Loop", sans-serif;
     font-weight: 600;
@@ -151,7 +152,6 @@ body.reveal-viewport {
 }
 
 .reveal h4,
-.reveal h5,
 .reveal h6 {
     margin: 0 0 20px 0;
     font-family: "Odibee Sans", Helvetica, sans-serif;
@@ -174,6 +174,10 @@ body.reveal-viewport {
 }
 
 .reveal h4 {
+    font-size: 1.5em;
+}
+
+.reveal h5 {
     font-size: 1.5em;
 }
 
@@ -467,7 +471,7 @@ body.reveal-viewport {
  *********************************************/
 
 .reveal .slides section .fragment.highlight-red.visible {
-    color: #DB162F;
+    color: #FC4472;
 }
 
 .reveal .slides section .fragment.highlight-green.visible {
@@ -480,7 +484,7 @@ body.reveal-viewport {
 }
 
 .reveal .slides section .fragment.highlight-current-red.current-fragment {
-    color: #DB162F;
+    color: #FC4472;
 }
 
 .reveal .slides section .fragment.highlight-current-green.current-fragment {

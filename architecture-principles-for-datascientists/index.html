@@ -27,7 +27,7 @@
         <section>
             <section>
                 <h3>Disclaimer</h3>
-                <p>This talk is very loosely inspired by </br><i>Alice's adventures in Wonderland</i></p>
+                <p>This talk is very loosely inspired by <br><i>Alice's adventures in Wonderland</i></p>
             </section>
             <section>
                 <img src="./img/dozing-off.png"
@@ -163,7 +163,7 @@
             <section>
                 <div class="two-halves">
                     <div class="half">
-                        <h2 class="fragment" data-fragment-index="1"> </br> </br> Pure functions </br>    versus side-effects</h2>
+                        <h2 class="fragment" data-fragment-index="1"> <br> <br> Pure functions <br>    versus side-effects</h2>
                     </div>
                     <div class="half">
                        <img src="./img/drink_me.png"
@@ -174,6 +174,7 @@
                     At the bottom of the hole, you find a small table with a bottle on it.
                     Attached to the bottle, there's a label. It says "Drink me - and you'll learn all about functional
                     programming". Intrigued, you drink a large gulp.
+                    Everything starts moving again around you, growing bigger, or are you the one becoming smaller?
                 </aside>
             </section>
             <section>
@@ -185,7 +186,6 @@
                     <li class="fragment" data-fragment-index="4">NO side effect </li>
                 </ul>
                 <aside class="notes">
-                    Everything starts moving again around you, growing bigger, or are you the one becoming smaller?
                     Pure functions seem soooo cool! They will probably solve all your problems!
                     Your test suite will be lightning fast! It will be so easy to test all the edge cases, without
                     headaches caused by bad test isolation!
@@ -214,8 +214,8 @@
         <section>
             <section>
                 <h2 class="fragment" data-fragment-index="1">Onion architecture</h2>
-                <img src="./img/caterpillar.jpg"
-                     alt="this is a caterpillar, possibly high" style="width: 7em"/>
+                <img src="./img/caterpillar.png"
+                     alt="this is a caterpillar, possibly high" style="width: 10em"/>
             </section>
             <section>
                 <h3>Onion architecture</h3>
@@ -247,7 +247,7 @@
                 </code></pre>
             </section>
             <section class="full-screen-code">
-                <pre><code data-trim data-noescape data-line-numbers="|4-5,16|9|13|18" class="language-python">
+                <pre><code data-trim data-noescape data-line-numbers="|4-5,16|9|13|18|4,5,16" class="language-python">
                     def main():
                         preprocess_file = "scaler.csv"
                         model_name = "saved_model.pkl"
@@ -384,6 +384,7 @@
                     respect onion architecture but feels clunky
                     we would like to decouple our code from the third party
                     implementation -> robustness to future changes; internal consistency;
+                    + mocking during integration tests
                 </aside>
             </section>
             <section class="full-screen-code">
@@ -423,12 +424,27 @@
                 def main(y_true, y_pred):
                     worksheet = open_gworksheet()
                     area = "B2:D4"
-                    old_confusion_matrix = load_confusion_matrix(worksheet, area)
+                    old_confusion_matrix = load_confusion_matrix(<span class="fragment highlight-red" data-fragment-index="1">worksheet</span>, area)
                     new_confusion_matrix = update_confusion_matrix(
                         old_confusion_matrix, y_true, y_pred
                     )
-                    save_confusion_matrix(worksheet, new_confusion_matrix, area)
+                    save_confusion_matrix(<span class="fragment highlight-red" data-fragment-index="1">worksheet</span>, new_confusion_matrix, area)
                 </code></pre>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def load_confusion_matrix(worksheet, area):
+                        return np.array(worksheet.<span class="fragment highlight-red" data-fragment-index="1">get</span>(area))
+
+
+                    def save_confusion_matrix(worksheet, data, area):
+                        worksheet.<span class="fragment highlight-red" data-fragment-index="1">update</span>(area, data.tolist())
+				</code></pre>
+                <aside class="notes">
+                    worksheet object supporting a get and a update method
+                    easier to use a test stub instead of a mock
+                </aside>
             </section>
             <section>
                 <h3>Dependency injection</h3>
@@ -439,7 +455,7 @@
                 </aside>
             </section>
              <section class="full-screen-code">
-                <pre><code data-trim data-noescape data-line-numbers="|12" class="language-python">
+                <pre><code data-trim data-noescape data-line-numbers="" class="language-python">
                 def open_gworksheet():
                     creds = ServiceAccountCredentials.from_json_keyfile_name(
                         "credentials.json"
@@ -451,12 +467,12 @@
 
                 def main(y_true, y_pred):
                     worksheet = open_gworksheet()
-                    area = "B2:D4"
-                    old_confusion_matrix = load_confusion_matrix(worksheet, area)
+                    <span class="fragment highlight-red" data-fragment-index="1">area</span> = "B2:D4"
+                    old_confusion_matrix = load_confusion_matrix(worksheet, <span class="fragment highlight-red" data-fragment-index="1">area</span>)
                     new_confusion_matrix = update_confusion_matrix(
                         old_confusion_matrix, y_true, y_pred
                     )
-                    save_confusion_matrix(worksheet, new_confusion_matrix, area)
+                    save_confusion_matrix(worksheet, new_confusion_matrix, <span class="fragment highlight-red" data-fragment-index="1">area</span>)
                 </code></pre>
                  <aside class="notes">
                      much better because you can mock open_gworksheet
@@ -582,9 +598,10 @@
             <section>
                 <h3 class="fragment" data-fragment-index="1">Bad abstraction layers are costly</h3>
 
-                <img src="./img/loir_in_teapot.png"
-                     alt="Un loir dans une théière" style="width: 100%"/>
+                <img src="./img/loir_theiere.png"
+                     alt="Un loir dans une théière" style="width: 13em"/>
                 <aside class="notes">
+                    dormouse
                     Abstraction layers define API contracts.
                     This contract will be used through out your codebase.
                     It's not trivial to choose the right abstraction in complex cases.
@@ -611,7 +628,7 @@
             <section>
                 <h3>Real-life problems</h3>
                 <ul>
-                    <li class="fragment" data-fragment-index="1">Log process during a long computation</li>
+                    <li class="fragment" data-fragment-index="1">Log progress during a long computation</li>
                     <li class="fragment" data-fragment-index="2">Save intermediate states during a long training</li>
                     <li class="fragment" data-fragment-index="3">Conditions in workflow depending on external checks</li>
                 </ul>
@@ -629,9 +646,19 @@
                     <li class="fragment" data-fragment-index="3">No logic inside the logger</li>
                     <li class="fragment" data-fragment-index="4">Application code provides the string, and doesn't care what happens afterwards</li>
                 </ul>
+                <aside class="notes">
+                    Python standard lib logging
+                </aside>
             </section>
             <section>
-                <p>Treat your object to save training checkpoints as a logger</p>
+                <h3>Saving checkpoints during training</h3>
+                <p class="fragment" data-fragment-index="1">Create an object that behaves like a logger</p>
+                <aside class="notes">
+                    Receive an object as input
+                    Decide if/where to save this object depending of context
+                    Does not contain training logic
+                    Training code does not depends on the logger either
+                </aside>
             </section>
             <section>
                 <ul>
@@ -674,7 +701,8 @@
                 </aside>
             </section>
             <section>
-                <h3>Special thanks to Sophie Surmont for the illustrations</h3>
+                <h5>Special thanks to <span style="font-size: 1.2em"> Sophie Surmont</span>  for the illustrations</h5>
+                <h5>and to <span style="font-size: 1.2em">Joachim Jablon</span> for proof-reading and helping with the CSS</h5>
             </section>
             <section>
                 <h1>Questions?</h1>
@@ -692,7 +720,7 @@
         height: 760,
 		history: true,
 		slideNumber: true,
-		plugins: [ RevealHighlight ],
+		plugins: [ RevealHighlight, RevealNotes ],
 	});
 	document.getElementsByTagName("code").forEach(element => {
 		var dot = document.createElement("div");
