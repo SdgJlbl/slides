@@ -11,13 +11,17 @@
         <section>
             <h1>Off with their I/Os!</h1>
             <h4>Best architecture practices to isolate I/Os</h4>
+            <aside class="notes">
+                Hello everyone, and welcome to this talk about best architecture practices to isolate your I/Os,
+                and how those principles can help you create a robust and easy to maintain codebase.
+            </aside>
         </section>
         <section>
             <h2>About me</h2>
             <ul>
                 <li>Lead data scientist at <img class="icon" src="./img/hokodo-logo.png"
                                                 alt="Hokodo logo" style="width: 4em"/></li>
-                <li>I push ML models in prod</li>
+                <li>I deploy ML models in prod</li>
                 <li><img class="icon" src="./img/GitHub-logo.png"
                          alt="GitHub logo" style="width: 1em"/>
                     <a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
@@ -106,7 +110,7 @@
                             index=["mean", "scale"],
                         )
                         parameters.to_csv("standardisation_parameters.csv")
-                        return X_train_scaled, y_train
+                        return X_train_scaled, y_train, scaler
                 </code></pre>
             </section>
 
@@ -118,39 +122,40 @@
                         joblib.dump(classifier, model_name)
 
 
-                    def evaluate(model, input_file):
+                    def evaluate(scaler, model, input_file):
                         classifier = joblib.load(model)
                         df = pd.read_csv(input_file, index_col=0)
                         X = df.drop(columns="label")
                         y = df["label"]
-                        return confusion_matrix(y, classifier.predict(X))
+                        X_scaled = scaler.transform(X)
+                        return confusion_matrix(y, classifier.predict(X_scaled))
 
 					</code></pre>
             </section>
             <section class="full-screen-code">
                 <pre><code data-trim data-noescape data-line-numbers="|2|3|4" class="language-python">
                     def main():
-                        X_train, y_train = standardise_data("trainset.csv")
+                        X_train, y_train, scaler = standardise_data("trainset.csv")
                         train_classifier(X_train, y_train, "saved_model.pkl")
-                        print(evaluate("saved_model.pkl", "testset.csv"))
+                        print(evaluate(scaler, "saved_model.pkl", "testset.csv"))
                 </code></pre>
             </section>
             <section class="full-screen-code">
                 <pre><code data-trim data-noescape data-line-numbers="|2,13" class="language-python">
                 def standardise_data(input_file):
-                        df = pd.read_csv(input_file, index_col=0)
-                        X_train = df.drop(columns="label")
-                        y_train = df["label"]
+                    df = pd.read_csv(input_file, index_col=0)
+                    X_train = df.drop(columns="label")
+                    y_train = df["label"]
 
-                        scaler = StandardScaler()
-                        X_train_scaled = scaler.fit_transform(X_train)
-                        parameters = pd.DataFrame(
-                            data=np.vstack((scaler.mean_, scaler.scale_)),
-                            columns=scaler.feature_names_in_,
-                            index=["mean", "scale"],
-                        )
-                        parameters.to_csv("standardisation_parameters.csv")
-                        return X_train_scaled, y_train
+                    scaler = StandardScaler()
+                    X_train_scaled = scaler.fit_transform(X_train)
+                    parameters = pd.DataFrame(
+                        data=np.vstack((scaler.mean_, scaler.scale_)),
+                        columns=scaler.feature_names_in_,
+                        index=["mean", "scale"],
+                    )
+                    parameters.to_csv("standardisation_parameters.csv")
+                    return X_train_scaled, y_train
                 </code></pre>
                 <aside class="notes">
                     I/O in unit tests -> slow; test isolation; lock-in for evolutions
@@ -194,7 +199,7 @@
             </section>
             <section>
                 <h3 class="fragment" data-fragment-index="1">All I/Os are side-effects!!!</h3>
-                <img src="./img/eat_me.jpg"
+                <img src="./img/cookie.png"
                      alt="eat me" style="width: 7em"/>
                 <aside class="notes">
                     As you become tiny, you notice a small cake under the table. On it is written "Eat me - all I/Os
@@ -247,7 +252,7 @@
                 </code></pre>
             </section>
             <section class="full-screen-code">
-                <pre><code data-trim data-noescape data-line-numbers="|4-5,16|9|13|18|4,5,16" class="language-python">
+                <pre><code data-trim data-noescape data-line-numbers="|4-5,16,17|9|13|19|4,5,16,17" class="language-python">
                     def main():
                         preprocess_file = "scaler.csv"
                         model_name = "saved_model.pkl"
@@ -264,6 +269,7 @@
 
                         # evaluating
                         scaler = load_scaler(preprocess_file)
+                        model = joblib.load(model_name)
                         confusion_mat = evaluate(scaler, model, X_test, y_test))
                         print(confusion_mat)
                 </code></pre>
@@ -303,8 +309,8 @@
         <section>
             <section>
                 <h2 class="fragment" data-fragment-index="1">Here the madness begins</h2>
-                <img src="./img/mad_tea_party.jpg"
-                     alt="people drinking tea, in a sense" style="width: 7em"/>
+                <img src="./img/tea_party.png"
+                     alt="people drinking tea, in a sense" style="width: 13em"/>
             </section>
             <section class="full-screen-code">
                 <pre><code data-trim data-noescape data-line-numbers="|2-5|6-7|10|13-14|17" class="language-python">
@@ -499,7 +505,7 @@
                 </code></pre>
             </section>
             <section class="full-screen-code">
-                <pre><code data-trim data-noescape data-line-numbers="|3-6|11-15" class="language-python">
+                <pre><code data-trim data-noescape data-line-numbers="|3-6|7-8|9|11-15" class="language-python">
                     class GSpreadSheet:
                         def __init__(self, credentials, gsheet_name, worksheet_name, area):
                             creds = ServiceAccountCredentials.from_json_keyfile_name(
