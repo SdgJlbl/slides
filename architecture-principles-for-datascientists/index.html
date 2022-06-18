@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="mine.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Off with their I/Os!</h1>
+            <h4>Best architecture practices to isolate I/Os</h4>
+        </section>
+        <section>
+            <h2>About me</h2>
+            <ul>
+                <li>Lead data scientist at <img class="icon" src="./img/hokodo-logo.png"
+                                                alt="Hokodo logo" style="width: 4em"/></li>
+                <li>I deploy ML models in prod</li>
+                <li><img class="icon" src="./img/GitHub-logo.png"
+                         alt="GitHub logo" style="width: 1em"/>
+                    <a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
+            </ul>
+        </section>
+        <!-- Atmosphere setup [white rabbit]-->
+        <section>
+            <section>
+                <h3>Disclaimer</h3>
+                <p>This talk is very loosely inspired by <br><i>Alice's adventures in Wonderland</i></p>
+            </section>
+            <section>
+                <img src="./img/dozing-off.png"
+                     alt="dozingoff" style="width: 7em"/>
+
+                <aside class="notes">
+                    It was supposed to be an easy and fast fix, but you have spent most of your day on it.
+                    Your test suite has been running for 20 minutes, and you are dozing off..
+                    Suddenly, you're wide awake. Something is moving out of the corner of your eye...
+                    Intrigued, you follow the little mammal, and suddenly, you are falling...
+                </aside>
+            </section>
+            <section>
+                <img class="fragment" data-fragment-index="1" src="./img/lapin_2.png"
+                     alt="follow the white rabbit" style="width: 11em"/>
+
+                <aside class="notes">
+                    It was supposed to be an easy and fast fix, but you have spent most of your day on it.
+                    Your test suite has been running for 20 minutes, and you are dozing off..
+                    Suddenly, you're wide awake. Something is moving out of the corner of your eye...
+                    Intrigued, you follow the little mammal, and suddenly, you are falling...
+                </aside>
+            </section>
+            <section>
+                <h2>Into the rabbit hole</h2>
+            </section>
+
+            <section class="full-screen-code">
+                <pre>
+                    <code data-trim data-noescape data-line-numbers="|6-11|13-15|17-19|21-23" class="language-python">
+                        import pandas as pd
+                        from sklearn.linear_model import LogisticRegression
+                        from sklearn.preprocessing import StandardScaler
+                        from sklearn.metrics import confusion_matrix
+
+                        df_train = pd.read_csv("trainset.csv", index_col=0)
+                        df_test = pd.read_csv("testset.csv", index_col=0)
+                        X_train = df_train.drop(columns="label")
+                        X_test = df_test.drop(columns="label")
+                        y_train = df_train["label"]
+                        y_test = df_test["label"]
+
+                        # standardize the date to avoid badly conditioned matrices
+                        scaler = StandardScaler()
+                        X_train_scaled = scaler.fit_transform(X_train)
+
+                        # train a logistic regression classifier
+                        classifier = LogisticRegression()
+                        classifier.fit(X_train_scaled, y_train)
+
+                        # apply the result to test data
+                        X_test_scaled = scaler.transform(X_test)
+                        confusion_matrix(y_test, classifier.predict(X_test_scaled))
+
+                </code></pre>
+                <aside class="notes">
+                    As you fall seemingly forever and ever, you think about how you came to this point.
+                    You started from a neat script, that you packaged into independent functions,
+                    each an independent component.
+                    * present the code context *
+                </aside>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def standardise_data(input_file):
+                        df = pd.read_csv(input_file, index_col=0)
+                        X_train = df.drop(columns="label")
+                        y_train = df["label"]
+
+                        scaler = StandardScaler()
+                        X_train_scaled = scaler.fit_transform(X_train)
+                        parameters = pd.DataFrame(
+                            data=np.vstack((scaler.mean_, scaler.scale_)),
+                            columns=scaler.feature_names_in_,
+                            index=["mean", "scale"],
+                        )
+                        parameters.to_csv("standardisation_parameters.csv")
+                        return X_train_scaled, y_train, scaler
+                </code></pre>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def train_classifier(cleaned_data, labels, model_name):
+                        classifier = LogisticRegression()
+                        classifier.fit(cleaned_data, labels)
+                        joblib.dump(classifier, model_name)
+
+
+                    def evaluate(scaler, model, input_file):
+                        classifier = joblib.load(model)
+                        df = pd.read_csv(input_file, index_col=0)
+                        X = df.drop(columns="label")
+                        y = df["label"]
+                        X_scaled = scaler.transform(X)
+                        return confusion_matrix(y, classifier.predict(X_scaled))
+
+					</code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|2|3|4" class="language-python">
+                    def main():
+                        X_train, y_train, scaler = standardise_data("trainset.csv")
+                        train_classifier(X_train, y_train, "saved_model.pkl")
+                        print(evaluate(scaler, "saved_model.pkl", "testset.csv"))
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|2,13" class="language-python">
+                def standardise_data(input_file):
+                    df = pd.read_csv(input_file, index_col=0)
+                    X_train = df.drop(columns="label")
+                    y_train = df["label"]
+
+                    scaler = StandardScaler()
+                    X_train_scaled = scaler.fit_transform(X_train)
+                    parameters = pd.DataFrame(
+                        data=np.vstack((scaler.mean_, scaler.scale_)),
+                        columns=scaler.feature_names_in_,
+                        index=["mean", "scale"],
+                    )
+                    parameters.to_csv("standardisation_parameters.csv")
+                    return X_train_scaled, y_train
+                </code></pre>
+                <aside class="notes">
+                    I/O in unit tests -> slow; test isolation; lock-in for evolutions
+                </aside>
+            </section>
+        </section>
+
+        <!-- Pure functions vs side-effects [drink me/ drink me too]-->
+        <section>
+            <section>
+                <div class="two-halves">
+                    <div class="half">
+                        <h2 class="fragment" data-fragment-index="1"> <br> <br> Pure functions <br>    versus side-effects</h2>
+                    </div>
+                    <div class="half">
+                       <img src="./img/drink_me.png"
+                     alt="drink me" style="width: 10em"/>
+                    </div>
+                </div>
+                <aside class="notes">
+                    At the bottom of the hole, you find a small table with a bottle on it.
+                    Attached to the bottle, there's a label. It says "Drink me - and you'll learn all about functional
+                    programming". Intrigued, you drink a large gulp.
+                    Everything starts moving again around you, growing bigger, or are you the one becoming smaller?
+                </aside>
+            </section>
+            <section>
+                <h3>Pure functions</h3>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Output depends only on the inputs</li>
+                    <li class="fragment" data-fragment-index="2">Easy to unit test</li>
+                    <li class="fragment" data-fragment-index="3">Great for parallelising</li>
+                    <li class="fragment" data-fragment-index="4">NO side effect </li>
+                </ul>
+                <aside class="notes">
+                    Pure functions seem soooo cool! They will probably solve all your problems!
+                    Your test suite will be lightning fast! It will be so easy to test all the edge cases, without
+                    headaches caused by bad test isolation!
+                    If you ever need to parallelise part of the preprocessing, it's free!
+                </aside>
+            </section>
+            <section>
+                <h3 class="fragment" data-fragment-index="1">All I/Os are side-effects!!!</h3>
+                <img src="./img/cookie.png"
+                     alt="eat me" style="width: 7em"/>
+                <aside class="notes">
+                    As you become tiny, you notice a small cake under the table. On it is written "Eat me - all I/Os
+                    are side-effects".
+                    OMG what are you going to do? You need I/Os for your code to actually DO something (read data from
+                    disk or from an API / save your models / return predictions to a third party calling your service...)
+                </aside>
+            </section>
+            <section>
+                <p>How can we have both the advantages of using a functional coding style, and still do actual stuff?</p>
+                <aside class="notes">
+                    Perplexed and sobered, you squeeze through a small door, wondering how to use all this new knowledge about FP.
+                </aside>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2 class="fragment" data-fragment-index="1">Onion architecture</h2>
+                <img src="./img/caterpillar.png"
+                     alt="this is a caterpillar, possibly high" style="width: 10em"/>
+            </section>
+            <section>
+                <h3>Onion architecture</h3>
+                <img src="./img/onion.svg"
+                     alt="onion architecture diagram" style="width: 100%"/>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|1-9|12-15|18-20" class="language-python">
+                    def standardise_data(X_train):
+                        scaler = StandardScaler()
+                        X_train_scaled = scaler.fit_transform(X_train)
+                        parameters = pd.DataFrame(
+                            data=np.vstack((scaler.mean_, scaler.scale_)),
+                            columns=scaler.feature_names_in_,
+                            index=["mean", "scale"],
+                        )
+                        return X_train_scaled, parameters
+
+
+                    def train_classifier(cleaned_data, labels):
+                        classifier = LogisticRegression()
+                        classifier.fit(cleaned_data, labels)
+                        return classifier
+
+
+                    def evaluate(scaler, classifier, data, label):
+                        cleaned_data = scaler.transform(data)
+                        return confusion_matrix(label, classifier.predict(cleaned_data))
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|4-5,16,17|9|13|19|4,5,16" class="language-python">
+                    def main():
+                        preprocess_file = "scaler.csv"
+                        model_name = "saved_model.pkl"
+                        X_train, y_train = load_data("trainset.csv")
+                        X_test, y_test = load_data("testset.csv")
+
+                        # preprocessing
+                        X_train_cleaned, scaling_parameters = standardise_data(X_train)
+                        scaling_parameters.to_csv(preprocess_file)
+
+                        # training
+                        model = train_classifier(X_train_cleaned, y_train)
+                        joblib.dump(model, model_name)
+
+                        # evaluating
+                        scaler = load_scaler(preprocess_file)
+                        model = joblib.load(model_name)
+                        confusion_mat = evaluate(scaler, model, X_test, y_test))
+                        print(confusion_mat)
+                </code></pre>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="1-3|6-12" class="language-python">
+                    def load_data(input_file):
+                        df = pd.read_csv(input_file, index_col=0)
+                        return df.drop(columns="label"), df["label"]
+
+
+                    def load_scaler(parameters_file):
+                        parameters = pd.read_csv(parameters_file, index_col=0)
+                        scaler = StandardScaler()
+                        scaler.scale_ = parameters.loc["scale"].values
+                        scaler.mean_ = parameters.loc["mean"].values
+                        scaler.feature_names_in_ = list(parameters.columns)
+                        return scaler
+
+                </code></pre>
+            </section>
+            <section>
+                <img src="./img/onion-2.svg"
+                     alt="onion architecture diagram" style="width: 100%"/>
+                <aside class="notes">
+                    You feel pretty confident that you can improve your code with this new knowledge.
+                    Soon, all of the logic will be encapsulated in pure functions, that will be tested with fast unit tests.
+                    No more nasty bugs, no longer waiting for hours for the test suite to finish.
+                    Ah, you feel pretty proud of yourself.
+                    That's when you find some piece of code that makes you doubt your sanity
+                </aside>
+            </section>
+        </section>
+
+        <!-- [mad tea party] -->
+        <section>
+            <section>
+                <h2 class="fragment" data-fragment-index="1">Here the madness begins</h2>
+                <img src="./img/tea_party.png"
+                     alt="people drinking tea, in a sense" style="width: 13em"/>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|2-5|6-7|10|13-14|17" class="language-python">
+                    def update_confusion_matrix(gsheet_name, y_true, y_pred):
+                        creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json"
+                        )
+                        client = gspread.authorize(creds)
+                        gspreadsheet = client.open(gsheet_name)
+                        worksheet = gspreadsheet.worksheet("Confusion matrix")
+
+                        # get current values
+                        current_conf_mat = np.array(worksheet.get(area="B2:D4"))
+
+                        # update confusion matrix
+                        conf_mat = sklearn.metrics.confusion_matrix(y_true, y_pred)
+                        new_conf_mat = conf_mat + current_conf_mat
+
+                        # save confusion matrix
+                        worksheet.update(area="B2:D4", values=new_conf_mat.to_list())
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="1-3|6-23|7-12,17-22|13,23" class="language-python">
+                    def update_confusion_matrix(current_confusion_matrix, y_true, y_pred):
+                        conf_mat = sklearn.metrics.confusion_matrix(y_true, y_pred)
+                        return conf_mat + current_confusion_matrix
+
+
+                    def load_confusion_matrix(gsheet_name):
+                         creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json"
+                        )
+                        client = gspread.authorize(creds)
+                        gspreadsheet = client.open(gsheet_name)
+                        worksheet = gspreadsheet.worksheet("Confusion matrix")
+                        return np.array(worksheet.get(area="B2:D4"))
+
+
+                    def save_confusion_matrix(gsheet_name, data):
+                         creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json"
+                        )
+                        client = gspread.authorize(creds)
+                        gspreadsheet = client.open(gsheet_name)
+                        worksheet = gspreadsheet.worksheet("Confusion matrix")
+                        worksheet.update(area="B2:D4", values=data.tolist())
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|3|4-6|7" class="language-python">
+                    def main(y_true, y_pred):
+                        gsheet_name = "foobar"
+                        old_confusion_matrix = load_confusion_matrix(gsheet_name)
+                        new_confusion_matrix = update_confusion_matrix(
+                            old_confusion_matrix, y_true, y_pred
+                        )
+                        save_confusion_matrix(gsheet_name, new_confusion_matrix)
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="" class="language-python">
+                    def load_confusion_matrix(gsheet_name):
+                         creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json"
+                        )
+                        client = gspread.authorize(creds)
+                        gspreadsheet = client.open(gsheet_name)
+                        worksheet = gspreadsheet.worksheet("Confusion matrix")
+                        return np.array(worksheet.get(area="B2:D4"))
+                </code></pre>
+            </section>
+            <section>
+                <img src="./img/muddled.svg"
+                     alt="overlapping potatoes" style="width: 100%"/>
+                <aside class="notes">
+                    respect onion architecture but feels clunky
+                    we would like to decouple our code from the third party
+                    implementation -> robustness to future changes; internal consistency;
+                    + mocking during integration tests
+                </aside>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|8" class="language-python">
+                    def load_confusion_matrix(gsheet_name):
+                         creds = ServiceAccountCredentials.from_json_keyfile_name(
+                            "credentials.json"
+                        )
+                        client = gspread.authorize(creds)
+                        gspreadsheet = client.open(gsheet_name)
+                        worksheet = gspreadsheet.worksheet("Confusion matrix")
+                        return np.array(worksheet.get(area="B2:D4"))
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="1-2|5-6" class="language-python">
+                    def load_confusion_matrix(worksheet, area):
+                        return np.array(worksheet.get(area))
+
+
+                    def save_confusion_matrix(worksheet, data, area):
+                        worksheet.update(area, data.tolist())
+				</code></pre>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="10,13-17|1-7,11" class="language-python">
+                def open_gworksheet():
+                    creds = ServiceAccountCredentials.from_json_keyfile_name(
+                        "credentials.json"
+                    )
+                    client = gspread.authorize(creds)
+                    gspreadsheet = client.open("gsheet_name")
+                    return gspreadsheet.worksheet("Confusion matrix")
+
+
+                def main(y_true, y_pred):
+                    worksheet = open_gworksheet()
+                    area = "B2:D4"
+                    old_confusion_matrix = load_confusion_matrix(<span class="fragment highlight-red" data-fragment-index="1">worksheet</span>, area)
+                    new_confusion_matrix = update_confusion_matrix(
+                        old_confusion_matrix, y_true, y_pred
+                    )
+                    save_confusion_matrix(<span class="fragment highlight-red" data-fragment-index="1">worksheet</span>, new_confusion_matrix, area)
+                </code></pre>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def load_confusion_matrix(worksheet, area):
+                        return np.array(worksheet.<span class="fragment highlight-red" data-fragment-index="1">get</span>(area))
+
+
+                    def save_confusion_matrix(worksheet, data, area):
+                        worksheet.<span class="fragment highlight-red" data-fragment-index="1">update</span>(area, data.tolist())
+				</code></pre>
+                <aside class="notes">
+                    worksheet object supporting a get and a update method
+                    easier to use a test stub instead of a mock
+                </aside>
+            </section>
+            <section>
+                <h3>Dependency injection</h3>
+                <img src="./img/dependency_injection.svg"
+                     alt="dependency injection diagram" style="width: 100%"/>
+                <aside class="notes">
+                    robustness to future changes; internal consistency
+                </aside>
+            </section>
+             <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="" class="language-python">
+                def open_gworksheet():
+                    creds = ServiceAccountCredentials.from_json_keyfile_name(
+                        "credentials.json"
+                    )
+                    client = gspread.authorize(creds)
+                    gspreadsheet = client.open("gsheet_name")
+                    return gspreadsheet.worksheet("Confusion matrix")
+
+
+                def main(y_true, y_pred):
+                    worksheet = open_gworksheet()
+                    <span class="fragment highlight-red" data-fragment-index="1">area</span> = "B2:D4"
+                    old_confusion_matrix = load_confusion_matrix(worksheet, <span class="fragment highlight-red" data-fragment-index="1">area</span>)
+                    new_confusion_matrix = update_confusion_matrix(
+                        old_confusion_matrix, y_true, y_pred
+                    )
+                    save_confusion_matrix(worksheet, new_confusion_matrix, <span class="fragment highlight-red" data-fragment-index="1">area</span>)
+                </code></pre>
+                 <aside class="notes">
+                     much better because you can mock open_gworksheet
+                    something is still bothering you though;
+                     your implementation is still coupled to gsheet choices
+                </aside>
+            </section>
+            <section>
+                <h3>Abstraction layer</h3>
+                <img src="./img/abstraction_layer.svg"
+                     alt="abstraction layer diagram" style="width: 100%"/>
+                <aside class="notes">
+                    robustness to future changes; internal consistency
+                </aside>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def main(spreadsheet, y_true, y_pred):
+                        old_confusion_matrix = spreadsheet.load()
+                        new_confusion_matrix = update_confusion_matrix(
+                            old_confusion_matrix, y_true, y_pred
+                        )
+                        spreadsheet.dump(new_confusion_matrix)
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|3-6|7-8|9|11-15" class="language-python">
+                    class GSpreadSheet:
+                        def __init__(self, credentials, gsheet_name, worksheet_name, area):
+                            creds = ServiceAccountCredentials.from_json_keyfile_name(
+                                credentials
+                            )
+                            self.client = gspread.authorize(creds)
+                            self.spreadsheet = self.client.open(gsheet_name)
+                            self.worksheet = self.spreadsheet.worksheet(worksheet_name)
+                            self.area = area
+
+                        def load(self):
+                            return np.array(self.worksheet.get(self.area))
+
+                        def dump(self, data):
+                            self.worksheet.update(self.area, data.tolist())
+                </code></pre>
+            </section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers="|2,3,7|10,11,15" class="language-python">
+                    # without abstraction
+                    def main(worksheet, y_true, y_pred, area="B2:D4"):
+                        old_confusion_matrix = load_confusion_matrix(worksheet, area)
+                        new_confusion_matrix = update_confusion_matrix(
+                            old_confusion_matrix, y_true, y_pred
+                        )
+                        save_confusion_matrix(worksheet, new_confusion_matrix, area)
+
+                    # with abstraction
+                    def main(spreadsheet, y_true, y_pred):
+                        old_confusion_matrix = spreadsheet.load()
+                        new_confusion_matrix = update_confusion_matrix(
+                            old_confusion_matrix, y_true, y_pred
+                        )
+                        spreadsheet.dump(new_confusion_matrix)
+                </code></pre>
+            </section>
+            <section>
+                <h3>Abstraction layer</h3>
+                <img src="./img/abstraction_layer2.svg"
+                     alt="abstraction layer diagram" style="width: 100%"/>
+                <aside class="notes">
+                    easy to use different implementation for different envs / usages
+                </aside>
+            </section>
+
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                class ExcelSpreadSheet:
+                    def __init__(self, local_path, worksheet_name):
+                        self.local_path = local_path
+                        self.worksheet_name = worksheet_name
+
+                    def load(self):
+                        return pd.read_excel(
+                            self.local_path, sheet_name=self.worksheet_name,
+                            index_col=0, header=0
+                        ).values
+
+                    def dump(self, data):
+                        current_df = pd.read_excel(
+                            self.local_path, sheet_name=self.worksheet_name,
+                            index_col=0, header=0
+                        )
+                        new_df = pd.DataFrame(data,
+                            index=current_df.index,
+                            columns=current_df.columns
+                        )
+                        new_df.to_excel(self.local_path, sheet_name=self.worksheet_name)
+                </code></pre>
+                <aside class="notes">
+                    how to show that both these classes are implementing the same API?
+                    class inheritance? NO
+                    duck typing!
+                </aside>
+				</section>
+            <section class="full-screen-code">
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                 class SpreadSheet(Protocol):
+                    def load(self) -> np.array:
+                        ...
+
+                    def dump(self, data: np.array):
+                        ...
+
+
+                def main(spreadsheet: SpreadSheet, y_true: np.array, y_pred: np.array):
+                    ...
+                </code></pre>
+                <aside class="notes">
+                    since python 3.8 in typing; before in mypy
+                    Satisfied, but slightly exhausted by so much new information, you sit back
+                    and enjoy your cup of tea while nibbling a scone.
+                    but as you are grabbing a tea pot for a second serving...
+                </aside>
+            </section>
+            <section>
+                <h3 class="fragment" data-fragment-index="1">Bad abstraction layers are costly</h3>
+
+                <img src="./img/loir_theiere.png"
+                     alt="Un loir dans une théière" style="width: 13em"/>
+                <aside class="notes">
+                    dormouse
+                    Abstraction layers define API contracts.
+                    This contract will be used through out your codebase.
+                    It's not trivial to choose the right abstraction in complex cases.
+                    If the implementation is easy to explain, it may be a good idea.
+                </aside>
+            </section>
+        </section>
+
+			<!-- Loggers, batch functions and other checkpoints [queen croquet] -->
+        <section>
+            <section>
+                <h2 class="fragment" data-fragment-index="1">When things get very uncooperative</h2>
+                <img src="./img/croquet.png"
+                         alt="is this even a game of croquet?" style="width: 11em"/>
+            </section>
+            <section>
+                <p>The structure we would like to have:</p>
+                <ul>
+                    <li>Load (I/Os)</li>
+                    <li>Do stuff (no I/Os)</li>
+                    <li>Dump (I/Os)</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Real-life problems</h3>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Log progress during a long computation</li>
+                    <li class="fragment" data-fragment-index="2">Save intermediate states during a long training</li>
+                    <li class="fragment" data-fragment-index="3">Conditions in workflow depending on external checks</li>
+                </ul>
+                <aside class="notes">
+                    Business logic / computations cannot do without I/Os
+                    as long as no performance issues, worth trying to stick to the
+                    usual structure
+                </aside>
+            </section>
+            <section>
+                <h3>Loggers</h3>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Take a string as input</li>
+                    <li class="fragment" data-fragment-index="2">Responsible for processing the string depending on the context</li>
+                    <li class="fragment" data-fragment-index="3">No logic inside the logger</li>
+                    <li class="fragment" data-fragment-index="4">Application code provides the string, and doesn't care what happens afterwards</li>
+                </ul>
+                <aside class="notes">
+                    Python standard lib logging
+                </aside>
+            </section>
+            <section>
+                <h3>Saving checkpoints during training</h3>
+                <p class="fragment" data-fragment-index="1">Create an object that behaves like a logger</p>
+                <aside class="notes">
+                    Receive an object as input
+                    Decide if/where to save this object depending of context
+                    Does not contain training logic
+                    Training code does not depends on the logger either
+                </aside>
+            </section>
+            <section>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Pass instance through all layers to the bottom</li>
+                    <li class="fragment" data-fragment-index="2">Or define a global variable once</li>
+                </ul>
+                <aside class="notes">
+                    The Queen of Heart is very annoyed that you brought back so much
+                    sanity to her realm. She's screaming "off with their I/Os! off
+                    with their I/Os!" and you're suddenly very afraid.
+                </aside>
+            </section>
+        </section>
+        <!-- Conclusion -->
+        <section>
+            <section>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">I/Os should occur at the highest possible level</li>
+                    <li class="fragment" data-fragment-index="2">Inject your dependencies to keep your code agnostic</li>
+                    <li class="fragment" data-fragment-index="3">Use abstraction layers</li>
+                </ul>
+                <aside class="notes">
+                    As you are fleeing for your life, you rememorate the 3 keys
+                    to a robust, sustainable codebase.
+                    And don't forget
+                </aside>
+            </section>
+            <section>
+                <p>Practicality beats purity</p>
+                <aside class="notes">
+                    You suddenly jerk awake. You look full of hope towards your screen,
+                    hoping to finally merge this Pull request after a far too long day.
+                </aside>
+            </section>
+            <section>
+                <img src="./img/red-ci.png"
+                     alt="dozingoff" style="width: 7em"/>
+                <aside class="notes">
+                    did you forget to commit before pushing?
+                </aside>
+            </section>
+            <section>
+                <h5>Special thanks to <span style="font-size: 1.2em"> Sophie Surmont</span>  for the illustrations</h5>
+                <h5>and to <span style="font-size: 1.2em">Joachim Jablon</span> for proof-reading and helping with the CSS</h5>
+            </section>
+            <section>
+                <h1>Questions?</h1>
+            </section>
+        </section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+	<script>
+	Reveal.initialize({
+        width: 1280,
+        height: 760,
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight, RevealNotes ],
+	});
+	document.getElementsByTagName("code").forEach(element => {
+		var dot = document.createElement("div");
+		dot.classList = "dot"
+		//element.prepend(dot);
+		//element.prepend(dot.cloneNode());
+		//element.prepend(dot.cloneNode());
+	});
+	</script>
+</body>
+</html>
