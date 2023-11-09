@@ -1,0 +1,592 @@
+/**
+ * White theme for reveal.js. This is the opposite of the 'black' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
+
+
+/* latin */
+@font-face {
+  font-family: 'Josefin Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Josefin Slab Regular'), local('JosefinSlab-Regular'), url('../fonts/josefin-slab/josefin-slab.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Nixie One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Nixie One'), local('NixieOne-Regular'), url('../fonts/nixie-one/nixie-one.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unica One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Unica One'), local('UnicaOne-Regular'), url('../fonts/unica-one/unica-one-1.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unica One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Unica One'), local('UnicaOne-Regular'), url('../fonts/unica-one/unica-one-2.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* nova-mono-regular - latin */
+@font-face {
+  font-family: 'Nova Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Nova Mono'), url('../fonts/nova-mono/nova-mono-v18-latin-regular.woff2') format('woff2'), url('../fonts/nova-mono/nova-mono-v18-latin-regular.woff') format('woff'), url('../fonts/nova-mono/nova-mono-v18-latin-regular.ttf') format('truetype');
+}
+/* cutive-mono-regular - latin */
+@font-face {
+  font-family: 'Cutive Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cutive Mono'), url('../fonts/cutive-mono/cutive-mono-v14-latin-regular.woff2') format('woff2'), url('../fonts/cutive-mono/cutive-mono-v14-latin-regular.woff') format('woff'), url('../fonts/cutive-mono/cutive-mono-v14-latin-regular.ttf') format('truetype');
+}
+/* comfortaa-regular - latin */
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Comfortaa'), url('../fonts/comfortaa/comfortaa-v38-latin-regular.woff2') format('woff2'), url('../fonts/comfortaa/comfortaa-v38-latin-regular.woff') format('woff'), url('../fonts/comfortaa/comfortaa-v38-latin-regular.ttf') format('truetype');
+}
+/* raleway-regular - latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'), url('../fonts/raleway/raleway-v27-latin-regular.woff2') format('woff2'), url('../fonts/raleway/raleway-v27-latin-regular.woff') format('woff'), url('../fonts/raleway/raleway-v27-latin-regular.ttf') format('truetype');
+}
+
+/* raleway-800 - latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Raleway'), url('../fonts/raleway/raleway-v27-latin-800.woff2') format('woff2'), url('../fonts/raleway/raleway-v27-latin-800.woff') format('woff'), url('../fonts/raleway/raleway-v27-latin-800.ttf') format('truetype');
+}
+
+/* raleway-italic - latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Raleway'), url('../fonts/raleway/raleway-v27-latin-italic.woff2') format('woff2'), url('../fonts/raleway/raleway-v27-latin-italic.woff') format('woff'), url('../fonts/raleway/raleway-v27-latin-italic.ttf') format('truetype');
+}
+
+/* zen-loop-regular - latin */
+@font-face {
+  font-family: 'Zen Loop';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Zen Loop'), url('../fonts/zen-loop/zen-loop-v7-latin-regular.woff2') format('woff2'), url('../fonts/zen-loop/zen-loop-v7-latin-regular.woff') format('woff'), url('../fonts/zen-loop/zen-loop-v7-latin-regular.ttf') format('truetype');
+}
+
+/* odibee-sans-regular - latin */
+@font-face {
+  font-family: 'Odibee Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Odibee Sans'), url('../fonts/odibee-sans/odibee-sans-v14-latin-regular.woff2') format('woff2'), url('../fonts/odibee/odibee-sans-v14-latin-regular.woff') format('woff'), url('../fonts/odibee/odibee-sans-v14-latin-regular.ttf') format('truetype');
+}
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body.reveal-viewport {
+    background: #FFFAF4;
+    background-color: #FFFAF4;
+}
+
+.reveal {
+    font-family: 'Raleway', Helvetica, serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: #0F1D3E;
+}
+
+::selection {
+    color: #faebd7;
+    background: #3c4b5f;
+    text-shadow: none;
+}
+
+::-moz-selection {
+    color: #faebd7;
+    background: #3c4b5f;
+    text-shadow: none;
+}
+
+.reveal .slides {
+    height: 100%;
+}
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+    line-height: 1.3;
+    font-weight: inherit;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h5 {
+    margin: 0 0 20px 0;
+    font-family: "Zen Loop", sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-shadow: none;
+    word-wrap: break-word;
+}
+
+.reveal h4,
+.reveal h6 {
+    margin: 0 0 20px 0;
+    font-family: "Nixie One", Helvetica, sans-serif;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-shadow: none;
+    word-wrap: break-word;
+}
+
+.reveal h1 {
+    font-size: 2.5em;
+}
+
+.reveal h2 {
+    font-size: 2.2em;
+}
+
+.reveal h3 {
+    font-size: 1.8em;
+}
+
+.reveal h4 {
+    font-size: 1em;
+}
+
+.reveal h5 {
+    font-size: 1.5em;
+}
+
+.reveal h1 {
+    text-shadow: none;
+}
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+    margin: 20px 0;
+    line-height: 1.3;
+}
+.reveal span.mono {
+    font-family: "Nova Mono", monospace;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+    max-width: 95%;
+    max-height: 95%;
+}
+
+.reveal strong,
+.reveal b {
+    font-weight: bold;
+}
+
+.reveal em {
+    font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+    display: inline-block;
+    text-align: left;
+    margin: 0 0 0 1em;
+}
+
+.reveal ol {
+    list-style-type: decimal;
+}
+
+.reveal ul {
+    list-style-type: disc;
+}
+
+.reveal ul ul {
+    list-style-type: none;
+}
+
+.reveal ul ul ul {
+    list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+    display: block;
+    margin-left: 40px;
+}
+
+.reveal dt {
+    font-weight: bold;
+}
+
+.reveal dd {
+    margin-left: 40px;
+}
+
+.reveal blockquote {
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: 20px auto;
+    padding: 5px;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+    display: inline-block;
+}
+
+.reveal q {
+    font-style: italic;
+}
+
+.reveal pre {
+    display: block;
+    position: relative;
+    width: 90%;
+    margin: 20px auto;
+    text-align: left;
+    font-size: 0.55em;
+    font-family: monospace;
+    line-height: 1.2em;
+    word-wrap: break-word;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+}
+
+.reveal pre {
+    border-radius: 5px;
+    background: #0F1D3E;
+}
+
+.reveal pre code {
+    font-family: 'Nova Mono';
+    font-weight: 600;
+    text-transform: none;
+    font-size: 18px;
+
+    display: block;
+    padding: 2em;
+    padding-top: 40px;
+    overflow: auto;
+    word-wrap: normal;
+}
+.reveal section.full-screen-code pre.code-wrapper {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.reveal section.full-screen-code code {
+    line-height: 1.1em;
+    font-size: 1.1em;
+}
+
+.reveal section.full-screen-code {
+    width: 100%;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #f9f9f9;
+  border-radius: 50%;
+  margin: 0 4px 0 0;
+  position: absolute;
+  top: 10px;
+}
+
+.dot:nth-child(1) {
+    background: #FF6057;
+    border: 1px solid #E14640;
+    left: 10px;
+  }
+
+.dot:nth-child(2) {
+    background: #FFBD2E;
+    border: 1px solid #DFA123;
+    left: 30px;
+  }
+
+.dot:nth-child(3) {
+    background: #27C93F;
+    border: 1px solid #1DAD2B;
+    left: 50px;
+}
+
+
+.reveal table {
+    margin: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.reveal table th {
+    font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+    text-align: left;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-bottom: 1px solid;
+}
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+    text-align: center;
+}
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+    text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.reveal sup {
+    vertical-align: super;
+}
+
+.reveal sub {
+    vertical-align: sub;
+}
+
+.reveal small {
+    display: inline-block;
+    font-size: 0.6em;
+    line-height: 1.2em;
+    vertical-align: top;
+}
+
+.reveal small * {
+    vertical-align: top;
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+    color: #191715;
+    -webkit-transition: color .15s ease;
+    -moz-transition: color .15s ease;
+    transition: color .15s ease;
+}
+
+.reveal a:hover {
+    color: #6ca0e8;
+    text-shadow: none;
+    border: none;
+}
+
+.reveal .roll span:after {
+    color: #faebd7;
+    background: #1a53a1;
+}
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+.reveal section img {
+    margin: 15px 0px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 0;
+    box-shadow: none;
+}
+
+.reveal section img.icon {
+    background-color: transparent;
+    vertical-align: middle;
+    width:1em;
+}
+
+.reveal section img.inline {
+    background-color: transparent;
+    vertical-align: middle;
+    height:0.9em;
+}
+
+.reveal a img {
+    -webkit-transition: all .15s linear;
+    -moz-transition: all .15s linear;
+    transition: all .15s linear;
+}
+
+.reveal a:hover img {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #2a76dd;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+    color: #2a76dd;
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+    background: rgba(0, 0, 0, 0.2);
+    color: #2a76dd;
+}
+
+.reveal .progress span {
+    -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
+
+/*********************************************
+ * BASE CSS OVERRIDES
+ *********************************************/
+
+.reveal .slides section .fragment.highlight-red.visible {
+    color: #FC4472;
+}
+
+.reveal .slides section .fragment.highlight-green.visible {
+    color: #8AB0AB;
+}
+
+.reveal .slides section .fragment.highlight-blue.visible {
+    color: #FFFFF;
+    font-weight: bold;
+}
+
+.reveal .slides section .fragment.highlight-current-red.current-fragment {
+    color: #FC4472;
+}
+
+.reveal .slides section .fragment.highlight-current-green.current-fragment {
+    color: #8AB0AB;
+}
+
+.reveal .slides section .fragment.highlight-current-blue.current-fragment {
+    font-weight: bold;
+    color: #191715;
+}
+
+
+/*
+Code style
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #0F1D3E;
+  color: #ddd;
+}
+
+.hljs-tag,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-strong,
+.hljs-name {
+  color: #F08700;
+}
+
+.hljs-code {
+  color: #4DA1A9;
+}
+
+.hljs-class .hljs-title {
+  color: #A1E44D;
+}
+
+.hljs-attribute,
+.hljs-symbol,
+.hljs-regexp,
+.hljs-link {
+  color: #bf79db;
+}
+
+.hljs-string {
+  color: #a88b78;
+}
+
+.hljs-bullet,
+.hljs-subst,
+.hljs-title,
+.hljs-section,
+.hljs-emphasis,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #7ed6de;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion,
+.hljs-meta {
+  color: #a88b78;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-title,
+.hljs-section,
+.hljs-type,
+.hljs-selector-id {
+  font-weight: bold;
+}
+
+/* define two columns */
+.half {
+    flex-direction: row;
+    justify-content: center;
+    flex-basis: 50%;
+}
+.two-halves {
+    display: flex;
+}

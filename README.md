@@ -12,6 +12,7 @@ Slides can be accessed online on `sdg.jlbl.net/slides/<slides-folder-name>`.
 - [Tests for Data Scientists](https://sdg.jlbl.net/slides/tests-for-datascientist/index.html)
 - [Privacy-preserving text analysis](https://sdg.jlbl.net/slides/text-privacy/index.html)
 - [Architecture principles for Data Scientists](https://sdg.jlbl.net/slides/architecture-principles-for-datascientists/index.html)
+- [Debugging as an experimental science](https://sdg.jlbl.net/slides/debugging-as-an-experimental-science/index.html)
 
 ## How to edit
 

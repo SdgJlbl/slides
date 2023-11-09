@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="mine.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>The science of debugging</h1>
+            <h4>PyLadies Paris · November 16, 2023</h4>
+        </section>
+        <section>
+            <h2>About me</h2>
+            <ul>
+                <li>ML engineer at  <img class="inline" src="./img/owkin-logo.png"
+                         alt="Owkin" style=""/></li>
+                <li>Maintainer of  <img class="inline" src="./img/substra-logo.png"
+                         alt="Substra" style="margin-top: 0.1em"/></li>
+                <li><img class="icon" src="./img/GitHub-logo.png"
+                         alt="GitHub logo" style="width: 1em"/>
+                    <a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
+            </ul>
+        </section>
+        <!-- Debugging is dark magic-->
+        <section>
+            <section>
+                <img class="fragment" data-fragment-index="1" src="./img/labyrinth.jpg"
+                         alt="a labyrinth" style="width: 20em"/>
+                <p class="fragment" data-fragment-index="1" style="font-size: x-small"> CC-BY-SA 4.0, Rolf Kranz</p>
+                <aside class="notes">
+                    Debugging is a universal experience for anyone writing code.
+                    It's often viewed as painful, confusing.
+                    But it shouldn't be dark magic.
+                </aside>
+            </section>
+            <section>
+                <h2>There is a logical explanation to bugs.</h2>
+                <aside class="notes">
+                    At least as long as we are not doing quantum programming, code is behaving rationally, and
+                    there is a logical explanation to bugs.
+                    We can use a systematic approach to find the cause.
+                    We can borrow from the scientific method.
+                </aside>
+            </section>
+            <section>
+                <h2>Debugging as an experimental science</h2>
+                <aside class="notes">
+                    Debugging should be approached as an experimental science.
+                    We can apply the same method as any scientist trying to understand what is happening.
+                </aside>
+            </section>
+            <section>
+                <h2>Experimental science = theory + experiments</h2>
+                <aside class="notes">
+                    It's also that the theory should be validated by experiments, and experiments are guided by the theory.
+                </aside>
+            </section>
+            <section>
+                <h2>Don't try to fix your bug</h2>
+                <p class="fragment">Understand what happens</p>
+                <aside class="notes">
+                    If you fix your bug by chance, you're not sure it won't happen again, you won't be able to build on
+                    the previous fix to solve more complex cases, you can't transfer knowledge.
+                    If you understand what happened, you're learning about your codebase and the idiosyncrasies of your
+                    programming language. Debugging becomes an opportunity to learn, instead of a cause of despair.
+                </aside>
+            </section>
+        </section>
+        <!-- Theory -->
+        <section>
+            <section>
+                <h2>Theory</h2>
+                <ul>
+                    <li class="fragment">Assumptions about how your code is working</li>
+                    <li class="fragment">Hypotheses about what happens during the bug</li>
+                </ul>
+                <aside class="notes">
+                    We are not going to explain the whole of the universe, but focus on a small part we have control over,
+                    namely your code. We are making assumptions about how the code is working, and what is happening during
+                    the flow of execution.
+                    Typically, we assume a few things, like Python is not buggy, the hardware is not hit by a rogue neutrino, ...
+                    We'll come back to this, but applying Occam's razor, ie the simplest explanation is the most plausible,
+                    is important.
+                </aside>
+            </section>
+            <section>
+                <h2>Theory</h2>
+                <p>Can be <strong>wrong</strong></p>
+                <aside class="notes">
+                    If you have a bug / unexpected behaviour, at least one of your assumptions about how your code is working
+                    is wrong.
+                    Your experiments must help you confirm or infirm your hypotheses.
+                </aside>
+            </section>
+            <section>
+                <h2>Theory</h2>
+                <p>The grid to interpret your experiments</p>
+                <aside class="notes">
+                    The theory is a mental image of your code. It's the analysis grid that helps you interpret your experiments.
+                    You will use it to create hypotheses about what happened, consciously or not.
+                    Do it consciously, to be able to challenge your assumptions.
+                    Your experiments must help you confirm or infirm your hypotheses and your assumptions.
+                </aside>
+            </section>
+        </section>
+        <!-- Experiments -->
+        <section>
+            <section>
+                <h2>Experiment</h2>
+                <p>What is actually happening when you run your code</p>
+                <aside class="notes">
+                    Experiments are what you get when confronting your theory to reality.
+                    You get information about what happened, from your logs, your outputs, your stack trace, maybe
+                    even your monitoring tools if you are lucky.
+                </aside>
+            </section>
+            <section>
+                <h2>Experiment</h2>
+                <p>Used to test your hypotheses</p>
+                <aside class="notes">
+                    By changing your inputs or your code, you get need data points that can help you confirm or infirm your
+                    hypotheses and your assumptions.
+                </aside>
+            </section>
+        </section>
+        <!-- Research / debugging log -->
+        <section>
+            <section>
+                <h2>How?</h2>
+                <p>Scientists use a research log</p>
+                <aside class="notes">
+                    Scientists use a research log to keep track of all their ideas, experiments, results, ...
+                </aside>
+            </section>
+            <section>
+                <h2>Debugging log</h2>
+                <ul>
+                    <li class="fragment">Write down experiment settings and results</li>
+                    <li class="fragment">Write down your assumptions and hypotheses explicitly</li>
+                    <li class="fragment">Write down ideas you can't follow right now</li>
+                </ul>
+                <aside class="notes">
+                    We can steal the idea and use a similar tool for debugging.
+                    First, write all inputs and results of your experiments, to avoid going in circles.
+                    Especially important if your experiments are slow.
+                    Expliciting your theory is important, because you can better see blind spots: both assumption about
+                    how your code works and hypotheses about what is happening during the bug.
+                    Ideas you have, even random / stupid ones, as if you were brainstorming.
+                </aside>
+            </section>
+            <section>
+                <img src="./img/diagram.png"
+                     alt="a circular diagram showing how assumptions are tested by experiments, which either confirm or infirm the assumptions"
+                     style="width: 20em"/>
+                <aside class="notes">
+                    Botom-up (starting from the stack trace) or top-down (starting from the input and follow the code flow)
+                </aside>
+            </section>
+            <section>
+                <p>Debugging log is great to write post-mortems</p>
+                <aside class="notes">
+                    Post-mortems are a good practice to learn from past incidents, and share knowledge inside your team.
+                    Post-mortem are sometime named post-incident reviews, or incident retrospectives.
+                </aside>
+            </section>
+        </section>
+        <!-- Toy example -->
+        <section>
+            <section>
+                <p>Let's see how that applies to a toy example</p>
+            </section>
+            <section>
+                <p>I need to iterate on cumulative lists: </p>
+                <p> <span class="mono"> [0], [0, 1], [0, 1, 2], ... </span></p>
+            </section>
+            <section>
+                <p>I need to add a special value at the beginning of each list: </p>
+                <p> <span class="mono"> -100 </span></p>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape data-line-numbers="6-8|1-3|1-10|11|12" class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        beginning.extend(l)
+                        return beginning
+
+
+                    for i in range(5):
+                        zero_to_i = list(range(i))
+                        l = prepend(zero_to_i)
+
+                    print(len(l))
+                    # Expected: 5; i = 4, zero_to_i = [0, 1, 2, 3], l = [-100, 0, 1, 2, 3]
+                    # Actual: 11
+                </code></pre>
+                <aside class="notes">
+                    line 7 creates lists of increasing length.
+                    prepend adds a special value at the beginning of the list. The default is -100, but it is configurable
+                    to allow any list of values.
+                </aside>
+            </section>
+            <section>
+                <h2>Assumption 1</h2>
+                <p><span class="mono">prepend</span> is adding <span class="mono">-100</span> in front of the list.</p>
+            </section>
+            <section>
+                <h2>Experiment 1</h2>
+                <pre><code data-trim data-noescape data-line-numbers class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        beginning.extend(l)
+                        return beginning
+
+                    print(prepend([0, 1, 2]))
+                    # [-100, 0, 1, 2]
+                </code></pre>
+            </section>
+            <section>
+                <h2>Experiment 2</h2>
+                <p>Let's print the values of <span class="mono">zero_to_i</span></p>
+            </section>
+            <section>
+                <h2>Experiment 2</h2>
+                <pre><code data-trim data-noescape data-line-numbers="1-10|8,11-15" class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        beginning.extend(l)
+                        return beginning
+
+
+                    for i in range(5):
+                        zero_to_i = list(range(i))
+                        print(zero_to_i)
+                        l = prepend(zero_to_i)
+
+                    # []
+                    # [0]
+                    # [0, 1]
+                    # [0, 1, 2]
+                    # [0, 1, 2, 3]
+                </code></pre>
+            </section>
+            <section>
+                <h2>Experiment 3</h2>
+                <p>Let's print the values of <span class="mono">l</span></p>
+            </section>
+            <section>
+                <h2>Experiment 3</h2>
+                <pre><code data-trim data-noescape data-line-numbers="1-10|9,11-16" class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        beginning.extend(l)
+                        return beginning
+
+
+                    for i in range(5):
+                        zero_to_i = list(range(i))
+                        l = prepend(zero_to_i)
+                        print(l)
+
+                    # [-100]
+                    # [-100, 0]
+                    # [-100, 0, 0, 1]
+                    # [-100, 0, 0, 1, 0, 1, 2]
+                    # [-100, 0, 0, 1, 0, 1, 2, 0, 1, 2, 3]
+                </code></pre>
+            </section>
+            <section>
+                <h2>Assumption 4</h2>
+                <p><span class="mono">prepend</span> is always behaving in the same way.</p>
+            </section>
+            <section>
+                <h2>Experiment 4</h2>
+                <pre><code data-trim data-noescape data-line-numbers="1-6|8-9" class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        beginning.extend(l)
+                        return beginning
+
+                    print(prepend([0, 1, 2]))
+                    # [-100, 0, 1, 2]
+
+                    print(prepend([0, 1, 2]))
+                    # [-100, 0, 1, 2, 0, 1, 2]
+                </code></pre>
+            </section>
+            <section>
+                <h2>Experiment 5</h2>
+                <p>Investigate what is happening with multiple successive calls to <span class="mono">prepend</span>.</p>
+            </section>
+            <section>
+                <h2>Experiment 5</h2>
+                <pre><code data-trim data-noescape data-line-numbers="1-6|7-9|7-13" class="language-python">
+                    def prepend(l: list, beginning: list = [-100]):
+                        print("l: ", l)
+                        print("beginning: ", beginning)
+                        beginning.extend(l)
+                        return beginning
+
+                    prepend([0, 1, 2])
+                    # l: [0, 1, 2]
+                    # beginning: [-100]
+
+                    prepend([0, 1, 2])
+                    # l: [0, 1, 2]
+                    # beginning: [-100, 0, 1, 2]
+                </code></pre>
+            </section>
+            <section>
+                <h2>What is happening</h2>
+                <ul>
+                    <li class="fragment">Default arguments are instantiated once.</li>
+                    <li class="fragment">If a default argument is changed, the new value will be used as default for subsequent calls.</li>
+                    <ul>
+                        <li class="fragment"><span class="mono">beginning.extend(l)</span> </li>
+                    </ul>
+                    <li class="fragment">DO NOT use mutable default arguments.</li>
+                </ul>
+                <aside class="notes">
+                    Default arguments are created once, when the function is defined.
+                    If a default argument is changed during the function call, the new value will be used as default for subsequent calls.
+                    It is recommended not to use mutable default arguments.
+                    (Mutable == that can be modified, things like list and dict; immutable, tuples, strings and integers)
+                </aside>
+            </section>
+            <section>
+                <h2>Fixed code</h2>
+                <pre><code data-trim data-noescape data-line-numbers="1-10|1-3|" class="language-python">
+                    def prepend(l: list, beginning: list | None = None):
+                        if beginning is None:
+                            beginning = [-100]
+                        beginning.extend(l)
+                        return beginning
+
+
+                    for i in range(5):
+                        zero_to_i = list(range(i))
+                        l = prepend(zero_to_i)
+
+                    print(len(l))
+                    # Expected: 5
+                    # Actual: 5
+                </code></pre>
+            </section>
+        </section>
+        <!-- Practical hints and tips -->
+        <section>
+            <section>
+                <h1>Hints and tips</h1>
+                <aside class="notes">
+                    For the rest of the talk, I'd like to cover more practical advice on how to tackle a real bug,
+                    when your code base is not 10-line long, but more like 100k lines.
+                    How to build your theoretical view of your code, how to test your hypotheses efficiently, what tools
+                    can help you for your experiments... and how you can leverage your debugging log to guide you through
+                    your exploration.
+                </aside>
+            </section>
+            <section>
+                <h2>Qualifying the bug - in theory</h2>
+                <ul>
+                    <li class="fragment">What is the "bug"?</li>
+                    <li class="fragment">Is it a bug?</li>
+                </ul>
+                <aside class="notes">
+                    First thing first, start your analysis with describing the bug: do you have a detailed description of the event?
+                    Expected behaviour matters (cf in bug report).
+                    Unsupported Python versions are not a bug.
+                </aside>
+            </section>
+            <section>
+                <h2>Qualifying the bug - in practice</h2>
+                <ul>
+                    <li class="fragment">Is it reproducible?</li>
+                    <li class="fragment">Was it working before?</li>
+                </ul>
+                <aside class="notes">
+                    Can you find a point in time / a previous version of your code when the code was working as expected?
+                </aside>
+            </section>
+            <section>
+                <h2>Building your theory 1/5</h2>
+                <p class="fragment">Rely on Occam's razor</p>
+                <aside class="notes">
+                    Might seem daunting but it's okay not to list all the assumptions you are making, focus on the most obvious at first.
+                    The ones that are most likely to be wrong, are probably the most interesting to test.
+                    Start with simple explanations / assumptions, and move to more complex ones if needed.
+                    Remember, it's a back and forth between theory and experiments.
+                </aside>
+            </section>
+            <section>
+                <h2>Building your theory 2/5</h2>
+                <p class="fragment">Use documentation and architecture diagrams</p>
+                <p class="fragment">But <b>don't trust them</b></p>
+                <aside class="notes">
+                    What you want to do is building a good high-level view of your code / a mental model of what is happening
+                    Easier with experience, for codebase you know well, takes time to build.
+                    Preexisting documentation can help you make sense of the code, but can be outdated or not covering
+                    all edge cases.
+                    Should be listed in your explicit assumptions: according to the documentation, X is true, and then
+                    confirmed with an experiment.
+                </aside>
+            </section>
+            <section>
+                <h2>Building your theory 3/5</h2>
+                <p>Follow the flow</p>
+                <aside class="notes">
+                    Follow the flow of execution, from the input to the output.
+                    Start from the input and follow the code flow by reading your code (modern IDE can help).
+                    You can also use a debugger to follow the code flow.
+                </aside>
+            </section>
+            <section>
+                <h2>Building your theory 4/5</h2>
+                <p>Divide and conquer</p>
+                <aside class="notes">
+                    Well separated components help.
+                    If you have a large codebase, you can start by identifying the components that are involved in the bug.
+                    Then, you can focus on one component at a time.
+                </aside>
+            </section>
+            <section>
+                <h2>Building your theory 5/5</h2>
+                <p class="fragment">Remember: at least one of your assumptions is wrong</p>
+                <aside class="notes">
+                    All the tips above can help you with filling the assumption part of your debugging log, but now is
+                    the time to put your theory to the test.
+                    And you want to identify which one.
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 1/7</h2>
+                <p class="fragment">Invest in tooling</p>
+                <aside class="notes">
+                    In parallel, you can start collecting experimental data points to guide your theory building.
+                    Some people are more comfortable building an abstract view of the problem first;
+                    others prefer to start from concrete logs and stack traces. Both approaches are valid, and you will
+                    often use both alternatively in complex bugs.
+                    Learn how to use a debugger. pdb might seem intimidating, and is not terribly user-friendly, but
+                    it is useful.
+                    As a team, invest in logging, and other monitoring tools.
+                </aside>
+            </section>
+            <section>
+                <h2>Observability for debugging</h2>
+                <ul>
+                    <li class="fragment">Good logs can already validate or invalidate hypotheses</li>
+                    <li class="fragment">Metrics can help in hard-to-reproduce scenarii</li>
+                </ul>
+                <aside class="notes">
+                    Good monitoring solutions can help you gain some time, because it will narrow down your assumptions
+                    and hypotheses without running any experiments.
+                    If you have incidents in production, OOM killed machines, performance issues, it might be hard to
+                    reproduce outside a production environment. Metrics will be helpful to identify chain failures /
+                    temporary overload.
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 2/7</h2>
+                <p>Trust nothing / print everything</p>
+                <aside class="notes">
+                    Print values of things you're unsure about.
+                    Print values of things you're sure about.
+                    If you're sure about something, getting experimental validation is still important.
+                    Most frustrating bugs are caused by a wrong "obvious" assumption that is not tested.
+                    Be systematic.
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 3/7</h2>
+                <p>Divide and conquer</p>
+                <aside class="notes">
+                    Same as for the theoretical understanding, having well-isolated components can help identifying on
+                    which part of the code you should focus your efforts.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Designing efficient experiments 4/7</h2>
+                <p>Inspect values at interfaces</p>
+                <aside class="notes">
+                    Use the web console to inspect HTTP requests between frontend and backend.
+                    Inspect SQL queries sent by your ORM to your database.
+                    It's often a convenient place to get information, and it provides a lot of value to identify where
+                    the problem is (in js or in Python or in SQL).
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 5/7</h2>
+                <p>Leverage temporality</p>
+                <aside class="notes">
+                    It was working before. There exists no ill-intentioned goblin who cursed your code.
+                    Think about what has changed (upgrades in your code, or in a dependency).
+                    git bisect can help narrow down the exact incriminated commit.
+                    Monitoring tooling can highlight a change in resource usage.
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 6/7</h2>
+                <p>Identify source of randomness</p>
+                <aside class="notes">
+                    Code is rational, so if your experiments are not reproducible, but should be, you have not taken
+                    into account something.
+                    Sometimes randomness is out of our control (external API calls).
+                    Sometimes, you can fix the random seed to help with debugging.
+                    Sometimes, something is stateful when you thought you had no side effect.
+                </aside>
+            </section>
+            <section>
+                <h2>Designing efficient experiments 7/7</h2>
+                <p>Debugging is a team effort</p>
+                <aside class="notes">
+                    Work in pair / learn to ask good technical questions
+                    Synthesize your current level of knowledge to share with a coworker.
+                    Write a message to someone when you're stuck -> just exposing everything will highlight what you've
+                    missed / neglected to test.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Writing code easy to debug</h2>
+                <aside class="notes">
+                    In a nutshell, code that is easy to test (stateless (FP), small & well-isolated components) is easier to debug.
+                </aside>
+            </section>
+
+        </section>
+
+        <!-- Conclusion -->
+        <section>
+            <section>
+                <h2>The science of debugging in 3 principles</h2>
+                <ul>
+                    <li class="fragment">There's a logical explanation.</li>
+                    <li class="fragment">Understand what happens, do not fix the bug.</li>
+                    <li class="fragment">Trust nothing, check all your assumptions.</li>
+                </ul>
+                <aside class="notes">
+                    Like thermodynamic, debugging has 3 fundamental principles.
+                </aside>
+            </section>
+            <section>
+                <h2>And a debugging log to bind them all</h2>
+            </section>
+            <section>
+                <h1>Questions?</h1>
+                <p style="font-size: medium">See also <a href="https://wizardzines.com/zines/debugging-guide/">The Pocket Guide to Debugging</a>, by Julia Evans</p>
+            </section>
+        </section>
+
+		</div>
+	</div>
+	<script src="../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
+	<script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+	<script>
+	Reveal.initialize({
+        width: 1280,
+        height: 760,
+		history: true,
+		slideNumber: true,
+		plugins: [ RevealHighlight, RevealNotes ],
+	});
+	document.getElementsByTagName("code").forEach(element => {
+		var dot = document.createElement("div");
+		dot.classList = "dot"
+		//element.prepend(dot);
+		//element.prepend(dot.cloneNode());
+		//element.prepend(dot.cloneNode());
+	});
+	</script>
+</body>
+</html>
