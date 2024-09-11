@@ -28,8 +28,8 @@
             <section>
                 <h2>What does an ML engineer do?</h2>
                 <ul>
-                    <li class="fragment">Productionize research code</li>
-                    <li class="fragment">Implement tooling to facilitate data scientist job</li>
+                    <li class="fragment">Productionizing research code</li>
+                    <li class="fragment">Implementing tooling to facilitate data scientist job</li>
                     <li class="fragment">Debugging</li>
                 </ul>
             </section>
@@ -38,11 +38,8 @@
         <section>
             <section>
                 <h2>Everyone is debugging</h2>
-            </section>
-            <section>
-                <img class="fragment" data-fragment-index="1" src="./img/labyrinth.jpg"
-                         alt="a labyrinth" style="width: 20em"/>
-                <p class="fragment" data-fragment-index="1" style="font-size: x-small"> CC-BY-SA 4.0, Rolf Kranz</p>
+                <img class="fragment" data-fragment-index="1" src="./img/maze.svg"
+                         alt="a labyrinth" style="width: 14em"/>
                 <aside class="notes">
                     Debugging is a universal experience for anyone writing code.
                     It's often viewed as painful, confusing.
@@ -59,7 +56,8 @@
                 </aside>
             </section>
             <section>
-                <h2>Approaching debugging as an experimental science</h2>
+                <h2>Approaching debugging as</h2>
+                <h2>an experimental science</h2>
                 <aside class="notes">
                     Debugging should be approached as an experimental science.
                     We can apply the same method as any scientist trying to understand what is happening.
@@ -72,8 +70,8 @@
                 </aside>
             </section>
             <section>
-                <img src="./img/labyrinth.jpg"
-                         alt="a labyrinth" style="width: 20em"/>
+                <img src="./img/walls.svg"
+                         alt="a labyrinth" style="width: 14em"/>
                 <aside class="notes">
                     Typical approach to debugging (iterate until your code works) would be like wandering at random:
                     kind of work for small mazes, but
@@ -99,17 +97,22 @@
         <section>
             <section>
                 <h1>Drawing your map</h1>
+                <img src="./img/feather.svg"
+                             alt="drawing of a feather" style="height: 4em"/>
 
                 <aside class="notes">
                     Aka building your mental model of your code. It sounds daunting, but it will be an iterative process.
                 </aside>
             </section>
             <section>
-                <h2>Drawing your map</h2>
-                <p class="fragment">You have assumptions about how your code is working</p>
+                <h2>Drawing your map
+
+                </h2>
+                <p>You have assumptions about how your code is working</p>
                 <p class="fragment">Make them explicit</p>
                 <p class="fragment">Focus on the most obvious at first</p>
-
+                <img class="footnote" src="./img/feather.svg"
+                             alt="drawing of a feather" style=""/>
                 <aside class="notes">
                     We are not going to explain the whole of the universe, but focus on a small part we have control over,
                     namely your code. We are making assumptions about how the code is working, and what is happening during
@@ -126,6 +129,9 @@
             <section>
                 <h2>Drawing your map</h2>
                 <p>Divide and conquer</p>
+
+                <img class="footnote" src="./img/feather.svg"
+                             alt="drawing of a feather" style=""/>
                 <aside class="notes">
                     One good option to make the mapping of your codebase less daunting is to divide and conquer.
                     Well separated components help.
@@ -137,8 +143,11 @@
             </section>
             <section>
                 <h2>Drawing your map</h2>
-                <p class="fragment">Use documentation and architecture diagrams</p>
+                <p>Use documentation and architecture diagrams</p>
                 <p class="fragment">But <b>don't trust them</b></p>
+
+                <img class="footnote" src="./img/feather.svg"
+                             alt="drawing of a feather" style=""/>
                 <aside class="notes">
                     Use past "maps" with a healthy dose of skepticism.
                     What you want to do is building a good high-level view of your code / a mental model of what is happening
@@ -152,6 +161,8 @@
             <section>
                 <h2>Using your map</h2>
                 <p class="fragment">Make some hypotheses about what is happening during the bug</p>
+                <img class="footnote" src="./img/scroll.svg"
+                             alt="drawing of a scroll" style=""/>
                 <aside class="notes">
                     It's all good and well to have a map of your surroundings, but what you really want is get out of this mess.
                     With your current mental model, you probably have some hypotheses about what has happened (== which
@@ -162,6 +173,8 @@
             <section>
                 <h2>Using your map</h2>
                 <p>Follow the flow</p>
+                <img class="footnote" src="./img/scroll.svg"
+                             alt="drawing of a scroll" style=""/>
 
                 <aside class="notes">
                     If you have no idea about what is happening, follow the flow of execution, from the input to the output.
@@ -171,7 +184,10 @@
             </section>
 
             <section>
-                <h2>Wrapping up: theory</h2>
+                <h2><img class="title" src="./img/feather.svg"
+                             alt="drawing of a feather" style=""/>
+                    Wrapping up
+                </h2>
                 <p>Remember: at least one of your assumptions is wrong</p>
 
                 <aside class="notes">
@@ -188,7 +204,10 @@
         <!-- Experiments -->
         <section>
             <section>
-                <h1>Tracing your way</h1>
+                <h1>Finding your way</h1>
+
+                <img src="./img/compass.png"
+                             alt="drawing of a compass" style="height: 4em"/>
 
                 <aside class="notes">
                     Having a map of your code is a start, but you probably need to explore as well, first to be able to
@@ -196,9 +215,11 @@
                 </aside>
             </section>
             <section>
-                <h2>Tracing your way</h2>
+                <h2>Finding your way</h2>
                 <p>Designing and recording experiments:</p>
                 <p>What is actually happening when you run your code</p>
+                <img class="footnote" src="./img/compass.png"
+                             alt="drawing of a compass" style=""/>
                 <aside class="notes">
                     Experiments are what you get when confronting your theory to reality.
                     You get information about what happened, from your logs, your outputs, your stack trace, maybe
@@ -210,8 +231,10 @@
                 </aside>
             </section>
             <section>
-                <h2>Tracing your way</h2>
+                <h2>Finding your way</h2>
                 <p>Experiments are used to test your hypotheses</p>
+                <img class="footnote" src="./img/compass.png"
+                             alt="drawing of a compass" style=""/>
                 <aside class="notes">
                     You can make prediction out of your mental model: if I turn in this direction, the next turn will be to the right.
                     By changing your inputs or your code, you get need data points that can help you confirm or infirm your
@@ -220,10 +243,12 @@
                 </aside>
             </section>
             <section>
-                <h2>Tracing your way</h2>
+                <h2>Finding your way</h2>
                 <p class="fragment">Be systematic</p>
                 <p class="fragment">Trust nothing</p>
                 <p class="fragment">Check everything</p>
+                <img class="footnote" src="./img/compass.png"
+                             alt="drawing of a compass" style=""/>
                 <aside class="notes">
                     Print values of things you're unsure about.
                     Print values of things you're sure about.
@@ -233,8 +258,10 @@
                 </aside>
             </section>
             <section>
-                <h2>Tracing your way</h2>
+                <h2>Finding your way</h2>
                 <p>Inspect values at interfaces.</p>
+                <img class="footnote" src="./img/compass.png"
+                             alt="drawing of a compass" style=""/>
 
                 <aside class="notes">
                     Back to "divide and conquer": you're looking for a needle in a haystack: try to make the haystack as
@@ -248,8 +275,10 @@
                 </aside>
             </section>
             <section>
-                <h2>Tracing your way</h2>
+                <h2>Finding your way</h2>
                 <p>Focus on data, not the code flow.</p>
+                <img class="footnote" src="./img/compass.png"
+                             alt="drawing of a compass" style=""/>
 
                 <aside class="notes">
                     One major limitation of your mental model is probably unaccounted-for side effects.
@@ -260,7 +289,8 @@
                 </aside>
             </section>
             <section>
-                <h2>Wrapping up: experiments</h2>
+                <h2>Wrapping up <img class="title" src="./img/compass.png"
+                             alt="drawing of a compass" style="height: 0.8em"/></h2>
                 <p>It's all about putting your theory to the test.</p>
 
                 <aside class="notes">
@@ -275,6 +305,9 @@
             <section>
                 <h1>Keeping track of your progress</h1>
 
+                <img src="./img/book.svg"
+                             alt="drawing of an open notebook" style="height: 4em"/>
+
                 <aside class="notes">
                     It's easy to get lost in the maze of your code, and forget what you've tried, what you've learned.
                     It's important to keep track of your progress, to avoid going in circles.
@@ -284,6 +317,9 @@
             <section>
                 <h2>How?</h2>
                 <p>Scientists use a research log</p>
+
+                <img class="footnote" src="./img/book.svg"
+                             alt="drawing of an open notebook" style=""/>
                 <aside class="notes">
                     Scientists use a research log to keep track of all their ideas, experiments, results, ...
                 </aside>
@@ -295,6 +331,9 @@
                     <li class="fragment">Write down your assumptions and hypotheses explicitly</li>
                     <li class="fragment">Write down ideas you can't follow right now</li>
                 </ul>
+
+                <p><img class="footnote" src="./img/book.svg"
+                             alt="drawing of an open notebook" style=""/></p>
                 <aside class="notes">
                     We can steal the idea and use a similar tool for debugging.
                     First, write all inputs and results of your experiments, to avoid going in circles.
@@ -314,6 +353,9 @@
             </section>
             <section>
                 <p>Debugging log is great to write incident retrospectives</p>
+
+                <img class="footnote" src="./img/book.svg"
+                             alt="drawing of an open notebook" style=""/>
                 <aside class="notes">
                     Incident retrospectives are a good practice to learn from past incidents, and share knowledge inside your team.
                 </aside>
@@ -322,31 +364,32 @@
         <!-- Toy example -->
         <section>
             <section>
-                <p>Let's see how that applies to a toy example</p>
+                <p>Let's apply this approach to a toy example.</p>
+                <p class="fragment" data-fragment-index="1"> I iterate on cumulative lists:</p>
+                <p class="fragment" data-fragment-index="1"><span class="mono"> [0], [0, 1], [0, 1, 2], ... </span></p>
+                <p class="fragment" data-fragment-index="2"> I add a <em>special value</em> at the beginning of each list: </br> <span class="mono"> -100 </span></p>
             </section>
             <section>
-                <p>I need to iterate on cumulative lists: </p>
-                <p> <span class="mono"> [0], [0, 1], [0, 1, 2], ... </span></p>
-            </section>
-            <section>
-                <p>I need to add a special value at the beginning of each list: </p>
-                <p> <span class="mono"> -100 </span></p>
-            </section>
-            <section>
-                <pre><code data-trim data-noescape data-line-numbers="6-8|1-3|1-10|11|12" class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        beginning.extend(l)
-                        return beginning
+                <div class="two-halves">
+                    <div class="half">
+                        <pre><code data-trim data-noescape data-line-numbers="6-8|1-3" class="language-python">
+                        def prepend(l: list, beginning: list = [-100]):
+                            beginning.extend(l)
+                            return beginning
 
 
-                    for i in range(5):
-                        zero_to_i = list(range(i))
-                        l = prepend(zero_to_i)
+                        for i in range(5):
+                            zero_to_i = list(range(i))
+                            l = prepend(zero_to_i)
 
-                    print(len(l))
-                    # Expected: 5; i = 4, zero_to_i = [0, 1, 2, 3], l = [-100, 0, 1, 2, 3]
-                    # Actual: 11
+                        print(len(l))
                 </code></pre>
+                    </div>
+                    <div class="half">
+                        <div class="handwriting">
+                        </div>
+                    </div>
+                </div>
                 <aside class="notes">
                     line 7 creates lists of increasing length.
                     prepend adds a special value at the beginning of the list. The default is -100, but it is configurable
@@ -354,107 +397,196 @@
                 </aside>
             </section>
             <section>
-                <h2>Assumption 1</h2>
-                <p><span class="mono">prepend</span> is adding <span class="mono">-100</span> in front of the list.</p>
-            </section>
-            <section>
-                <h2>Experiment 1</h2>
-                <pre><code data-trim data-noescape data-line-numbers class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        beginning.extend(l)
-                        return beginning
+                <div class="two-halves">
+                    <div class="half">
+                        <pre><code data-trim data-noescape class="language-python">
+                        def prepend(l: list, beginning: list = [-100]):
+                            beginning.extend(l)
+                            return beginning
 
-                    print(prepend([0, 1, 2]))
-                    # [-100, 0, 1, 2]
+
+                        for i in range(5):
+                            zero_to_i = list(range(i))
+                            l = prepend(zero_to_i)
+
+                        print(len(l))
                 </code></pre>
+                    </div>
+                    <div class="half">
+                        <div class="handwriting">
+                        <p class="fragment" data-fragment-index="3">Expected: 5</p>
+                        <p class="fragment" data-fragment-index="4">zero_to_i = [0, 1, 2, 3]</p>
+                        <p class="fragment" data-fragment-index="5">l = [-100, 0, 1, 2, 3]</p>
+                        <p class="fragment" data-fragment-index="6">Observed: 11</p>
+                        </div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    line 7 creates lists of increasing length.
+                    prepend adds a special value at the beginning of the list. The default is -100, but it is configurable
+                    to allow any list of values.
+                </aside>
             </section>
             <section>
-                <h2>Experiment 2</h2>
-                <p>Let's print the values of <span class="mono">zero_to_i</span></p>
+                <div class="two-halves">
+                    <div class="half">
+                        <div class="fragment" data-fragment-index="2">
+                            <h3>Experiment 1</h3>
+                            <pre><code data-trim data-noescape class="language-python">
+                            def prepend(l: list, beginning: list = [-100]):
+                                beginning.extend(l)
+                                return beginning
+
+                            print(prepend([0, 1, 2]))
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div>
+                            <h3>Hypothesis 1</h3>
+                            <div class="handwriting">
+                            <p class="fragment" data-fragment-index="1">
+                                <span class="mono">prepend</span> is adding <span class="mono">-100</span> in front of the list.
+                            </p>
+                                <p class="fragment" data-fragment-index="3">[-100, 0, 1, 2]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section>
-                <h2>Experiment 2</h2>
-                <pre><code data-trim data-noescape data-line-numbers="1-10|8,11-15" class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        beginning.extend(l)
-                        return beginning
+                <div class="two-halves">
+                    <div class="half">
+                        <div class="fragment" data-fragment-index="2">
+                            <h3>Experiment 2</h3>
+                            <pre><code data-trim data-noescape class="language-python">
+                            def prepend(l: list, beginning: list = [-100]):
+                                beginning.extend(l)
+                                return beginning
 
 
-                    for i in range(5):
-                        zero_to_i = list(range(i))
-                        print(zero_to_i)
-                        l = prepend(zero_to_i)
-
-                    # []
-                    # [0]
-                    # [0, 1]
-                    # [0, 1, 2]
-                    # [0, 1, 2, 3]
-                </code></pre>
+                            for i in range(5):
+                                zero_to_i = list(range(i))
+                                print(zero_to_i)
+                                l = prepend(zero_to_i)
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div>
+                            <h3>Hypothesis 2</h3>
+                            <div class="handwriting">
+                            <p class="fragment" data-fragment-index="1">
+                                Let's check the value of <span class="mono">zero_to_i</span></p>
+                            </p>
+                                <p class="fragment" data-fragment-index="3">[]</p>
+                                <p class="fragment" data-fragment-index="4">[0]</p>
+                                <p class="fragment" data-fragment-index="5">[0, 1]</p>
+                                <p class="fragment" data-fragment-index="6">[0, 1, 2]</p>
+                                <p class="fragment" data-fragment-index="7">[0, 1, 2, 3]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section>
-                <h2>Experiment 3</h2>
-                <p>Let's print the values of <span class="mono">l</span></p>
+                <div class="two-halves">
+                    <div class="half">
+                        <div class="fragment" data-fragment-index="2">
+                            <h3>Experiment 3</h3>
+                            <pre><code data-trim data-noescape class="language-python">
+                            def prepend(l: list, beginning: list = [-100]):
+                                beginning.extend(l)
+                                return beginning
+
+
+                            for i in range(5):
+                                zero_to_i = list(range(i))
+                                l = prepend(zero_to_i)
+                                print(l)
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div>
+                            <h3>Hypothesis 3</h3>
+                            <div class="handwriting">
+                            <p class="fragment" data-fragment-index="1">
+                                Let's check the value of <span class="mono">l</span></p>
+                            </p>
+                                <p class="fragment" data-fragment-index="3">[-100]</p>
+                                <p class="fragment" data-fragment-index="4">[-100, 0]</p>
+                                <p class="fragment" data-fragment-index="5">[-100, 0, 0, 1]</p>
+                                <p class="fragment" data-fragment-index="6">[-100, 0, 0, 1, 0, 1, 2]</p>
+                                <p class="fragment" data-fragment-index="7">[-100, 0, 0, 1, 0, 1, 2, 0, 1, 2, 3]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section>
-                <h2>Experiment 3</h2>
-                <pre><code data-trim data-noescape data-line-numbers="1-10|9,11-16" class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        beginning.extend(l)
-                        return beginning
+                <div class="two-halves">
+                    <div class="half">
+                        <div class="fragment" data-fragment-index="2">
+                            <h3>Experiment 4</h3>
+                            <pre><code data-trim data-noescape class="language-python">
+                            def prepend(l: list, beginning: list = [-100]):
+                                beginning.extend(l)
+                                return beginning
 
+                            print(prepend([0, 1, 2]))
 
-                    for i in range(5):
-                        zero_to_i = list(range(i))
-                        l = prepend(zero_to_i)
-                        print(l)
-
-                    # [-100]
-                    # [-100, 0]
-                    # [-100, 0, 0, 1]
-                    # [-100, 0, 0, 1, 0, 1, 2]
-                    # [-100, 0, 0, 1, 0, 1, 2, 0, 1, 2, 3]
-                </code></pre>
+                            print(prepend([0, 1, 2]))
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div>
+                            <h3>Hypothesis 4</h3>
+                            <div class="handwriting">
+                            <p class="fragment" data-fragment-index="1">
+                                <span class="mono">prepend</span> is always behaving in the same way.</p>
+                            </p>
+                                <p class="fragment" data-fragment-index="3">1st print: [-100, 0, 1, 2]</p>
+                                <p class="fragment" data-fragment-index="4">2nd print: [-100, 0, 1, 2, 0, 1, 2]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section>
-                <h2>Assumption 4</h2>
-                <p><span class="mono">prepend</span> is always behaving in the same way.</p>
-            </section>
-            <section>
-                <h2>Experiment 4</h2>
-                <pre><code data-trim data-noescape data-line-numbers="1-6|8-9" class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        beginning.extend(l)
-                        return beginning
+                <div class="two-halves">
+                    <div class="half">
+                        <div class="fragment" data-fragment-index="2">
+                            <h3>Experiment 5</h3>
+                            <pre><code data-trim data-noescape class="language-python">
+                            def prepend(l: list, beginning: list = [-100]):
+                                print("l: ", l)
+                                print("beginning: ", beginning)
+                                beginning.extend(l)
+                                return beginning
 
-                    print(prepend([0, 1, 2]))
-                    # [-100, 0, 1, 2]
+                            prepend([0, 1, 2])
 
-                    print(prepend([0, 1, 2]))
-                    # [-100, 0, 1, 2, 0, 1, 2]
-                </code></pre>
-            </section>
-            <section>
-                <h2>Experiment 5</h2>
-                <p>Investigate what is happening with multiple successive calls to <span class="mono">prepend</span>.</p>
-            </section>
-            <section>
-                <h2>Experiment 5</h2>
-                <pre><code data-trim data-noescape data-line-numbers="1-6|7-9|7-13" class="language-python">
-                    def prepend(l: list, beginning: list = [-100]):
-                        print("l: ", l)
-                        print("beginning: ", beginning)
-                        beginning.extend(l)
-                        return beginning
-
-                    prepend([0, 1, 2])
-                    # l: [0, 1, 2]
-                    # beginning: [-100]
-
-                    prepend([0, 1, 2])
-                    # l: [0, 1, 2]
-                    # beginning: [-100, 0, 1, 2]
-                </code></pre>
+                            prepend([0, 1, 2])
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="half">
+                        <div>
+                            <h3>Hypothesis 5</h3>
+                            <div class="handwriting">
+                            <p class="fragment" data-fragment-index="1">
+                                Something is fishy when <span class="mono">prepend</span> is called multiple times.</p>
+                            </p>
+                                <p class="fragment" data-fragment-index="3">l: [0, 1, 2]</p>
+                                <p class="fragment" data-fragment-index="4">beginning: [-100]</p>
+                                <p class="fragment" data-fragment-index="5">l: [0, 1, 2]</p>
+                                <p class="fragment" data-fragment-index="6">beginning: [-100, 0, 1, 2]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section>
                 <h2>What is happening</h2>
@@ -486,10 +618,6 @@
                     for i in range(5):
                         zero_to_i = list(range(i))
                         l = prepend(zero_to_i)
-
-                    print(len(l))
-                    # Expected: 5
-                    # Actual: 5
                 </code></pre>
             </section>
         </section>
@@ -497,6 +625,9 @@
         <section>
             <section>
                 <h1>Other useful tools for your adventure</h1>
+
+                <img src="./img/bag.svg"
+                             alt="drawing of a bag" style="height: 4em"/>
                 <aside class="notes">
                     For the rest of the talk, I'd like to cover more practical advice on how to tackle a real bug,
                     when your code base is not 10-line long, but more like 100k lines.
@@ -506,7 +637,9 @@
                 </aside>
             </section>
             <section>
-                <h2>Qualify the bug</h2>
+                <h2><img class="title" src="./img/magnifier.svg"
+                             alt="drawing of a magnifying glass" style="height: 0.8em"/>
+                    Qualify the bug</h2>
                 <ul>
                     <li class="fragment">What is the "bug"?</li>
                     <li class="fragment">Is it a "bug"?</li>
@@ -520,7 +653,9 @@
                 </aside>
             </section>
             <section>
-                <h2>Leverage temporality</h2>
+                <h2>Leverage temporality
+                <img class="title" src="./img/hourglass.svg"
+                             alt="drawing of a hourglass" style=""/></h2>
                 <p>When was the last it was working?</p>
                 <p>What changed in between?</p>
                 <aside class="notes">
@@ -531,7 +666,12 @@
                 </aside>
             </section>
             <section>
-                <h2>Identify source of randomness</h2>
+                <h2>
+                <img class="title" src="./img/dice2.svg"
+                             alt="drawing of a dice" style=""/>
+                    Identify sources of randomness
+                <img class="title" src="./img/dice.svg"
+                             alt="drawing of a dice" style="height: 0.8em"/></h2>
                 <p>Control what you can</p>
                 <p>Be mindful of what you don't</p>
                 <aside class="notes">
