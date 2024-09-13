@@ -458,7 +458,7 @@ body.reveal-viewport {
 
 .reveal section img.title {
     background-color: transparent;
-    vertical-align: text-bottom;
+    vertical-align: bottom;
     height:1.2em;
 }
 

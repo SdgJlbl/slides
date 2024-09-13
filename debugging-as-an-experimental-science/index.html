@@ -24,6 +24,12 @@
                              alt="GitHub logo" style="width: 1em"/>
                         <a href="https://github.com/SdgJlbl">@SdgJlbl</a></li>
                 </ul>
+
+                <aside class="notes">
+                    I'm a maintainer of Substra, an open-source federated learning framework.
+                    If you're not familiar with federated learning, it's training partial models locally where the data
+                    has been collected, and only share model updates instead of centralising the data, to improve privacy.
+                </aside>
             </section>
             <section>
                 <h2>What does an ML engineer do?</h2>
@@ -32,6 +38,11 @@
                     <li class="fragment">Implementing tooling to facilitate data scientist job</li>
                     <li class="fragment">Debugging</li>
                 </ul>
+                <aside class="notes">
+                    ML Engineers smooth transitioning from code optimized for fast iteration to code optimized for
+                    long-term maintenance.
+                    Their job can include implementing tools that facilitate fast iterations, or the transition to prod-ready code.
+                </aside>
             </section>
         </section>
         <!-- Debugging is dark magic-->
@@ -42,54 +53,68 @@
                          alt="a labyrinth" style="width: 14em"/>
                 <aside class="notes">
                     Debugging is a universal experience for anyone writing code.
-                    It's often viewed as painful, confusing.
-                    But it shouldn't be akin to wandering blind in a labyrinth.
+                    It's usually considered as annoying, or even frustrating, one of those things you have to do, you know,
+                    no job is perfect.
+                    Sometimes, it can feel like wandering blind in a maze, trying to get out. After some time, you're not
+                    sure if you have already tried that, or not. And this way, was it really a dead end or did you miss
+                    something?
                 </aside>
             </section>
             <section>
                 <h2>There is a logical explanation to bugs.</h2>
                 <aside class="notes">
-                    At least as long as we are not doing quantum programming, code is behaving rationally, and
-                    there is a logical explanation to bugs.
+                    Code is behaving rationally, and there is a logical explanation to bugs.
                     We can use a systematic approach to find the cause.
-                    We can borrow from the scientific method.
+                    There is something called the scientific method, that has had a few good results in the past.
+                    Could we use that?
                 </aside>
             </section>
             <section>
                 <h2>Approaching debugging as</h2>
                 <h2>an experimental science</h2>
                 <aside class="notes">
-                    Debugging should be approached as an experimental science.
-                    We can apply the same method as any scientist trying to understand what is happening.
+                    Tada!
                 </aside>
             </section>
             <section>
                 <h2>Experimental science = theory + experiments</h2>
                 <aside class="notes">
-                    It's also that the theory should be validated by experiments, and experiments are guided by the theory.
+                    The scientific methodology is based on two interdependent pillars: theory and experiments.
+                    Observation -> theory -> experiments.
+                    Theory should be validated by experiments, and experiments are guided by the theory.
+                </aside>
+            </section>
+            <section>
+                <img src="./img/maze_from_side.svg"
+                         alt="a labyrinth" style="width: 20em"/>
+                <aside class="notes">
+                    I was never taught how to debug. For a long time, I wasn't using a principled approach, I was
+                    iterating until my code worked.
+                    It would be like wandering at random: kind of work for small mazes, but
+                    it's frustrating and solving one bug is not helping you solve the next one.
                 </aside>
             </section>
             <section>
                 <img src="./img/walls.svg"
-                         alt="a labyrinth" style="width: 14em"/>
+                         alt="a labyrinth" style="width: 20em"/>
                 <aside class="notes">
-                    Typical approach to debugging (iterate until your code works) would be like wandering at random:
-                    kind of work for small mazes, but
-                    it's frustrating and solving one bug is not helping you solve the next one.
-                    Two options: putting marks on wall to avoid going in circles (experimental-based)
-                    or trying to draw a map of the maze (theory-based).
-                    For complex bugs (large mazes), you probably need to combine both.
+                    So I started to take notes. Virtually putting marks on walls to avoid going in circles.
+                    Then I mapped my path, to be better the next time I was in the same region of the maze (have the same bug).
+                    And I realized my goal has changed.
                 </aside>
             </section>
             <section>
                 <h2>Don't try to fix your bug</h2>
                 <p class="fragment">Understand what happens</p>
                 <aside class="notes">
-                    If you fix your bug by chance, you're not sure it won't happen again, you won't be able to build on
-                    the previous fix to solve more complex cases, you can't transfer knowledge.
-                    If you understand what happened, you're learning about your codebase and the idiosyncrasies of your
-                    programming language. Debugging becomes an opportunity to learn, instead of a cause of despair.
-                    Improve your skills to solve future mazes more efficiently!
+                    I don't want to fix my bug by chance, and forever be haunted by the fear of it coming back.
+                    I want to understand what happened, so I can build on this knowledge to solve more complex cases.
+                    I want to be able to transfer this knowledge to my coworkers, so they can solve their own mazes.
+                    I want to know more about Python in general, and my codebase in particular, and being able to share
+                    that I've learned.
+                    And seeing things that way, debugging is not longer a chore, but it's actually an exciting puzzle to solve.
+                    Let's get started to improve your skills for solving mazes efficiently.
+                    And we'll start with drawing your map.
                 </aside>
             </section>
         </section>
@@ -101,7 +126,8 @@
                              alt="drawing of a feather" style="height: 4em"/>
 
                 <aside class="notes">
-                    Aka building your mental model of your code. It sounds daunting, but it will be an iterative process.
+                    Aka building your mental model of your code.
+                    A lot of big words, here, but it's not as bad as it sounds. We'll go step by step.
                 </aside>
             </section>
             <section>
@@ -114,16 +140,14 @@
                 <img class="footnote" src="./img/feather.svg"
                              alt="drawing of a feather" style=""/>
                 <aside class="notes">
-                    We are not going to explain the whole of the universe, but focus on a small part we have control over,
-                    namely your code. We are making assumptions about how the code is working, and what is happening during
-                    the flow of execution.
-                    Typically, we assume a few things, like Python is not buggy, the hardware is not hit by a rogue neutrino, ...
-                    We'll come back to this, but applying Occam's razor, ie the simplest explanation is the most plausible,
-                    is important.
-                    Might seem daunting, but it's okay not to list all the assumptions you are making, focus on the most obvious at first.
-                    The ones that are most likely to be wrong, are probably the most interesting to test.
-                    Start with simple explanations / assumptions, and move to more complex ones if needed.
-                    Remember, it's a back and forth between theory and experiments.
+                    First, you do have some assumptions about your code expected behaviour.
+                    Not high-level, but more detailed. Eg: how an algorithm is registered in Substra.
+                    Make them explicit, because we want to be able to test them (and maybe invalidate them).
+                    Now, you have too many things to keep track of, how much details should you go into?
+                    Start from the beginning, with simple explanations / assumptions, close to where the bug is observed.
+                    It might come from earlier.
+                    Occam's razor: the simplest explanation is the most plausible.
+                    So it's okay to assume at first that Python is not buggy, the hardware is not hit by a rogue neutrino, ...
                 </aside>
             </section>
             <section>
@@ -133,12 +157,12 @@
                 <img class="footnote" src="./img/feather.svg"
                              alt="drawing of a feather" style=""/>
                 <aside class="notes">
-                    One good option to make the mapping of your codebase less daunting is to divide and conquer.
-                    Well separated components help.
-                    If you have a large codebase, you can start by identifying the components that are involved in the bug.
-                    Then, you can focus on one component at a time.
-                    When you inherit a legacy codebase, you don't always have this luxury.
-                    Still, start from a general view, and zoom in on your portion of the map / codebase.
+                    Divide and conquer is a programming paradigm: rather than trying to solve a complex problem all at once,
+                    you split it in smaller problems, solve them, and then combine the solutions.
+                    Understand small chunks (components) of your codebase, and how they interact.
+                    You might be able to determine which parts of your codebase are involved in the bug, and focus on those
+                    at first.
+                    There might be several components involved, but understanding them one at a time is easier.
                 </aside>
             </section>
             <section>
@@ -149,11 +173,9 @@
                 <img class="footnote" src="./img/feather.svg"
                              alt="drawing of a feather" style=""/>
                 <aside class="notes">
-                    Use past "maps" with a healthy dose of skepticism.
-                    What you want to do is building a good high-level view of your code / a mental model of what is happening
-                    Easier with experience, for codebase you know well, takes time to build.
-                    Preexisting documentation can help you make sense of the code, but can be outdated or not covering
-                    all edge cases.
+                    Preexisting documentation can help you make sense of the code, but use those past maps with a healthy
+                    dose of skepticism: they can be outdated or not covering all edge cases.
+
                     Should be listed in your explicit assumptions: according to the documentation, X is true, and then
                     confirmed with an experiment.
                 </aside>
@@ -179,25 +201,25 @@
                 <aside class="notes">
                     If you have no idea about what is happening, follow the flow of execution, from the input to the output.
                     Start from the input and follow the code flow by reading your code (modern IDE can help).
-                    You can also use a debugger to follow the code flow.
+                    You can also use tools like a debugger to follow the code flow.
                 </aside>
             </section>
 
             <section>
                 <h2><img class="title" src="./img/feather.svg"
                              alt="drawing of a feather" style=""/>
-                    Wrapping up
+                    Remember
                 </h2>
-                <p>Remember: at least one of your assumptions is wrong</p>
+                <p>At least one of your assumptions is wrong</p>
 
                 <aside class="notes">
                     The theory is a mental image of your code.
                     You will use it to create hypotheses about what happened, consciously or not.
                     Do it consciously, to be able to challenge your assumptions.
-                    If you have a bug / unexpected behaviour, at least one of your assumptions about how your code is working
+                    If you have a bug, at least one of your assumptions about how your code is working
                     is wrong.
                     All models are wrong, but some are useful (George Box).
-                    Your experiments must help you confirm or infirm your hypotheses.
+                    Now, use your mental model to design experiments, and confirm or infirm your hypotheses.
                 </aside>
             </section>
         </section>
@@ -210,13 +232,13 @@
                              alt="drawing of a compass" style="height: 4em"/>
 
                 <aside class="notes">
-                    Having a map of your code is a start, but you probably need to explore as well, first to be able to
-                    draw your map, and then to actually solve your bug and get out of the maze.
+                    We have a draft map, let's use it to explore, and fill in the blanks.
+                    And then to actually solve your bug and get out of the maze.
                 </aside>
             </section>
             <section>
                 <h2>Finding your way</h2>
-                <p>Designing and recording experiments:</p>
+                <p>Experiments:</p>
                 <p>What is actually happening when you run your code</p>
                 <img class="footnote" src="./img/compass.png"
                              alt="drawing of a compass" style=""/>
@@ -224,7 +246,7 @@
                     Experiments are what you get when confronting your theory to reality.
                     You get information about what happened, from your logs, your outputs, your stack trace, maybe
                     even your monitoring tools if you are lucky.
-                    Collecting experimental data points also guide your theory building.
+                    Collecting experimental data points also guide your theory building, it's an iterative process.
                     Some people are more comfortable building an abstract view of the problem first;
                     others prefer to start from concrete logs and stack traces. Both approaches are valid, and you will
                     often use both alternatively in complex bugs.
@@ -239,7 +261,7 @@
                     You can make prediction out of your mental model: if I turn in this direction, the next turn will be to the right.
                     By changing your inputs or your code, you get need data points that can help you confirm or infirm your
                     hypotheses and your assumptions.
-                    Be rigorous: something sligthly off is not right.
+                    Good experiments are reproducible, and allow fast iterations.
                 </aside>
             </section>
             <section>
@@ -250,11 +272,11 @@
                 <img class="footnote" src="./img/compass.png"
                              alt="drawing of a compass" style=""/>
                 <aside class="notes">
-                    Print values of things you're unsure about.
-                    Print values of things you're sure about.
+                    Print values of things you're unsure about; print values of things you're sure about.
                     If you're sure about something, getting experimental validation is still important.
                     Most frustrating bugs are caused by a wrong "obvious" assumption that is not tested.
-                    Be systematic.
+                    Be rigorous: something kind of right is not right.
+                    In practice...
                 </aside>
             </section>
             <section>
@@ -264,14 +286,10 @@
                              alt="drawing of a compass" style=""/>
 
                 <aside class="notes">
-                    Back to "divide and conquer": you're looking for a needle in a haystack: try to make the haystack as
+                    It's usually easy to inspect values at interfaces: HTTP requests between frontend and backend,
+                    SQL queries sent by your ORM to your database.
+                    Bonus: "divide and conquer": you're looking for a needle in a haystack: try to make the haystack as
                     small as possible.
-                    Even if your codebase is not neatly divided into components, you can still identify interfaces
-                    (between backend / frontend, server and db).
-                    Use the web console to inspect HTTP requests between frontend and backend.
-                    Inspect SQL queries sent by your ORM to your database.
-                    It's often a convenient place to get information, and it provides a lot of value to identify where
-                    the problem is (in js or in Python or in SQL).
                 </aside>
             </section>
             <section>
@@ -281,20 +299,22 @@
                              alt="drawing of a compass" style=""/>
 
                 <aside class="notes">
-                    One major limitation of your mental model is probably unaccounted-for side effects.
-                    It's hard to keep track of all states, and some might be well hidden.
                     Rather than following what is happening in the code with logs, it's usually more informative to
-                    check how your data is changing at each step: print statements, debugger, or just checking the values
+                    check how your data is changing at each step: print statements, debugger, or just checking the tables
                     in the DB.
+
+                    It's hard to keep track of all states, side effects...
+                    One major limitation of your mental model
+                    Focusing your experimental approach on data complements nicely your mental model.
                 </aside>
             </section>
             <section>
-                <h2>Wrapping up <img class="title" src="./img/compass.png"
+                <h2>Remember <img class="title" src="./img/compass.png"
                              alt="drawing of a compass" style="height: 0.8em"/></h2>
                 <p>It's all about putting your theory to the test.</p>
 
                 <aside class="notes">
-                    Experiments are here to invalidate some of your assumptions.
+                    Experiments are key to invalidate some of your assumptions.
                     Having a good mental model will help you to design efficient experiments (informative, little effort)
                     Focusing on the state of data helps pinpointing discrepancies quickly.
                 </aside>
@@ -348,7 +368,7 @@
                      alt="a circular diagram showing how assumptions are tested by experiments, which either confirm or infirm the assumptions"
                      style="width: 20em"/>
                 <aside class="notes">
-                    Bottom-up (starting from the stack trace) or top-down (starting from the input and follow the code flow)
+                    Iterative process
                 </aside>
             </section>
             <section>
@@ -357,7 +377,9 @@
                 <img class="footnote" src="./img/book.svg"
                              alt="drawing of an open notebook" style=""/>
                 <aside class="notes">
-                    Incident retrospectives are a good practice to learn from past incidents, and share knowledge inside your team.
+                    1/ fixing the "same" bug six months later
+                    2/ sharing knowledge inside your team
+                    3/ detecting patterns
                 </aside>
             </section>
         </section>
@@ -369,7 +391,7 @@
                 <p class="fragment" data-fragment-index="1"><span class="mono"> [0], [0, 1], [0, 1, 2], ... </span></p>
                 <p class="fragment" data-fragment-index="2"> I add a <em>special value</em> at the beginning of each list: </br> <span class="mono"> -100 </span></p>
             </section>
-            <section>
+            <section data-transition="slide-in fade-out">
                 <div class="two-halves">
                     <div class="half">
                         <pre><code data-trim data-noescape data-line-numbers="6-8|1-3" class="language-python">
@@ -396,7 +418,7 @@
                     to allow any list of values.
                 </aside>
             </section>
-            <section>
+            <section data-transition="none">
                 <div class="two-halves">
                     <div class="half">
                         <pre><code data-trim data-noescape class="language-python">
@@ -414,10 +436,11 @@
                     </div>
                     <div class="half">
                         <div class="handwriting">
-                        <p class="fragment" data-fragment-index="3">Expected: 5</p>
+                        <p class="fragment" data-fragment-index="3">i = 4</p>
                         <p class="fragment" data-fragment-index="4">zero_to_i = [0, 1, 2, 3]</p>
                         <p class="fragment" data-fragment-index="5">l = [-100, 0, 1, 2, 3]</p>
-                        <p class="fragment" data-fragment-index="6">Observed: 11</p>
+                        <p class="fragment" data-fragment-index="6">Expected: 5</p>
+                        <p class="fragment" data-fragment-index="7">Observed: 11</p>
                         </div>
                     </div>
                 </div>
@@ -577,7 +600,7 @@
                             <h3>Hypothesis 5</h3>
                             <div class="handwriting">
                             <p class="fragment" data-fragment-index="1">
-                                Something is fishy when <span class="mono">prepend</span> is called multiple times.</p>
+                                The default argument <span class="mono">beginning</span> is always [-100].</p>
                             </p>
                                 <p class="fragment" data-fragment-index="3">l: [0, 1, 2]</p>
                                 <p class="fragment" data-fragment-index="4">beginning: [-100]</p>
@@ -637,84 +660,26 @@
                 </aside>
             </section>
             <section>
-                <h2><img class="title" src="./img/magnifier.svg"
-                             alt="drawing of a magnifying glass" style="height: 0.8em"/>
-                    Qualify the bug</h2>
-                <ul>
-                    <li class="fragment">What is the "bug"?</li>
-                    <li class="fragment">Is it a "bug"?</li>
-                    <li class="fragment">Is it reproducible?</li>
-                </ul>
+                <h2>Other useful tools for your adventure</h2>
+                <p class="fragment"><img class="title" src="./img/magnifier.svg"
+                             alt="drawing of a magnifying glass" style=""/> Qualify the bug</p>
+                <p class="fragment"><img class="title" src="./img/hourglass.svg"
+                             alt="drawing of a hourglass" style=""/> Leverage temporality</p>
+                <p class="fragment"><img class="title" src="./img/dices.svg"
+                             alt="bad drawing of two dices" style=""/> Identify sources of randomness</p>
+                <p class="fragment"><img class="title" src="./img/tools.svg"
+                             alt="drawing of various tools" style=""/> Invest in tooling</p>
+                <p class="fragment"><img class="title" src="./img/duck.svg"
+                             alt="drawing of a rubber duck" style="width: 0.9em; vertical-align: middle"/> Enroll another adventurer</p>
+                <p class="fragment"><img class="title" src="./img/compass_archi.svg"
+                             alt="drawing of a compass, I guess" style="height: 1.1em"/> Architect your maze better</p>
                 <aside class="notes">
-                    First thing first, start your analysis with describing the bug: do you have a detailed description of the event?
-                    Expected behaviour matters (cf in bug report).
-                    Unsupported Python versions are not a bug.
-                    Can you find a point in time / a previous version of your code when the code was working as expected?
-                </aside>
-            </section>
-            <section>
-                <h2>Leverage temporality
-                <img class="title" src="./img/hourglass.svg"
-                             alt="drawing of a hourglass" style=""/></h2>
-                <p>When was the last it was working?</p>
-                <p>What changed in between?</p>
-                <aside class="notes">
-                    It was working before. There exists no ill-intentioned goblin who cursed your code.
-                    Think about what has changed (upgrades in your code, or in a dependency).
-                    git bisect can help narrow down the exact incriminated commit.
-                    Monitoring tooling can highlight a change in resource usage.
-                </aside>
-            </section>
-            <section>
-                <h2>
-                <img class="title" src="./img/dice2.svg"
-                             alt="drawing of a dice" style=""/>
-                    Identify sources of randomness
-                <img class="title" src="./img/dice.svg"
-                             alt="drawing of a dice" style="height: 0.8em"/></h2>
-                <p>Control what you can</p>
-                <p>Be mindful of what you don't</p>
-                <aside class="notes">
-                    Code is rational, so if your experiments are not reproducible, but should be, you have not taken
-                    into account something.
-                    Sometimes randomness is out of our control (external API calls).
-                    Sometimes, you can fix the random seed to help with debugging.
-                    Sometimes, something is stateful when you thought you had no side effect.
-                </aside>
-            </section>
-            <section>
-                <h2>Invest in tooling</h2>
-                <p class="fragment">Learn how to use a debugger</p>
-                <p class="fragment">Set up some monitoring</p>
-                <aside class="notes">
-                    Learn how to use a debugger. pdb might seem intimidating, and is not terribly user-friendly, but
-                    it is useful.
-                    As a team, invest in logging, and other monitoring tools:
-                    good logs can already validate or invalidate hypotheses, metrics can help in hard-to-reproduce scenarios
-                    Good monitoring solutions can help you gain some time, because it will narrow down your assumptions
-                    and hypotheses without running any experiments.
-                    If you have incidents in production, OOM killed machines, performance issues, it might be hard to
-                    reproduce outside a production environment. Metrics will be helpful to identify chain failures /
-                    temporary overload.
-                </aside>
-            </section>
-            <section>
-                <h2>Enroll another adventurer</h2>
-                <p>Debugging is a team effort</p>
-                <aside class="notes">
-                    Work in pair / learn to ask good technical questions
-                    Synthesize your current level of knowledge to share with a coworker.
-                    Write a message to someone when you're stuck -> just exposing everything will highlight what you've
-                    missed / neglected to test.
-                </aside>
-            </section>
-            <section>
-                <h2>Architect your maze better</h2>
-                <p> Write code easy to debug</p>
-                <aside class="notes">
-                    No one ever thought about that ^^
-                    Not a reactive measure though...
-                    In a nutshell, code that is easy to test (stateless (FP), small & well-isolated components) is easier to debug.
+                    Qualify the bug: what is the bug? Is it a bug? Is it reproducible? Expected vs observed behaviour.
+                    Leverage temporality: when was the last it was working? What changed in between? git bisect
+                    Identify sources of randomness: control what you can, be aware of what you don't. Beware of side-effects.
+                    Invest in tooling: learn how to use a debugger, set up some monitoring.
+                    Enroll another adventurer: debugging is a team effort. Synthesize your current level of knowledge to share with a coworker.
+                    Architect your maze better: write code easy to debug. code that is easy to test (stateless (FP), small & well-isolated components)
                 </aside>
             </section>
         </section>
@@ -722,18 +687,13 @@
         <!-- Conclusion -->
         <section>
             <section>
-                <h2>The science of debugging in 3 principles</h2>
+                <h2>The science of debugging</h2>
                 <ul>
                     <li class="fragment">There's a logical explanation.</li>
-                    <li class="fragment">Understand what happens, do not fix the bug.</li>
+                    <li class="fragment">Do not fix the bug, understand what happens.</li>
                     <li class="fragment">Trust nothing, check all your assumptions.</li>
+                    <li class="fragment">Use a debugging log to track your progress.</li>
                 </ul>
-                <aside class="notes">
-                    Like thermodynamic, debugging has 3 fundamental principles.
-                </aside>
-            </section>
-            <section>
-                <h2>And use a debugging log to track your efforts</h2>
             </section>
             <section>
                 <h1>Questions?</h1>
