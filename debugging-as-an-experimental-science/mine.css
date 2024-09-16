@@ -98,6 +98,14 @@
   src: local('Odibee Sans'), url('../fonts/odibee-sans/odibee-sans-v14-latin-regular.woff2') format('woff2'), url('../fonts/odibee/odibee-sans-v14-latin-regular.woff') format('woff'), url('../fonts/odibee/odibee-sans-v14-latin-regular.ttf') format('truetype');
 }
 
+/* caveat-regular - latin */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Caveat'), url('../fonts/caveat/Caveat-Regular.ttf') format('truetype');
+}
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
@@ -170,7 +178,7 @@ body.reveal-viewport {
 }
 
 .reveal h3 {
-    font-size: 1.8em;
+    font-size: 1.5em;
 }
 
 .reveal h4 {
@@ -192,9 +200,15 @@ body.reveal-viewport {
     margin: 20px 0;
     line-height: 1.3;
 }
+.reveal .handwriting {
+    font-family: "Caveat", cursive;
+    font-size: 1.2em;
+}
 .reveal span.mono {
     font-family: "Nova Mono", monospace;
+    font-size: 0.8em;
 }
+
 
 /* Ensure certain elements are never larger than the slide itself */
 .reveal img,
@@ -440,6 +454,18 @@ body.reveal-viewport {
     background-color: transparent;
     vertical-align: middle;
     height:0.9em;
+}
+
+.reveal section img.title {
+    background-color: transparent;
+    vertical-align: bottom;
+    height:1.2em;
+}
+
+.reveal section img.footnote {
+    background-color: transparent;
+    vertical-align: bottom;
+    height:1.2em;
 }
 
 .reveal a img {
